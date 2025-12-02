@@ -1,0 +1,173 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/src/fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF') format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/src/fonts/sf-pro-display/SFPRODISPLAYMEDIUM.OTF') format('opentype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/src/fonts/sf-pro-display/SFPRODISPLAYBOLD.OTF') format('opentype');
+  font-weight: 700;
+}
+
+
+
+:root {
+  /* Brand / Accent */
+  --primary: #ffb547;
+  --deep: #17183b;
+
+  /* Light Grays */
+  --gray-0: #ffffff;
+  --gray-50: #fafafa;
+  --gray-100: #f6f6f6;
+  --gray-150: #f5f5f5;
+  --gray-200: #ededed;
+  --gray-250: #ebebeb;
+  --gray-300: #e7e7e7;
+  --gray-350: #d5d5d5;
+  --gray-400: #d4d4d4;
+  --gray-450: #d2d2da;
+  --gray-500: #cdcdcd;
+  --gray-550: #cfcfcf;
+  --gray-600: #c4c4c4;
+  --gray-650: #b5b5b5;
+  --gray-700: #a7a7a7;
+  --gray-750: #a4a4a4;
+  --gray-800: #9f9f9f;
+  --gray-850: #989898;
+
+  /* Dark Grays */
+  --gray-dark-100: #909090;
+  --gray-dark-150: #797979;
+  --gray-dark-200: #787878;
+  --gray-dark-250: #737373;
+  --gray-dark-300: #717171;
+  --gray-dark-350: #6f6f6f;
+  --gray-dark-400: #6c6c6c;
+  --gray-dark-450: #656565;
+  --gray-dark-500: #545454;
+  --gray-dark-550: #414141;
+  --gray-dark-600: #353535;
+  --gray-dark-650: #2e2e2e;
+  --gray-dark-700: #2c2c2c;
+  --gray-dark-750: #201f24;
+  --gray-dark-800: #16181e;
+  --gray-dark-850: #111111;
+
+  /* Black */
+  --black: #000000;
+  /* White */
+  --white: #fff;
+
+  /* Accent / Special */
+  --red: #ff0006;
+  --orange: #ff5e00;
+  --yellow: #f9a000;
+  --purple: #781dbc;
+  --gold: #e1b000;
+  --bright-red: #e10000;
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-deep: var(--deep);
+
+  /* Light Grays */
+  --color-gray-0: var(--gray-0);
+  --color-gray-50: var(--gray-50);
+  --color-gray-100: var(--gray-100);
+  --color-gray-150: var(--gray-150);
+  --color-gray-200: var(--gray-200);
+  --color-gray-250: var(--gray-250);
+  --color-gray-300: var(--gray-300);
+  --color-gray-350: var(--gray-350);
+  --color-gray-400: var(--gray-400);
+  --color-gray-450: var(--gray-450);
+  --color-gray-500: var(--gray-500);
+  --color-gray-550: var(--gray-550);
+  --color-gray-600: var(--gray-600);
+  --color-gray-650: var(--gray-650);
+  --color-gray-700: var(--gray-700);
+  --color-gray-750: var(--gray-750);
+  --color-gray-800: var(--gray-800);
+  --color-gray-850: var(--gray-850);
+
+  /* Dark Grays */
+  --color-gray-dark-100: var(--gray-dark-100);
+  --color-gray-dark-150: var(--gray-dark-150);
+  --color-gray-dark-200: var(--gray-dark-200);
+  --color-gray-dark-250: var(--gray-dark-250);
+  --color-gray-dark-300: var(--gray-dark-300);
+  --color-gray-dark-350: var(--gray-dark-350);
+  --color-gray-dark-400: var(--gray-dark-400);
+  --color-gray-dark-450: var(--gray-dark-450);
+  --color-gray-dark-500: var(--gray-dark-500);
+  --color-gray-dark-550: var(--gray-dark-550);
+  --color-gray-dark-600: var(--gray-dark-600);
+  --color-gray-dark-650: var(--gray-dark-650);
+  --color-gray-dark-700: var(--gray-dark-700);
+  --color-gray-dark-750: var(--gray-dark-750);
+  --color-gray-dark-800: var(--gray-dark-800);
+  --color-gray-dark-850: var(--gray-dark-850);
+
+  /* Black */
+  --color-black: var(--black);
+  /* White */
+  --color-white: var(--white);
+
+  /* Accent / Special */
+  --color-red: var(--red);
+  --color-orange: var(--orange);
+  --color-yellow: var(--yellow);
+  --color-purple: var(--purple);
+  --color-gold: var(--gold);
+  --color-bright-red: var(--bright-red);
+
+  /* fonts */
+  --font-poppins : "Poppins", sans-serif;
+  --font-figtree : "Figtree", sans-serif;
+  --font-sf-pro : "SF Pro Display", sans-serif;
+
+}
+
+/* Navber */
+.nav-items {
+  @apply text-base font-semibold text-black/40 font-poppins duration-300
+}
+.nav-items:hover {
+  @apply text-black 
+}
+
+ .catagories-main .catagory {
+  @apply text-base font-medium text-white/50 font-poppins duration-300 leading-8 cursor-pointer border-r flex items-center gap-2 pr-12 
+}
+
+ .catagories-main .catagory:last-child{
+  @apply pr-2 border-0
+} 
+
+ .catagories-main .catagory:first-child{
+  @apply justify-start  relative 
+} 
+ 
+
+ .catagories-main .catagory:hover {
+  @apply  text-white/80  
+}
+/* Navber */
+
+/* slick button */
+.slick-arrow {
+  display: none !important;
+}
