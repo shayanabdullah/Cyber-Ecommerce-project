@@ -8,8 +8,9 @@ import { MdVideogameAsset } from "react-icons/md";
 import Container from "../../commonComponents/Container";
 import { motion } from "motion/react";
 import { fadeIn } from "../../../utils/motion/motion";
+import Slider from "react-slick";
 
-const catagories = [
+ export const catagories = [
   {
     id : 0,
     text : 'Phones',
@@ -43,6 +44,13 @@ const catagories = [
 ]
 
 const CatagoriesHeader = ({className}) => {
+   const settings = {
+       infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 2,
+     autoplay: true,
+    autoplaySpeed: 2500,
+   }
   return (
     <motion.div 
     variants={fadeIn('up', 0.4)}
@@ -50,8 +58,10 @@ const CatagoriesHeader = ({className}) => {
           whileInView={'show'}
           viewport={{once: true}}
     className={`catagories-main py-2 bg-gray-dark-650 ${className}`}>
-      <Container>
-        <div className="catagory-contents flex items-center justify-between overflow-x-auto">
+      <div className="hidden lg:block">
+              <Container>
+     
+         <div className="catagory-contents flex items-center justify-between ">
          {
           catagories.map((item) => (
             <div className="catagory" key={item.id}>
@@ -61,7 +71,29 @@ const CatagoriesHeader = ({className}) => {
           ))
          }
         </div>
+
       </Container>
+      </div>
+
+
+
+      {/* mobile catagory */}
+      <div className="lg:hidden">
+        <Container>
+          <div className="">
+      <Slider {...settings}>
+              {
+                  catagories.map((item) => (
+            <div className="catagory " key={item.id}>
+              <i className="text-2xl">{item.icon}</i>
+              <a href={`# ${item.text}`}>{item.text}</a>
+            </div>
+          ))
+            }
+      </Slider>
+          </div>
+        </Container>
+      </div>
     </motion.div>
   );
 };
