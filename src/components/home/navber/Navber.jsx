@@ -58,7 +58,7 @@ const Navber = () => {
         initial="hidden"
         whileInView={"show"}
         viewport={{ once: true }}
-        className="py-5 bg-white hidden lg:block"
+        className="py-5 bg-white hidden xxl:block"
       >
         <Container>
           <div className="nav-main flex items-center gap-8 justify-end">
@@ -102,7 +102,7 @@ const Navber = () => {
       </motion.nav>
 
       {/* mobile navber */}
-      <div className="lg:hidden sticky top-0 bg-white z-99">
+      <div className="xxl:hidden sticky top-0 bg-white z-99">
         <motion.nav
           className="py-6 bg-gray-100/10 flex justify-between px-4 border-b border-black/34 "
           variants={fadeIn("down", 0.3)}

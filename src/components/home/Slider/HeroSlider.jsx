@@ -3,8 +3,8 @@ import Slider from "react-slick";
 import Container from "../../commonComponents/Container";
 import banner from "@/assets/iphone.png";
 import iphone from "@/assets/banner.svg";
-import macbook from "@/assets/mackbook.svg";
-import macbookimg from "@/assets/macbook-banner.png";
+import macbook from "@/assets/mackbook-banner.svg";
+import macbookimg from "@/assets/macbook.png";
 import ShopButton from "../../commonComponents/ShopButton";
 import { motion } from "motion/react";
 import { fadeIn } from "../../../utils/motion/motion";
@@ -97,14 +97,14 @@ const HeroSlider = () => {
         className="lg:hidden"
       >
         <Slider {...settings}>
-          <div>
-            <img src={iphone} alt="" className="w-full" />
+          <div >
+            <img src={iphone} alt="" className="w-full h-full" />
           </div>
           <div>
-            <img src={macbook} alt="" className="w-full" />
+            <img src={macbook} alt="" className="w-full h-full" />
           </div>
           <div>
-            <img src={iphone} alt="" />
+            <img src={iphone} alt="" className="w-full h-full" />
           </div>
         </Slider>
       </motion.div>

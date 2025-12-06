@@ -138,6 +138,9 @@
   --font-poppins : "Poppins", sans-serif;
   --font-figtree : "Figtree", sans-serif;
   --font-sf-pro : "SF Pro Display", sans-serif;
+  
+  /* Breakpoint */
+  --breakpoint-xxl : 1350px;
 
 }
 
@@ -171,6 +174,10 @@
 .slick-arrow {
   display: none !important;
 }
+/* swiper button */
+.swiper-button-prev, .swiper-button-next {
+  display: none !important;
+}
 
 @layer utilities {
   ::-webkit-scrollbar {
@@ -193,4 +200,9 @@ i {
   max-height: 40vh;
   transition: all 150ms ease-in-out;
   opacity: 0;
+}
+
+
+.featured-p {
+  @apply font-poppins font-medium text-base leading-6 text-gray-dark-100
 }
