@@ -60,7 +60,7 @@ const Feature = () => {
 
       {/* Moblie featured section */}
       <section className=" xxl:hidden">
-       <div className="main">
+       <div className="main grid grid-cols-1 md:grid-cols-2">
         <div className="card flex flex-col gap-6 justify-center items-center py-10 px-4">
           <div className="img">
             <img src={airpod2} alt="" className="max-w-[200px] w-full" />

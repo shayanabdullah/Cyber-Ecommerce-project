@@ -1,0 +1,121 @@
+import Container from '@/components/commonComponents/Container'
+import React from 'react'
+import { GoChevronLeft, GoChevronRight } from 'react-icons/go'
+import { SlScreenSmartphone } from "react-icons/sl";
+import { RiComputerLine } from "react-icons/ri";
+import { BsSmartwatch } from "react-icons/bs";
+import { FiHeadphones } from "react-icons/fi";
+import { IoCameraOutline } from "react-icons/io5";
+import { MdVideogameAsset } from "react-icons/md";
+import {Swiper, SwiperSlide} from 'swiper/react';
+import "swiper/css";
+import { Autoplay, Navigation } from 'swiper/modules';
+export const catagories = [
+  {
+    id: 0,
+    text: "Phones",
+    icon: <SlScreenSmartphone />,
+  },
+    {
+    id: 1,
+    text: "Smart Watches",
+    icon: <BsSmartwatch />,
+
+  },
+  
+  {
+    id: 2,
+    text: "Cameras",
+    icon: <IoCameraOutline />,
+  },
+    {
+    id: 3,
+    text: "Headphones",
+    icon: <FiHeadphones />,
+  },
+  {
+    id: 4,
+    text: "Computers",
+    icon:<RiComputerLine />,
+  },
+
+  {
+    id: 5,
+    text: "Gaming",
+    icon: <MdVideogameAsset />,
+  },
+
+  {
+    id: 6,
+    text: "Computers",
+    icon:<RiComputerLine />,
+  },
+];
+
+const BrowseCatagory = () => {
+  return (
+   <>
+   <section className='py-20 px-4'>
+   <Container>
+     <div className="header flex justify-between items-center pb-8">
+      <h3 className='font-poppins font-medium text-2xl leading-8 text-black'>Browse By Category</h3>
+      <div className="flex items-center gap-2 text-4xl">
+        <button className='cursor-pointer next'>
+          <GoChevronLeft />
+        </button>
+        <button className='cursor-pointer prev'>
+          <GoChevronRight />
+        </button>
+      </div>
+    </div>
+
+    <div className="catagories">
+     <Swiper  
+      slidesPerView={2}
+              spaceBetween={10}
+              loop={true}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              breakpoints={{
+                600: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                768: {
+                  slidesPerView: 4,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 6,
+                  spaceBetween: 32,
+                },
+              }}
+              navigation={
+                {
+                  nextEl: '.next',
+                  prevEl : '.prev'
+                }
+              }
+              modules={[Navigation, Autoplay]}>
+       {
+        catagories.map((catagory)=> (
+      <SwiperSlide key={catagory.id} className=''>
+            <div className="py-6 rounded-[15px] bg-gray-200 flex flex-col items-center justify-center cursor-pointer">
+            <i className='text-3xl pb-2'>{catagory.icon}</i>
+            <h3 className='font-poppins font-medium text-base text-black leading-6'>{catagory.text}</h3>
+          </div>
+      </SwiperSlide>
+        ))
+      }
+     </Swiper>
+    </div>
+
+   </Container>
+   </section>
+   </>
+  )
+}
+
+export default BrowseCatagory

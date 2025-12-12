@@ -5,6 +5,8 @@ import banner from "@/assets/iphone.png";
 import iphone from "@/assets/banner.svg";
 import macbook from "@/assets/mackbook-banner.svg";
 import macbookimg from "@/assets/macbook.png";
+import galaxy from "@/assets/galaxy-banner.webp";
+import ipad from "@/assets/ipad-banner.webp";
 import ShopButton from "../../commonComponents/ShopButton";
 import { motion } from "motion/react";
 import { fadeIn } from "../../../utils/motion/motion";
@@ -32,7 +34,7 @@ const HeroSlider = () => {
       >
         <Container>
           <Slider {...settings}>
-            <div className="banner flex! items-center justify-between px-5">
+            <div className="banner flex! items-center justify-between px-5 max-w-[1420px]">
               <div className="text-box">
                 <p className="font-figtree font-semibold leading-8 text-2xl text-white/45 pb-8">
                   Pro.Beyond.
@@ -49,7 +51,8 @@ const HeroSlider = () => {
                 <img src={banner} alt="" />
               </div>
             </div>
-            <div className="banner flex! items-center justify-between px-5 pt-[60px] gap-12">
+        
+            <div className="banner flex! items-center justify-between px-5 pt-[60px] gap-12 max-w-[1420px]">
               <div className="text-box shrink-0">
                 <p className="font-figtree font-semibold leading-8 text-2xl text-white/45 pb-8">
                   Pro.Beyond.
@@ -68,7 +71,7 @@ const HeroSlider = () => {
                 <img src={macbookimg} alt="" className="w-[800px]" />
               </div>
             </div>
-            <div className="banner flex! items-center justify-between px-5">
+            <div className="banner flex! items-center justify-between px-5 max-w-[1420px]">
               <div className="text-box">
                 <p className="font-figtree font-semibold leading-8 text-2xl text-white/45 pb-8">
                   Pro.Beyond.
@@ -96,16 +99,23 @@ const HeroSlider = () => {
         viewport={{ once: true }}
         className="lg:hidden"
       >
-        <Slider {...settings}>
+        <Slider {...settings} >
           <div >
             <img src={iphone} alt="" className="w-full h-full" />
           </div>
           <div>
             <img src={macbook} alt="" className="w-full h-full" />
           </div>
+               <div className="w-full max-h-40 ">
+              <img src={galaxy} alt="" className="object-cover"/>
+            </div>
+                <div className="w-full max-h-40">
+              <img src={ipad} alt="" className="object-cover"/>
+            </div>
           <div>
             <img src={iphone} alt="" className="w-full h-full" />
           </div>
+           
         </Slider>
       </motion.div>
     </>

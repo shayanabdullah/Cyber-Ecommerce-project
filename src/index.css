@@ -22,6 +22,8 @@
 
 
 
+
+
 :root {
   /* Brand / Accent */
   --primary: #ffb547;
@@ -46,6 +48,7 @@
   --gray-750: #a4a4a4;
   --gray-800: #9f9f9f;
   --gray-850: #989898;
+  --gray-900: #8B8B8B;
 
   /* Dark Grays */
   --gray-dark-100: #909090;
@@ -79,6 +82,17 @@
   --bright-red: #e10000;
 }
 
+body {
+background-color: var(--white);
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+
 @theme {
   --color-primary: var(--primary);
   --color-deep: var(--deep);
@@ -102,6 +116,7 @@
   --color-gray-750: var(--gray-750);
   --color-gray-800: var(--gray-800);
   --color-gray-850: var(--gray-850);
+  --color-gray-900: var(--gray-900);
 
   /* Dark Grays */
   --color-gray-dark-100: var(--gray-dark-100);
@@ -179,6 +194,15 @@
   display: none !important;
 }
 
+.swiper-pagination-bullet {
+  background: var(--black) !important;
+}
+
+.swiper-slide {
+  max-height: 700px !important;
+  height: 100% !important;
+}
+
 @layer utilities {
   ::-webkit-scrollbar {
     width: 0;
@@ -201,7 +225,6 @@ i {
   transition: all 150ms ease-in-out;
   opacity: 0;
 }
-
 
 .featured-p {
   @apply font-poppins font-medium text-base leading-6 text-gray-dark-100

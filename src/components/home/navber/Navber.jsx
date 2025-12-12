@@ -136,7 +136,7 @@ const Navber = () => {
         </motion.nav>
 
         <div
-          className={`sidebar max-w-[350px] h-screen fixed z-99 left-0 top-0 bg-black border-r border-black transition-all duration-300 ease-in-out w-full ${
+          className={`sidebar max-w-[350px] h-screen fixed z-99 left-0 top-0 bg-gray-dark-850 border-r border-black transition-all duration-300 ease-in-out w-full ${
             isMenuOpen == true ? "translate-x-0" : " -translate-x-full"
           }`}
         >
@@ -161,8 +161,10 @@ const Navber = () => {
                   href={link.href}
                   key={link.id}
                   className="nav-items text-white! "
+                  onClick={handleMenuClose}
                 >
                   {link.link}
+                
                 </a>
               ))}
               <a href="#" className="nav-items text-white!">
