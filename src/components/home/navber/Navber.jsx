@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import CatagoriesHeader, { catagories } from "./CatagoriesHeader";
 import { fadeIn } from "../../../utils/motion/motion";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { GoHome } from "react-icons/go";
+
 import {
   FaChevronDown,
   FaChevronUp,

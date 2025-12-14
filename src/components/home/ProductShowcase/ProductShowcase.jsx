@@ -115,7 +115,7 @@ const ProductShowcase = () => {
                   <div
                     className={`img pb-10 flex w-full ${
                       item.center ? "justify-center" : "justify-end"
-                    }`}
+                    } ${item.up ? "-translate-y-8" : ""}`}
                   >
                     <img
                       src={item.img}

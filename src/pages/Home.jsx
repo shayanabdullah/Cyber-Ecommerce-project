@@ -7,6 +7,7 @@ import FeaturedProduct from '@/components/home/FeaturedProduct/FeaturedProduct'
 import ProductShowcase from '@/components/home/ProductShowcase/ProductShowcase'
 import DiscountProduct from '@/components/home/DiscontProduct/DiscountProduct'
 import CTA from '@/components/home/CTA/CTA'
+import Footer from '@/components/home/Footer/Footer'
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
  <ProductShowcase/>
  <DiscountProduct/>
  <CTA/>
+ <Footer/>
  </>
   )
 }

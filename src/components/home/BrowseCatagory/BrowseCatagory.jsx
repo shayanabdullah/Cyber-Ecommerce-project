@@ -10,6 +10,8 @@ import { MdVideogameAsset } from "react-icons/md";
 import {Swiper, SwiperSlide} from 'swiper/react';
 import "swiper/css";
 import { Autoplay, Navigation } from 'swiper/modules';
+import { motion } from 'motion/react';
+import { fadeIn, textVariant } from '@/utils/motion/motion';
 export const catagories = [
   {
     id: 0,
@@ -55,10 +57,14 @@ export const catagories = [
 const BrowseCatagory = () => {
   return (
    <>
-   <section className='py-20 px-4'>
+ <motion.section
+  variants={fadeIn('up', 0.4)}
+       initial='hidden'
+       whileInView={'show'}
+       viewport={{once: true}} className='py-20 px-4'>
    <Container>
      <div className="header flex justify-between items-center pb-8">
-      <h3 className='font-poppins font-medium text-2xl leading-8 text-black'>Browse By Category</h3>
+      <motion.h3  variants={textVariant(0.6)} className='font-poppins font-medium text-2xl leading-8 text-black'>Browse By Category</motion.h3>
       <div className="flex items-center gap-2 text-4xl">
         <button className='cursor-pointer next'>
           <GoChevronLeft />
@@ -102,10 +108,12 @@ const BrowseCatagory = () => {
        {
         catagories.map((catagory)=> (
       <SwiperSlide key={catagory.id} className=''>
-            <div className="py-6 rounded-[15px] bg-gray-200 flex flex-col items-center justify-center cursor-pointer">
+            <motion.div
+            variants={fadeIn('down', 0.6)}
+            className="py-6 rounded-[15px] bg-gray-200 flex flex-col items-center justify-center cursor-pointer">
             <i className='text-3xl pb-2'>{catagory.icon}</i>
-            <h3 className='font-poppins font-medium text-base text-black leading-6'>{catagory.text}</h3>
-          </div>
+            <motion.h3  variants={textVariant(0.7)} className='font-poppins font-medium text-base text-black leading-6'>{catagory.text}</motion.h3>
+          </motion.div>
       </SwiperSlide>
         ))
       }
@@ -113,7 +121,7 @@ const BrowseCatagory = () => {
     </div>
 
    </Container>
-   </section>
+   </motion.section>
    </>
   )
 }

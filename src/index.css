@@ -82,6 +82,10 @@
   --bright-red: #e10000;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
 background-color: var(--white);
 }
@@ -91,7 +95,9 @@ img {
   -webkit-user-drag: none;
   pointer-events: none;
 }
-
+ h1, h2 , h3, p{
+  cursor: default;
+ }
 
 @theme {
   --color-primary: var(--primary);

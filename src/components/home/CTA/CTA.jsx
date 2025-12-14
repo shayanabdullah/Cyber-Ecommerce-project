@@ -9,7 +9,7 @@ import lap from '@/assets/Cta-img/cta-ipad-2.svg'
 const CTA = () => {
   return (
  <>
- <section className='py-[135px] relative overflow-hidden bg-[linear-gradient(138deg,#2E2E2E,#000000)]
+ <section className='py-[135px] relative overflow-hidden bg-[linear-gradient(138deg,#2E2E2E,#181818)]
 '>
     <div className="img absolute top-0 right-[-25%] md:right-0 lg:top-0  lg:right-0  ">
         <img src={phone} alt="" className='w-full' />
@@ -17,10 +17,10 @@ const CTA = () => {
     <div className="img absolute top-[-12%] left-[-49%] md:left-0 lg:-top-5 lg:left-8 z-10 ">
         <img src={lap} alt="" className='w-full' />
     </div>
-    <div className="img absolute top-0 left-[20%]  w-[200px] md:w-[300px] lg:w-full lg:-top-5 lg:left-[12%]  ">
+    <div className="img absolute top-0 left-[20%]  w-[200px] md:w-[300px]  lg:-top-5 lg:left-[12%]  ">
         <img src={laptop} alt="" className='w-full' />
     </div>
-    <div className="img absolute    bottom-[-11%]  left-[-19%] w-[200px] md:w-[300px] lg:top-[29%]  lg:min-w-[420px]  ">
+    <div className="img absolute bottom-[-11%]  left-[-19%] w-[200px] md:min-w-[300px] lg:top-[29%] lg:left-0 lg:min-w-[420px]  ">
         <img src={ipad} alt="" className='w-full' />
     </div>
     <div className="img absolute bottom-0 right-0 w-[200px] md:w-[300px] lg:bottom-0 lg:right-0 lg:w-[400px] ">
