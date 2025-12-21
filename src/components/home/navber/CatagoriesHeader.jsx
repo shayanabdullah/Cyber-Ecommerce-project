@@ -1,49 +1,58 @@
 import React from "react";
-import { FaMobileAlt } from "react-icons/fa";
+import { FaMobileAlt, FaTabletAlt } from "react-icons/fa";
 import { FiHeadphones } from "react-icons/fi";
 import { HiComputerDesktop } from "react-icons/hi2";
 import { BsSmartwatch } from "react-icons/bs";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdVideogameAsset } from "react-icons/md";
-import Container from "../../commonComponents/Container";
+import Container from "../../common/Container";
 import { motion } from "motion/react";
-import { fadeIn } from "../../../utils/motion/motion";
+import { fadeIn } from "../../../utils/motion/variants";
 import Slider from "react-slick";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-export const catagories = [
+import { Link } from "react-router-dom";
+import { LuLaptop } from "react-icons/lu";
+export const categories = [
   {
     id: 0,
     text: "Phones",
+    path: "/shop/phones",
     icon: <FaMobileAlt />,
   },
   {
     id: 1,
-    text: "Computers",
-    icon: <HiComputerDesktop />,
+    text: "Laptop",
+    path: "/shop/computers",
+    icon: <LuLaptop />,
   },
   {
     id: 2,
     text: "Smart Watches",
+    path: "/shop/smart-watches",
     icon: <BsSmartwatch />,
   },
   {
     id: 3,
-    text: "Cameras",
-    icon: <IoCameraOutline />,
+    text: "Tablet",
+    path: "/shop/cameras",
+    icon: <FaTabletAlt />,
   },
   {
     id: 4,
     text: "Headphones",
+    path: "/shop/headphones",
     icon: <FiHeadphones />,
   },
   {
     id: 5,
     text: "Gaming",
+    path: "/shop/gaming",
     icon: <MdVideogameAsset />,
   },
 ];
+
 
 const CatagoriesHeader = ({ className }) => {
   const settings = {
@@ -64,10 +73,10 @@ const CatagoriesHeader = ({ className }) => {
       <div className="hidden lg:block">
         <Container>
           <div className="catagory-contents flex items-center justify-between ">
-            {catagories.map((item) => (
+            {categories.map((item) => (
               <div className="catagory" key={item.id}>
                 <i className="text-2xl">{item.icon}</i>
-                <a href={`# ${item.text}`}>{item.text}</a>
+                <Link to={item.path} href={`# ${item.text}`}>{item.text}</Link >
               </div>
             ))}
           </div>
@@ -79,7 +88,7 @@ const CatagoriesHeader = ({ className }) => {
         <Container>
           <div className="">
             <Swiper
-              slidesPerView={2}
+              slidesPerView={1}
               spaceBetween={10}
               loop={true}
               autoplay={{
@@ -87,6 +96,10 @@ const CatagoriesHeader = ({ className }) => {
                 disableOnInteraction: false,
               }}
               breakpoints={{
+                375 : {
+                  slidesPerView: 2,
+
+                },
                 600: {
                   slidesPerView: 3,
                   spaceBetween: 20,
@@ -99,7 +112,7 @@ const CatagoriesHeader = ({ className }) => {
               navigation={true}
               modules={[Navigation, Autoplay]}
             >
-              {catagories.map((item) => (
+              {categories.map((item) => (
                 <SwiperSlide>
                   <div className="catagory " key={item.id}>
                     <i className="text-2xl">{item.icon}</i>

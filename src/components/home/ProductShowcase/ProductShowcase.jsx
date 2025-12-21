@@ -1,6 +1,6 @@
 import React from "react";
-import ShopButton from "@/components/commonComponents/ShopButton";
-import { ShowcaseProducts } from "@/utils/data/showCaseProuductData";
+import ShopButton from "@/components/common/ShopButton";
+import { ShowcaseProducts } from "@/data/showcaseProducts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 

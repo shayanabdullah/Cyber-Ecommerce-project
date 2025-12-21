@@ -1,15 +1,15 @@
 import React from "react";
 import Slider from "react-slick";
-import Container from "../../commonComponents/Container";
+import Container from "../../common/Container";
 import banner from "@/assets/iphone.png";
 import iphone from "@/assets/banner.svg";
 import macbook from "@/assets/mackbook-banner.svg";
 import macbookimg from "@/assets/macbook.png";
 import galaxy from "@/assets/galaxy-banner.webp";
 import ipad from "@/assets/ipad-banner.webp";
-import ShopButton from "../../commonComponents/ShopButton";
+import ShopButton from "../../common/ShopButton";
 import { motion } from "motion/react";
-import { fadeIn } from "../../../utils/motion/motion";
+import { fadeIn } from "../../../utils/motion/variants";
 
 
 const HeroSlider = () => {

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Container from "../../commonComponents/Container";
+import Container from "../../common/Container";
 import logo from "../../../assets/logo.png";
 import { CiSearch } from "react-icons/ci";
 import { IoIosHeartEmpty, IoIosHelpCircleOutline } from "react-icons/io";
 import { PiShoppingCartLight } from "react-icons/pi";
 import { FiUser } from "react-icons/fi";
 import { motion } from "motion/react";
-import CatagoriesHeader, { catagories } from "./CatagoriesHeader";
-import { fadeIn } from "../../../utils/motion/motion";
+import CatagoriesHeader from "./CatagoriesHeader";
+import { fadeIn } from "../../../utils/motion/variants";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
 import {
@@ -19,27 +19,31 @@ import {
   FaShippingFast,
   FaTwitter,
 } from "react-icons/fa";
-import { IoCallOutline, IoCallSharp, IoClose } from "react-icons/io5";
+import { IoCallSharp, IoClose } from "react-icons/io5";
+import { Link, NavLink } from "react-router-dom";
+import { catagories } from "../browseCatagory/BrowseCatagory";
 
 const navLinks = [
   {
     id: 1,
     link: "Home",
-    href: "home",
+    path: "/",
   },
+ 
   {
     id: 2,
     link: "About",
-    href: "About",
+    path: "/about",
   },
   {
     id: 3,
     link: "Blog",
+    path: "/blog",
   },
   {
     id: 4,
     link: "Contact",
-    href: "Contact",
+    path: "/contact",
   },
 ];
 const Navber = () => {
@@ -58,14 +62,14 @@ const Navber = () => {
         initial="hidden"
         whileInView={"show"}
         viewport={{ once: true }}
-        className="py-5 bg-white hidden xxl:block"
+        className="pt-5 bg-white hidden xxl:block"
       >
         <Container>
           <div className="nav-main flex items-center gap-8 justify-end">
             <div className="logo pr-9">
-              <a href="#">
+              <Link to={'/'} href="#">
                 <img src={logo} alt="logo" />
-              </a>
+              </Link>
             </div>
             <div className="search relative  ">
               <i className="absolute top-3.5 left-[37px] text-2xl text-gray-850 ">
@@ -81,11 +85,11 @@ const Navber = () => {
 
             <div className="nav-menu flex items-center gap-[70px] pl-8">
               {navLinks.map((link) => (
-                <a href={link.href} key={link.id} className="nav-items">
+                <NavLink to={link.path} key={link.id} className={({isActive})=> isActive ? 'nav-active' : 'nav-items'}>
                   {link.link}
-                </a>
+                </NavLink>
               ))}
-              <div className=" flex items-center gap-10    text-2xl w-full">
+              <div className=" flex items-center gap-10 text-2xl w-full">
                 <a href="#">
                   <IoIosHeartEmpty />
                 </a>
@@ -98,12 +102,15 @@ const Navber = () => {
               </div>
             </div>
           </div>
+                {/* catagory-header */}
         </Container>
+      <CatagoriesHeader className="" />        
       </motion.nav>
 
       {/* mobile navber */}
-      <div className="xxl:hidden sticky top-0 bg-white z-99">
-        <motion.nav
+      <div className="xxl:hidden sticky top-0 bg-white z-99 overflow-hidden">
+<Container>
+          <motion.nav
           className="py-6 bg-gray-100/10 flex justify-between px-4 border-b border-black/34 "
           variants={fadeIn("down", 0.3)}
           initial="hidden"
@@ -157,15 +164,9 @@ const Navber = () => {
             </p>
             <div className="nav-items flex flex-col  gap-5 px-3">
               {navLinks.map((link) => (
-                <a
-                  href={link.href}
-                  key={link.id}
-                  className="nav-items text-white! "
-                  onClick={handleMenuClose}
-                >
+                <NavLink to={link.path} key={link.id} className={({isActive})=> isActive ? 'nav-active-mobile' : 'nav-items-mobile'}   onClick={handleMenuClose}>
                   {link.link}
-                
-                </a>
+                </NavLink>
               ))}
               <a href="#" className="nav-items text-white!">
                 Shop
@@ -246,10 +247,11 @@ const Navber = () => {
             />
           </div>
         </div>
+        <CatagoriesHeader className="" />
+</Container>
       </div>
 
-      {/* catagory-header */}
-      <CatagoriesHeader className="" />
+
     </>
   );
 };

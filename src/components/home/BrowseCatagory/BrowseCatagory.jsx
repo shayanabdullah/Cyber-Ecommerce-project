@@ -1,4 +1,4 @@
-import Container from '@/components/commonComponents/Container'
+import Container from '@/components/common/Container'
 import React from 'react'
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go'
 import { SlScreenSmartphone } from "react-icons/sl";
@@ -11,7 +11,7 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import "swiper/css";
 import { Autoplay, Navigation } from 'swiper/modules';
 import { motion } from 'motion/react';
-import { fadeIn, textVariant } from '@/utils/motion/motion';
+import { fadeIn, textVariant } from '@/utils/motion/variants';
 export const catagories = [
   {
     id: 0,

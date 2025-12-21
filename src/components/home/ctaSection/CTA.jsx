@@ -1,4 +1,4 @@
-import ShopButton from '@/components/commonComponents/ShopButton'
+import ShopButton from '@/components/common/ShopButton'
 import { Container } from '@mui/material'
 import React from 'react'
 import watch from '@/assets/Cta-img/cta-watch.svg'

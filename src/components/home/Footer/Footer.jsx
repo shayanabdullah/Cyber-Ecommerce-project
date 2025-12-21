@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '@/assets/logo-white.svg'
-import Container from '@/components/commonComponents/Container';
+import Container from '@/components/common/Container';
 import { FaFacebook, FaFacebookF, FaInstagram, FaLinkedin, FaTiktok, FaTwitter, FaWhatsapp } from 'react-icons/fa';
  const footerLinks = [
   {
@@ -57,7 +57,7 @@ const Footer = () => {
                              <ul>
                                    {
                                     link.items.map((li)=> (
-                                        <li className='font-poppins text-sm font-light leading-[180.5%] text-gray-550/80 cursor-pointer hover:underline'>{li}</li>
+                                        <li className='font-poppins text-sm font-light leading-[180.5%] text-gray-550/80 cursor-pointer hover:underline' key={li}>{li}</li>
                                     ))
                                    }
                                 </ul>

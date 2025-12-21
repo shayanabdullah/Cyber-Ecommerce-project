@@ -7,9 +7,9 @@ import vr from '@/assets/vr.png'
 import fullVr from '@/assets/full-vr.png'
 import half from '@/assets/macbook-half.svg'
 import macbook from '@/assets/macbook-sm.svg'
-import ShopButton from "@/components/commonComponents/ShopButton";
+import ShopButton from "@/components/common/ShopButton";
 import { motion } from "motion/react";
-import { fadeIn, textVariant } from "@/utils/motion/motion";
+import { fadeIn, textVariant } from "@/utils/motion/variants";
 const Feature = () => {
   return (
     <>

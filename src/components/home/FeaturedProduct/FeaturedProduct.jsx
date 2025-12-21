@@ -1,4 +1,4 @@
-import Container from "@/components/commonComponents/Container";
+import Container from "@/components/common/Container";
 import {
   Button,
   Tab,
@@ -8,11 +8,11 @@ import {
   TabPanels,
 } from "@headlessui/react";
 
-import ShopButton from "@/components/commonComponents/ShopButton";
+import ShopButton from "@/components/common/ShopButton";
 import { GoHeart } from "react-icons/go";
 import { FaFire, FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
-import { newArrival } from "@/utils/data/FeaturedProductData";
+import { newArrival } from "@/data/featuredProducts";
 
 const bestSellingProducts = newArrival.filter(
   (item) => item.bestSelling === true

@@ -1,5 +1,5 @@
-import ShopButton from "@/components/commonComponents/ShopButton";
-import { discountProducts } from "@/utils/data/DiscountProductData";
+import ShopButton from "@/components/common/ShopButton";
+import { discountProducts } from "@/data/discountProducts";
 import { Container } from "@mui/material";
 import React, { useState } from "react";
 import { FaFire, FaHeart, FaRegHeart } from "react-icons/fa";

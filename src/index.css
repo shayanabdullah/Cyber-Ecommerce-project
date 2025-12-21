@@ -1,28 +1,26 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
 
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('/src/fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF') format('opentype');
+  font-family: "SF Pro Display";
+  src: url("/src/fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF")
+    format("opentype");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('/src/fonts/sf-pro-display/SFPRODISPLAYMEDIUM.OTF') format('opentype');
+  font-family: "SF Pro Display";
+  src: url("/src/fonts/sf-pro-display/SFPRODISPLAYMEDIUM.OTF")
+    format("opentype");
   font-weight: 500;
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('/src/fonts/sf-pro-display/SFPRODISPLAYBOLD.OTF') format('opentype');
+  font-family: "SF Pro Display";
+  src: url("/src/fonts/sf-pro-display/SFPRODISPLAYBOLD.OTF") format("opentype");
   font-weight: 700;
 }
-
-
-
-
 
 :root {
   /* Brand / Accent */
@@ -48,7 +46,7 @@
   --gray-750: #a4a4a4;
   --gray-800: #9f9f9f;
   --gray-850: #989898;
-  --gray-900: #8B8B8B;
+  --gray-900: #8b8b8b;
 
   /* Dark Grays */
   --gray-dark-100: #909090;
@@ -87,7 +85,7 @@ html {
 }
 
 body {
-background-color: var(--white);
+  background-color: var(--white);
 }
 
 img {
@@ -95,9 +93,12 @@ img {
   -webkit-user-drag: none;
   pointer-events: none;
 }
- h1, h2 , h3, p{
+h1,
+h2,
+h3,
+p {
   cursor: default;
- }
+}
 
 @theme {
   --color-primary: var(--primary);
@@ -156,38 +157,49 @@ img {
   --color-bright-red: var(--bright-red);
 
   /* fonts */
-  --font-poppins : "Poppins", sans-serif;
-  --font-figtree : "Figtree", sans-serif;
-  --font-sf-pro : "SF Pro Display", sans-serif;
-  
-  /* Breakpoint */
-  --breakpoint-xxl : 1350px;
+  --font-poppins: "Poppins", sans-serif;
+  --font-figtree: "Figtree", sans-serif;
+  --font-sf-pro: "SF Pro Display", sans-serif;
+  --font-inter: "Inter", sans-serif;
 
+  /* Breakpoint */
+  --breakpoint-xxl: 1350px;
+  --breakpoint-xs: 375px
 }
 
 /* Navber */
 .nav-items {
-  @apply text-base font-semibold text-black/40 font-poppins duration-300
+  @apply text-base font-semibold text-black/40 font-poppins duration-300;
+}
+.nav-items-mobile {
+  @apply text-base font-semibold text-white font-poppins duration-300;
+}
+
+.nav-active {
+  @apply text-base font-semibold text-black font-poppins duration-300 border-black border-b-2;
+}
+
+.nav-active-mobile {
+  @apply text-base font-semibold text-blue-200 font-poppins duration-300;
 }
 .nav-items:hover {
-  @apply text-black 
+  @apply text-black;
 }
 
- .catagories-main .catagory {
-  @apply text-base font-medium text-white/50 font-poppins duration-300 leading-8 cursor-pointer lg:border-r flex! items-center gap-2 lg:pr-12  justify-center lg:justify-start
+.catagories-main .catagory {
+  @apply text-base font-medium text-white/50 font-poppins duration-300 leading-8 cursor-pointer lg:border-r flex! items-center gap-2 lg:pr-12  justify-center lg:justify-start;
 }
 
- .catagories-main .catagory:last-child{
-  @apply lg:pr-2 border-0
-} 
+.catagories-main .catagory:last-child {
+  @apply lg:pr-2 border-0;
+}
 
- .catagories-main .catagory:first-child{
-  @apply lg:justify-start  relative 
-} 
- 
+.catagories-main .catagory:first-child {
+  @apply lg:justify-start  relative;
+}
 
- .catagories-main .catagory:hover {
-  @apply  text-white/80  
+.catagories-main .catagory:hover {
+  @apply text-white/80;
 }
 /* Navber */
 
@@ -196,7 +208,8 @@ img {
   display: none !important;
 }
 /* swiper button */
-.swiper-button-prev, .swiper-button-next {
+.swiper-button-prev,
+.swiper-button-next {
   display: none !important;
 }
 
@@ -209,23 +222,40 @@ img {
   height: 100% !important;
 }
 
-@layer utilities {
-  ::-webkit-scrollbar {
-    width: 0;
-  }
+
+/* Chrome, Edge, Safari */
+.custom-scroll::-webkit-scrollbar {
+  width: 0.2vw;
 }
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #5d5d5d;
+  border-radius: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  margin-block: 10px;
+}
+
+/* .custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #5d5d5d #d9d9d9;
+} */
+
 
 i {
   cursor: pointer;
 }
 
 .dropdown-open {
- transform: translateY(10px);
+  transform: translateY(10px);
   pointer-events: all;
   opacity: 1;
 }
 .dropdown {
- transform: translateY(-10px);
+  transform: translateY(-10px);
   pointer-events: none;
   max-height: 40vh;
   transition: all 150ms ease-in-out;
@@ -233,5 +263,59 @@ i {
 }
 
 .featured-p {
-  @apply font-poppins font-medium text-base leading-6 text-gray-dark-100
+  @apply font-poppins font-medium text-base leading-6 text-gray-dark-100;
+}
+
+/* input btn hide */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* range slider */
+
+/* Yellow Range Slider */
+#range-slider-yellow {
+  background: #cecece;
+}
+
+.range-slider {
+  height: 5px !important;
+}
+#range-slider-yellow .range-slider__range {
+  background: black;
+  transition: height 0.3s;
+}
+
+#range-slider-yellow .range-slider__thumb {
+  background: #000;
+  transition: transform 0.3s;
+  width: 15px !important;
+  height: 15px !important;
+}
+
+#range-slider-yellow .range-slider__thumb[data-active] {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+#range-slider-yellow .range-slider__range[data-active] {
+  height: 5px !important;
+}
+
+
+.drop-price li {
+  transition: all 0.2s ease-in-out;
+    padding-block: 10px;
+    padding-inline: 14px;
+    width: 100%;
+} 
+
+.drop-price li:hover {
+  background: #F2F2F2;
+
 }
