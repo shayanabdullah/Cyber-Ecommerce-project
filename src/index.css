@@ -319,3 +319,7 @@ input[type="number"] {
   background: #F2F2F2;
 
 }
+
+button:disabled {
+  cursor: not-allowed;
+}
