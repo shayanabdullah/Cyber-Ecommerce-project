@@ -11,6 +11,8 @@ import { smartphones } from "@/data/smartphonesApi";
 import { FiFilter } from "react-icons/fi";
 import ProductCard from "@/components/common/ProductCard";
 import Pagination from "@/components/common/Pagination";
+import { HiX } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -23,6 +25,8 @@ const Shop = () => {
   const numOfPage = Math.ceil(smartphones.length / pageNumber);
   const start = currentPageActive * pageNumber;
   const end = start + pageNumber;
+
+  const [filterOpen, setFilteropen] = useState(false);
 
   return (
     <>
@@ -130,7 +134,10 @@ const Shop = () => {
                         </ul>
                       </div>
                     </div>
-                    <div className="filter filter-btn lg:hidden text-xl cursor-pointer">
+                    <div
+                      className="filter filter-btn lg:hidden text-xl cursor-pointer py-2"
+                      onClick={() => setFilteropen(true)}
+                    >
                       <i>
                         <FiFilter />
                       </i>
@@ -139,17 +146,20 @@ const Shop = () => {
                 </div>
                 <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
                   {smartphones.slice(start, end).map((phone) => (
-                    <ProductCard
-                      name={phone.name}
-                      brand={phone.brand}
-                      img={phone.img}
-                      reviews={phone.reviews}
-                      discountPercentage={phone.discountPercentage}
-                      discountPrice={phone.discountPrice}
-                      mainPrice={phone.price}
-                      key={phone.id}
-                      alt={`${phone.name}img`}
-                    />
+                    <Link to={`/shop/phones/${phone.brand + phone.name}`}>
+                      <ProductCard
+                        name={phone.name}
+                        brand={phone.brand}
+                        img={phone.img}
+                        reviews={phone.reviews}
+                        discountPercentage={phone.discountPercentage}
+                        discountPrice={phone.discountPrice}
+                        mainPrice={phone.price}
+                        key={phone.id}
+                        alt={`${phone.name}img`}
+                        wishId={phone.id}
+                      />
+                    </Link>
                   ))}
                 </div>
 
@@ -162,6 +172,49 @@ const Shop = () => {
                   setPerPage={setPerPage}
                 />
               </div>
+            </div>
+
+            {/* mobile filter */}
+            <div className="lg:hidden w-full  relative">
+              <div
+                className={`flex flex-col max-w-[350px] w-full h-screen bg-white fixed overflow-y-scroll overflow-x-hidden top-0 z-99 custom-scroll-2 transition-all duration-200 ${
+                  filterOpen ? "left-0" : "-left-full"
+                }`}
+              >
+                <i
+                  className="absolute text-2xl top-5 right-4 cursor-pointer "
+                  onClick={() => setFilteropen(false)}
+                >
+                  <HiX />
+                </i>
+
+                <div className={`left  py-10! px-5 `}>
+                  <div className={``}>
+                    <PriceRange />
+                  </div>
+                  <div className="flex flex-col gap-y-6">
+                    <Catagory title={"Brand"} arrMap={smartpohonesBrands} />
+                    <Catagory
+                      title={"Built-in memory"}
+                      arrMap={builtInMemory}
+                    />
+                    {specsAccordionData.map((item, index) => (
+                      <Catagory
+                        title={item.title}
+                        arrMap={item.options}
+                        key={index}
+                        defaultOpen={index < specsAccordionData.length - 4}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`overlay fixed top-0 w-full bg-black/60 backdrop-blur-sm h-screen z-98 ${
+                  filterOpen ? "" : "hidden"
+                }`}
+                onClick={() => setFilteropen(false)}
+              ></div>
             </div>
           </Container>
         </section>

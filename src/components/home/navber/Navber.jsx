@@ -142,9 +142,10 @@ const Navber = () => {
           </div>
         </motion.nav>
 
-        <div
-          className={`sidebar max-w-[350px] h-screen fixed z-99 left-0 top-0 bg-gray-dark-850 border-r border-black transition-all duration-300 ease-in-out w-full ${
-            isMenuOpen == true ? "translate-x-0" : " -translate-x-full"
+        <div className="overflow-x-hidden">
+          <div
+          className={`sidebar max-w-[350px] h-screen fixed z-60  top-0 bg-gray-dark-850 border-r border-black transition-all duration-300 ease-in-out w-full ${
+            isMenuOpen == true ? "left-0" : " -left-full"
           }`}
         >
           <div className="logo bg-white py-5 px-3 relative">
@@ -158,7 +159,7 @@ const Navber = () => {
               <IoClose />
             </i>
           </div>
-          <nav className="flex flex-col h-[calc(100vh-160px)] overflow-y-auto py-10 gap-6 px-5 relative">
+          <nav className="flex flex-col h-[calc(100vh-160px)] overflow-y-auto py-10 gap-6 px-5 ">
             <p className="text-sm font-semibold font-poppins text-white/50">
               Quick Links
             </p>
@@ -199,7 +200,7 @@ const Navber = () => {
             </div>
           </nav>
           {/* icons */}
-          <div className=" border border-gray-150 py-2 bg-gray-200 px-3 absolute bottom-0 left-0 w-full max-w-[350px] ">
+          <div className=" border border-gray-150 py-2 bg-gray-200 px-3 absolute bottom-0 left-0 w-full ">
             <p className="text-lg font-semibold font-poppins  ">Subscribe</p>
             <p className="font-medium font-poppins text-sm pb-4">
               Get 10% off your first order
@@ -227,12 +228,16 @@ const Navber = () => {
             </div>
           </div>
         </div>
+        </div>
+
+        {/* overlay */}
         <div
-          className={`overlay absolute inset-0 bg-black/60 backdrop-blur-sm h-screen z-98 ${
+          className={`overlay fixed w-full bg-black/60 backdrop-blur-sm h-screen z-50 ${
             isMenuOpen ? "" : "hidden"
           }`}
           onClick={handleMenuClose}
         ></div>
+
         {/* search btn */}
         <div className="px-3 py-3">
           <div className="search relative w-full border-2 rounded-lg border-gray-500 focus-within:border-black">

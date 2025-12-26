@@ -222,6 +222,9 @@ p {
   height: 100% !important;
 }
 
+::-webkit-scrollbar {
+  width: 0;
+}
 
 /* Chrome, Edge, Safari */
 .custom-scroll::-webkit-scrollbar {
@@ -234,6 +237,20 @@ p {
 }
 
 .custom-scroll::-webkit-scrollbar-track {
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  margin-block: 10px;
+}
+.custom-scroll-2::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scroll-2::-webkit-scrollbar-thumb {
+  background-color: #5d5d5d;
+  border-radius: 10px;
+}
+
+.custom-scroll-2::-webkit-scrollbar-track {
   background-color: #d9d9d9;
   border-radius: 10px;
   margin-block: 10px;

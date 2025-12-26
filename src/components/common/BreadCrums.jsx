@@ -13,7 +13,7 @@ const BreadCrums = () => {
                 <h2 className="font-poppins font-medium text-xs md:text-base text-gray-750">Catalog</h2>
                 <i className="text-2xl text-gray-750"><GoChevronRight /></i>
                 {/* active last  */}
-                <h2 className="font-poppins font-medium text-xs md:text-base text-black">Smartphones</h2>
+                <h2 className="font-poppins font-semibold text-xs md:text-base text-black">Smartphones</h2>
             </div>
         </Container>
       </section>

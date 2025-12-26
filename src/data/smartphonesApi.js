@@ -27,10 +27,11 @@ export const smartphones = [
     name: "iPhone 17 Pro",
     price: 1199,
     discountPercentage: 10,
-    discountPrice: 1079,
+    discountPrice: 1099,
     rating: 4.8,
     reviews: 1240,
-    img : iphone17
+    img : iphone17,
+
   },
   {
     id: 2,
@@ -79,7 +80,7 @@ export const smartphones = [
   {
     id: 6,
     brand: "Xiaomi",
-    name: "Xiaomi 17 Pro Max",
+    name: "17 Pro Max",
     price: 1024,
     discountPercentage: 14,
     discountPrice: 899,

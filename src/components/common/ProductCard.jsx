@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { GoLaw } from "react-icons/go";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { LuMessageSquareMore } from "react-icons/lu";
 
-const ProductCard = ({img, brand, name, reviews, mainPrice, discountPercentage, discountPrice, phoneId, alt}) => {
+const ProductCard = ({img, brand, name, reviews, mainPrice, discountPercentage, discountPrice, phoneId, alt,wishId}) => {
   const [quantities, setQuantities] = useState({});
+  const [wishlist, setWishList] = useState({});
+  const handleWish = (id) => {
+    setWishList((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
 
+    console.log(id, wishlist);
+  };
   const handleIncrement = (id) => {
     setQuantities((prev) => ({
       ...prev,
@@ -42,8 +50,12 @@ const ProductCard = ({img, brand, name, reviews, mainPrice, discountPercentage, 
                 {brand} {name}
               </h2>
             </div>
-            <div className="p-2 rounded-full bg-[#363842] text-white text-sm absolute top-2 left-2 md:static md:text-2xl cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#555761]">
-              <IoHeartOutline />
+            <div className="p-2 rounded-full bg-[#363842] text-white text-sm absolute top-2 left-2 md:static md:text-2xl cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#555761]" onClick={()=> handleWish(wishId)}>
+                {wishlist[wishId] ? (
+                  <IoHeart className="text-white"/>
+                ) : (
+                  <IoHeartOutline/>
+                )}
             </div>
           </div>
           {/* rating and reviews  */}

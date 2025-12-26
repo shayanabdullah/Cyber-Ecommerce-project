@@ -128,20 +128,7 @@ const Pagination = ({
                     <FaCheck className={` text-xs md:text-sm text-gray-950`} />
                   )}
                 </li>
-                <li
-                  className="font-figtree font-medium flex items-center justify-between "
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentPage(0);
-                    setPerPageDropDownOpen(false);
-                    setPerPage(2);
-                  }}
-                >
-                  2
-                  {perPage === 2 && (
-                    <FaCheck className={` text-xs md:text-sm text-gray-950`} />
-                  )}
-                </li>
+
                 <li
                   className="font-figtree font-medium  flex items-center justify-between"
                   onClick={(e) => {

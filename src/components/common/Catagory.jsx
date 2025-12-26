@@ -15,7 +15,7 @@ const Catagory = ({ title, arrMap, defaultOpen = true }) => {
   );
 
   return (
-    <div className="max-w-[300px] xl:max-w-full px-4 xl:px-0">
+    <div className="max-w-[320px] xl:max-w-full px-4 xl:px-0">
       <div className={`cursor-pointer`} onClick={() => setIsOpen(!isOpen)}>
         <div className="text-box text-lg font-poppins font-medium text-black flex justify-between py-3 border-b-2 border-gray-650/60">
           <p>{title}</p>
