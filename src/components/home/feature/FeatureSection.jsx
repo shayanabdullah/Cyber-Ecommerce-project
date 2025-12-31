@@ -10,7 +10,7 @@ import macbook from '@/assets/macbook-sm.svg'
 import ShopButton from "@/components/common/ShopButton";
 import { motion } from "motion/react";
 import { fadeIn, textVariant } from "@/utils/motion/variants";
-const Feature = () => {
+const FeatureSection = () => {
   return (
     <>
       <motion.section 
@@ -113,4 +113,4 @@ const Feature = () => {
   );
 };
 
-export default Feature;
+export default FeatureSection;
