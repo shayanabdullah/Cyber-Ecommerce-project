@@ -46,7 +46,7 @@ const navLinks = [
     path: "/contact",
   },
 ];
-const Navber = () => {
+const NavberSection = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const handleMenuOpen = () => {
@@ -261,4 +261,4 @@ const Navber = () => {
   );
 };
 
-export default Navber;
+export default NavberSection;

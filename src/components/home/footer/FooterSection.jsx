@@ -29,7 +29,7 @@ import { FaFacebook, FaFacebookF, FaInstagram, FaLinkedin, FaTiktok, FaTwitter, 
   },
 ];
 
-const Footer = () => {
+const FooterSection = () => {
   return (
     <>
     <footer className=''>
@@ -93,4 +93,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default FooterSection

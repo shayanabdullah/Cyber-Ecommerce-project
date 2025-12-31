@@ -1,14 +1,14 @@
-import Footer from '@/components/home/footer/Footer'
-import Navber from '@/components/home/navber/Navber'
+import FooterSection from '@/components/home/footer/FooterSection'
+import NavberSection from '@/components/home/navber/NavberSection'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
   return (
 <>
-<Navber/>
+<NavberSection/>
 <Outlet/>
-<Footer/>
+<FooterSection/>
 </> 
  )
 }
