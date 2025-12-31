@@ -1,11 +1,11 @@
 import React from 'react'
 import Hero from '@/components/home/slider/Hero'
 import FeatureSection from '@/components/home/feature/FeatureSection'
-import BrowseCatagory from '@/components/home/browseCatagory/BrowseCatagory'
-import FeaturedProduct from '@/components/home/featuredProduct/FeaturedProduct'
-import ProductShowcase from '@/components/home/productShowcase/ProductShowcase'
-import DiscountProduct from '@/components/home/discountProduct/DiscountProduct'
-import CTA from '@/components/home/ctaSection/CTA'
+import BrowseCatagorySection from '@/components/home/browseCatagory/BrowseCatagorySection'
+import FeaturedProductSection from '@/components/home/featuredProduct/FeaturedProductSection'
+import ProductShowcaseSection from '@/components/home/productShowcase/ProductShowcaseSection'
+import DiscountProductSection from '@/components/home/discountProduct/DiscountProductSection'
+import CTASection from '@/components/home/ctaSection/CTASection'
 
 
 const Home = () => {
@@ -13,11 +13,11 @@ const Home = () => {
 <>
  <Hero />
  <FeatureSection/>
- <BrowseCatagory/>
- <FeaturedProduct/>
- <ProductShowcase/>
- <DiscountProduct/>
- <CTA/>
+ <BrowseCatagorySection/>
+ <FeaturedProductSection/>
+ <ProductShowcaseSection/>
+ <DiscountProductSection/>
+ <CTASection/>
 </>
 
   )

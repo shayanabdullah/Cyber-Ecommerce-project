@@ -21,7 +21,7 @@ import {
 } from "react-icons/fa";
 import { IoCallSharp, IoClose } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
-import { catagories } from "../browseCatagory/BrowseCatagory";
+import { catagories } from "../browseCatagory/BrowseCatagorySection";
 
 const navLinks = [
   {

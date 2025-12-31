@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import React, { useState } from "react";
 import { FaFire, FaHeart, FaRegHeart } from "react-icons/fa";
 
-const DiscountProduct = () => {
+const DiscountProductSection = () => {
   const [wishlist, setWishList] = useState({});
   const handleWish = (id) => {
     setWishList((prev) => ({
@@ -72,4 +72,4 @@ const DiscountProduct = () => {
   );
 };
 
-export default DiscountProduct;
+export default DiscountProductSection;

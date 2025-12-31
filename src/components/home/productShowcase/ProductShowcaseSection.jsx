@@ -4,7 +4,7 @@ import { ShowcaseProducts } from "@/data/showcaseProducts";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 
-const ProductShowcase = () => {
+const ProductShowcaseSection = () => {
   return (
     <>
       <section className="max-w-[3000px] mx-auto hidden lg:block overflow-hidden">
@@ -146,4 +146,4 @@ const ProductShowcase = () => {
   );
 };
 
-export default ProductShowcase;
+export default ProductShowcaseSection;

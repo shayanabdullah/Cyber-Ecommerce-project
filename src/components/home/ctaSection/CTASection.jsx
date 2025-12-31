@@ -6,7 +6,7 @@ import ipad from '@/assets/Cta-img/cta-ipad.svg'
 import laptop from '@/assets/Cta-img/cta-laptop.svg'
 import phone from '@/assets/Cta-img/cta-phone.svg'
 import lap from '@/assets/Cta-img/cta-ipad-2.svg'
-const CTA = () => {
+const CTASection = () => {
   return (
  <>
  <section className='py-[135px] relative overflow-hidden bg-[linear-gradient(138deg,#2E2E2E,#181818)]
@@ -41,4 +41,4 @@ const CTA = () => {
   )
 }
 
-export default CTA
+export default CTASection

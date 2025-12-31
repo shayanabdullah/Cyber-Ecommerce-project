@@ -19,7 +19,7 @@ const bestSellingProducts = newArrival.filter(
 );
 const featuredProd = newArrival.filter((item) => item.featuredProduct === true);
 
-const FeaturedProduct = () => {
+const FeaturedProductSection = () => {
   const [wishlist, setWishList] = useState({});
   const handleWish = (id) => {
     setWishList((prev) => ({
@@ -212,4 +212,4 @@ const FeaturedProduct = () => {
   );
 };
 
-export default FeaturedProduct;
+export default FeaturedProductSection;

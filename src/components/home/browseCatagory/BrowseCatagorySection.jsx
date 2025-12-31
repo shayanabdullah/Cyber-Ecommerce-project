@@ -54,7 +54,7 @@ export const catagories = [
   },
 ];
 
-const BrowseCatagory = () => {
+const BrowseCatagorySection = () => {
   return (
    <>
  <motion.section
@@ -126,4 +126,4 @@ const BrowseCatagory = () => {
   )
 }
 
-export default BrowseCatagory
+export default BrowseCatagorySection
