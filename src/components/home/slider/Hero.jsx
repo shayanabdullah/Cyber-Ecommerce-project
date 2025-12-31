@@ -12,7 +12,7 @@ import { motion } from "motion/react";
 import { fadeIn } from "../../../utils/motion/variants";
 
 
-const HeroSlider = () => {
+const Hero = () => {
   const settings = {
     infinite: true,
     speed: 1000,
@@ -122,4 +122,4 @@ const HeroSlider = () => {
   );
 };
 
-export default HeroSlider;
+export default Hero;
