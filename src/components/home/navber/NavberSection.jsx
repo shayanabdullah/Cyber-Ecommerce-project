@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Container from "../../common/Container";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/Logo.png";
 import { CiSearch } from "react-icons/ci";
 import { IoIosHeartEmpty, IoIosHelpCircleOutline } from "react-icons/io";
 import { PiShoppingCartLight } from "react-icons/pi";
