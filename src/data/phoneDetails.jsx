@@ -14,19 +14,29 @@ import { BsCpu, BsCameraVideo } from "react-icons/bs";
     display: {
       title: "Screen",
       specs: [
-        { label: "Screen diagonal", value: "6.3″" },
-        { label: "Resolution", value: "2622 × 1206 pixels" },
-        { label: "Refresh rate", value: "120 Hz (ProMotion)" },
-        { label: "Pixel density", value: "460 ppi" },
-        { label: "Screen type", value: "Super Retina XDR OLED (LTPO)" },
+        { label: "Screen diagonal", specvalue: "6.3″" },
+        { label: "Resolution", specvalue: "2622 × 1206 pixels" },
+        { label: "Refresh rate", specvalue: "120 Hz (ProMotion)" },
+        { label: "Pixel density", specvalue: "460 ppi" },
+        { label: "Screen type", specvalue: "Super Retina XDR OLED (LTPO)" },
         {
           label: "Additional features",
           value: [
-            "HDR10",
-            "Dolby Vision",
-            "Always‑On Display",
-            "True Tone",
-            "Dynamic Island",
+          {
+            feature :   "HDR10",
+          },
+          {
+            feature :    "Dolby Vision",
+          },
+          {
+            feature : "Always‑On Display",
+          },
+          {
+            feature :  "True Tone",
+          },
+          {
+            feature : "Dynamic Island",
+          },
           ],
         },
       ],

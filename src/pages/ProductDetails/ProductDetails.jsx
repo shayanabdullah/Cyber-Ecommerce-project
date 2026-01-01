@@ -12,6 +12,7 @@ import { MdVerified } from "react-icons/md";
 import ShopButton from "@/components/common/ShopButton";
 import { FaShieldAlt } from "react-icons/fa";
 import { phoneDetails, productData } from "@/data/phoneDetails";
+import SpecsSection from "@/components/common/SpecsSection";
 
 const ProductDetails = () => {
   const [previewImg, setPreviewImg] = useState(iphone17);
@@ -28,7 +29,6 @@ const ProductDetails = () => {
     { img: iphone17blue },
     { img: iphone17silver },
   ];
-
 
   const serviceFeatures = [
     {
@@ -65,6 +65,8 @@ const ProductDetails = () => {
       });
     }
   };
+
+  const phone = phoneDetails[0];
 
   return (
     <>
@@ -109,7 +111,7 @@ const ProductDetails = () => {
           </div>
           {/* Temporary BredCrums */}
 
-           {/* Products preview section */}
+          {/* Products preview section */}
           <div className="main pb-28 md:py-28 hidden md:block">
             <div className="product">
               <div className="flex flex-col md:flex-row justify-center items-center gap-12">
@@ -147,7 +149,7 @@ const ProductDetails = () => {
                   {/* details */}
                   <div className="right">
                     <h2 className="font-sf-pro font-bold text-[40px] leading-10 pb-6">
-                      Apple iPhone 17 Pro Max
+                      Apple iPhone 17 Pro 
                     </h2>
                     <div className="price flex items-center gap-4 pb-4">
                       <p className="font-poppins font-semibold text-[32px] leading-12 text-black">
@@ -225,21 +227,21 @@ const ProductDetails = () => {
                     <div className="">
                       {productData.map((item) => (
                         <>
-                       <div className="" key={item.id}>
-                           <p
-                            className={`font-sf-pro font-normal text-sm text-gray-dark-400 leading-6 transition-all duration-500 ease-in-out overflow-y-hidden ${
-                              readMore ? "max-h-[300px]" : "max-h-[72px]"
-                            }`}
-                          >
-                            {item.description}
-                          </p>
-                          <span
-                            className="text-gray-dark-700 underline cursor-pointer font-semibold"
-                            onClick={() => setreadMore((prev) => !prev)}
-                          >
-                            {readMore ? "less" : "more"}
-                          </span>
-                       </div>
+                          <div className="" key={item.id}>
+                            <p
+                              className={`font-sf-pro font-normal text-sm text-gray-dark-400 leading-6 transition-all duration-500 ease-in-out overflow-y-hidden ${
+                                readMore ? "max-h-[300px]" : "max-h-[72px]"
+                              }`}
+                            >
+                              {item.description}
+                            </p>
+                            <span
+                              className="text-gray-dark-700 underline cursor-pointer font-semibold"
+                              onClick={() => setreadMore((prev) => !prev)}
+                            >
+                              {readMore ? "less" : "more"}
+                            </span>
+                          </div>
                         </>
                       ))}
                     </div>
@@ -284,9 +286,6 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
-
-
-
 
           {/*  for moblie  */}
           <div className="main pb-28 md:hidden px-3">
@@ -464,32 +463,84 @@ const ProductDetails = () => {
         </Container>
       </section>
 
+      {/* Products details */}
+      <section className="py-20 bg-gray-50">
+        <div className="main max-w-[1120px] mx-auto bg-white py-12 px-10 rounded-lg ">
+          <div className="heading pb-8 ">
+            <h2 className="font-poppins font-medium text-2xl leading-6 pb-8">
+              Details
+            </h2>
+            {phoneDetails.map((item) => (
+              <>
+                <p
+                  className={`font-poppins font-medium text-sm leading-6 text-[#9D9D9D]  transition-all duration-500 ease-in-out overflow-y-hidden ${
+                    detailsReadMore ? "max-h-[500px]" : "max-h-[72px]"
+                  }`}
+                >
+                  {item.overview.description}
+                </p>
+                <span
+                  className="text-gray-dark-700 underline cursor-pointer font-semibold"
+                  onClick={() => setdetailsReadMore((prev) => !prev)}
+                >
+                  {detailsReadMore ? "less" : "more.."}
+                </span>
+              </>
+            ))}
+          </div>
+          {/* Screen */}
 
-      
+          <div className="">
+            <div className="flex flex-col gap-y-10">
+              <SpecsSection
+                title={phone.display.title}
+                specs={phone.display.specs}
+              />
+              <SpecsSection
+                title={phone.processor.title}
+                specs={phone.processor.specs}
+              />
+              <SpecsSection
+                title={phone.memory.title}
+                specs={phone.memory.specs}
+              />
+              <SpecsSection
+                title={phone.battery.title}
+                specs={phone.battery.specs}
+              />
+              <SpecsSection
+                title={phone.connectivity.title}
+                specs={phone.connectivity.specs}
+              />
+              <SpecsSection
+                title={phone.build.title}
+                specs={phone.build.specs}
+              />
+              <SpecsSection
+                title={phone.software.title}
+                specs={phone.software.specs}
+              />
+            </div>
+            <div className="flex flex-col gap-y-10 pb-5">
+              <h2 className="text-2xl font-medium">Camera</h2>
 
-          {/* Products details */}
-          <section className="py-20 bg-gray-50">
-              <div className="main max-w-[1120px] mx-auto bg-white py-12 px-10 rounded-lg ">
-                <div className="heading pb-8 ">
-                  <h2 className="font-poppins font-medium text-2xl leading-6 pb-8">Details</h2>
-                  {
-                    phoneDetails.map((item)=> (
-                     <>
-                      <p className={`font-poppins font-medium text-sm leading-6 text-[#9D9D9D]  transition-all duration-500 ease-in-out overflow-y-hidden ${
-                              detailsReadMore ? "max-h-[500px]" : "max-h-[72px]"}`}>{item.overview.description}</p>  
-                          <span
-                            className="text-gray-dark-700 underline cursor-pointer font-semibold"
-                            onClick={() => setdetailsReadMore((prev) => !prev)}
-                          >
-                            {detailsReadMore ? "less" : "more.."}
-                          </span>
-                     </>
-                    ))
-                  }
-                </div>
-              </div>
-          </section>
-          {/* Products details */}
+              <SpecsSection title="Rear Camera" specs={phone.camera.rear} />
+              <SpecsSection title="Front Camera" specs={phone.camera.front} />
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <h2 className="text-2xl font-medium">{phone.sensors.title}</h2>
+
+              <ul className="grid grid-cols-2 gap-2 font-sf-pro font-normal text-sm text-black">
+                {phone.sensors.specs.map((sensor, i) => (
+                  <li key={i}>• {sensor}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Products details */}
     </>
   );
 };
