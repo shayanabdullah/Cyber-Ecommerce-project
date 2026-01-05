@@ -89,7 +89,7 @@ const ReviewSection = () => {
          {
           reviewsData.map((review)=> (
              <div className="py-6 pl-4 pr-6 bg-gray-50 rounded-[10px] flex  gap-5">
-              <div className="img w-14 h-14 rounded-full overflow-hidden">
+              <div className="img max-w-14 max-h-14 rounded-full overflow-hidden">
                 <img src={review.avatar} alt="" className="" />
               </div>
               

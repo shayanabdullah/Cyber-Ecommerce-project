@@ -5,6 +5,7 @@ import { createBrowserRouter, Route, Router, RouterProvider, Routes } from 'reac
 import Layout from './layout/Layout'
 import Shop from './pages/Shop'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
+import Cart from './pages/Cart'
 
 const App = () => {
 
@@ -14,8 +15,9 @@ const App = () => {
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "/shop/:category", element: <Shop /> },
-      { path: "/shop/phones/:details", element: <ProductDetails/> },
+      { path: "shop/:category", element: <Shop /> },
+      { path: "shop/phones/:details", element: <ProductDetails/> },
+      { path: "cart", element: <Cart/> },
       { path: "*", element: 'No Data Found' },
     ],
   },

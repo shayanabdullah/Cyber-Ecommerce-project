@@ -30,7 +30,7 @@ const relatedProducts = smartphones.slice(
 
   return (
     <>
-    <section className="py-20">
+    <section className="py-20 px-4">
       <Container>
         <div className="header pb-8">
                 <h3 className='font-poppins font-medium text-2xl leading-8 text-black'>Related Products</h3>

@@ -1,8 +1,8 @@
 import React from "react";
 import Slider from "react-slick";
 import Container from "../../common/Container";
-import banner from "@/assets/iphone.png";
-import iphone from "@/assets/banner.svg";
+import iphone from "@/assets/iphone.png";
+import banner from "@/assets/banner.webp";
 import macbook from "@/assets/mackbook-banner.svg";
 import macbookimg from "@/assets/macbook.png";
 import galaxy from "@/assets/galaxy-banner.webp";
@@ -19,7 +19,7 @@ const Hero = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     fade: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 1500,
     arrows: false,
   };
@@ -31,7 +31,7 @@ const Hero = () => {
         whileInView={"show"}
         viewport={{ once: true }}
         className="bg-linear-to-l from-[#211C24] to-[#211C24] cursor-pointer pt-[73px] hidden lg:block"
-      >
+      >banner
         <Container>
           <Slider {...settings}>
             <div className="banner flex! items-center justify-between px-5 max-w-[1420px]">
@@ -48,7 +48,7 @@ const Hero = () => {
                 <ShopButton text={"Shop Now"} />
               </div>
               <div className="img-box">
-                <img src={banner} alt="" />
+                <img src={iphone} alt="" />
               </div>
             </div>
         
@@ -85,7 +85,7 @@ const Hero = () => {
                 <ShopButton text={"Shop Now"} />
               </div>
               <div className="img-box">
-                <img src={banner} alt="" />
+                <img src={iphone} alt="" />
               </div>
             </div>
           </Slider>
@@ -101,7 +101,7 @@ const Hero = () => {
       >
         <Slider {...settings} >
           <div >
-            <img src={iphone} alt="" className="w-full h-full" />
+            <img src={banner} alt="" className="w-full h-full" />
           </div>
           <div>
             <img src={macbook} alt="" className="w-full h-full" />
@@ -113,7 +113,7 @@ const Hero = () => {
               <img src={ipad} alt="" className="object-cover"/>
             </div>
           <div>
-            <img src={iphone} alt="" className="w-full h-full" />
+            <img src={banner} alt="" className="w-full h-full" />
           </div>
            
         </Slider>

@@ -93,9 +93,11 @@ const NavberSection = () => {
                 <a href="#">
                   <IoIosHeartEmpty />
                 </a>
+              <Link to='/cart'>
                 <a href="#">
                   <PiShoppingCartLight />
                 </a>
+              </Link>
                 <a href="#">
                   <FiUser />
                 </a>
