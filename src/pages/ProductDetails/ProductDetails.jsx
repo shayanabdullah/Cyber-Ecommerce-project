@@ -10,19 +10,33 @@ import { FiTruck } from "react-icons/fi";
 import { BsShop } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import ShopButton from "@/components/common/ShopButton";
-import { FaShieldAlt } from "react-icons/fa";
+import { FaChevronDown, FaShieldAlt } from "react-icons/fa";
 import { phoneDetails, productData } from "@/data/phoneDetails";
 import SpecsSection from "@/components/common/SpecsSection";
+import { FiSmartphone, FiCpu, FiCamera, FiBattery } from "react-icons/fi";
+import { BsCpu, BsCameraVideo } from "react-icons/bs";
+import ReviewSection from "@/components/common/ReviewSection";
+import RelatedProducts from "@/components/common/RelatedProducts";
 
 const ProductDetails = () => {
   const [previewImg, setPreviewImg] = useState(iphone17);
   const [readMore, setreadMore] = useState(false);
   const [detailsReadMore, setdetailsReadMore] = useState(false);
+  const [viewMore, setViewMore] = useState(false);
 
   const [varinatPrice, setVariant] = useState({
     price: 1099,
     prePrice: 1199,
   });
+
+  const iconMap = {
+    smartphone: <FiSmartphone />,
+    cpu: <FiCpu />,
+    cores: <BsCpu />,
+    camera: <FiCamera />,
+    frontCamera: <BsCameraVideo />,
+    battery: <FiBattery />,
+  };
 
   const gallery = [
     { img: iphone17 },
@@ -149,7 +163,7 @@ const ProductDetails = () => {
                   {/* details */}
                   <div className="right">
                     <h2 className="font-sf-pro font-bold text-[40px] leading-10 pb-6">
-                      Apple iPhone 17 Pro 
+                      Apple iPhone 17 Pro
                     </h2>
                     <div className="price flex items-center gap-4 pb-4">
                       <p className="font-poppins font-semibold text-[32px] leading-12 text-black">
@@ -208,7 +222,7 @@ const ProductDetails = () => {
                             key={spec.id}
                           >
                             <i className="text-[#4E4E4E] text-2xl">
-                              {spec.icon}
+                              {iconMap[spec.icon]}
                             </i>
                             <div className="h-full flex flex-col justify-center ">
                               <h2 className="font-sf-pro font-normal text-sm text-gray-800 ">
@@ -465,7 +479,11 @@ const ProductDetails = () => {
 
       {/* Products details */}
       <section className="py-20 bg-gray-50">
-        <div className="main max-w-[1120px] mx-auto bg-white py-12 px-10 rounded-lg ">
+        <div
+          className={`main max-w-[1320px] mx-auto bg-white py-12 px-10 rounded-lg transition-all duration-500 ease-in-out overflow-y-hidden  ${
+            viewMore ? "max-h-[5000px]" : "max-h-[830px]"
+          }`}
+        >
           <div className="heading pb-8 ">
             <h2 className="font-poppins font-medium text-2xl leading-6 pb-8">
               Details
@@ -488,59 +506,89 @@ const ProductDetails = () => {
               </>
             ))}
           </div>
+
           {/* Screen */}
 
           <div className="">
-            <div className="flex flex-col gap-y-10">
-              <SpecsSection
-                title={phone.display.title}
-                specs={phone.display.specs}
-              />
-              <SpecsSection
-                title={phone.processor.title}
-                specs={phone.processor.specs}
-              />
-              <SpecsSection
-                title={phone.memory.title}
-                specs={phone.memory.specs}
-              />
-              <SpecsSection
-                title={phone.battery.title}
-                specs={phone.battery.specs}
-              />
-              <SpecsSection
-                title={phone.connectivity.title}
-                specs={phone.connectivity.specs}
-              />
-              <SpecsSection
-                title={phone.build.title}
-                specs={phone.build.specs}
-              />
-              <SpecsSection
-                title={phone.software.title}
-                specs={phone.software.specs}
-              />
-            </div>
-            <div className="flex flex-col gap-y-10 pb-5">
-              <h2 className="text-2xl font-medium">Camera</h2>
+            <div>
+              <div className="flex flex-col gap-y-10 pb-5">
+                <SpecsSection
+                  title={phone.display.title}
+                  specs={phone.display.specs}
+                />
+                <SpecsSection
+                  title={phone.processor.title}
+                  specs={phone.processor.specs}
+                />
+                <SpecsSection
+                  title={phone.memory.title}
+                  specs={phone.memory.specs}
+                />
+                <SpecsSection
+                  title={phone.battery.title}
+                  specs={phone.battery.specs}
+                />
+                <SpecsSection
+                  title={phone.connectivity.title}
+                  specs={phone.connectivity.specs}
+                />
+                <SpecsSection
+                  title={phone.build.title}
+                  specs={phone.build.specs}
+                />
+                <SpecsSection
+                  title={phone.software.title}
+                  specs={phone.software.specs}
+                />
+              </div>
+              <div className="flex flex-col gap-y-10 pb-8">
+                <h2 className="font-poppins font-medium text-lg md:text-2xl leading-6">
+                  Camera
+                </h2>
 
-              <SpecsSection title="Rear Camera" specs={phone.camera.rear} />
-              <SpecsSection title="Front Camera" specs={phone.camera.front} />
-            </div>
+                <SpecsSection title="Rear Camera" specs={phone.camera.rear} />
+                <SpecsSection title="Front Camera" specs={phone.camera.front} />
+              </div>
 
-            <div className="flex flex-col gap-4">
-              <h2 className="text-2xl font-medium">{phone.sensors.title}</h2>
+              <div className="flex flex-col gap-4">
+                <h2 className="font-poppins font-medium text-lg md:text-2xl leading-6">
+                  {phone.sensors.title}
+                </h2>
 
-              <ul className="grid grid-cols-2 gap-2 font-sf-pro font-normal text-sm text-black">
-                {phone.sensors.specs.map((sensor, i) => (
-                  <li key={i}>• {sensor}</li>
-                ))}
-              </ul>
+                <ul className="grid grid-cols-2 gap-2 font-sf-pro font-normal text-sm text-black">
+                  {phone.sensors.specs.map((sensor, i) => (
+                    <li key={i}>• {sensor}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
+
+        {!viewMore && (
+          <div className="view more w-full pt-8 flex justify-center">
+            <ShopButton
+              text={`View more`}
+              icon={<FaChevronDown />}
+              className={
+                "border-black! text-black! flex items-center gap-2 py-3! "
+              }
+              onClick={() => setViewMore(true)}
+            />
+          </div>
+        )}
       </section>
       {/* Products details */}
+
+      {/* Reviews */}
+      <ReviewSection />
+
+      {/* Reviews */}
+      
+      {/* related Products */}
+      <RelatedProducts/>
+      {/* related Products */}
+
     </>
   );
 };

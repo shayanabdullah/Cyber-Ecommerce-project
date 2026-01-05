@@ -5,7 +5,7 @@ const SpecsSection = ({title, specs}) => {
 <>
      <div className="screen">
            <div className="pb-4">
-             <h2 className="font-poppins font-medium text-2xl leading-6 ">
+             <h2 className="font-poppins font-medium text-lg md:text-2xl leading-6 ">
               {title}
             </h2>
            </div>
@@ -15,16 +15,16 @@ const SpecsSection = ({title, specs}) => {
           key={i}
           className="flex justify-between w-full py-2 border-b border-[#CDCDCD]"
         >
-          <p className='font-sf-pro font-normal font-base leading-6 text-black'>{item.label}</p>
+          <p className='font-sf-pro font-normal text-sm md:font-base leading-6 text-black'>{item.label}</p>
           {Array.isArray(item.value) ? (
             <ul className="text-right space-y-1">
               {item.value.map((feature, index) => (
-                <li key={index} className='font-sf-pro font-normal text-[15px] text-black '>{feature.feature}</li>
+                <li key={index} className='font-sf-pro font-normal text-[13px] md:text-[15px] text-black '>{feature.feature}</li>
               ))}
             </ul>
           ) : (
           
-            <span className='font-sf-pro font-normal text-[15px] text-black '>
+            <span className='font-sf-pro font-normal text-[13px] md:text-[15px] text-black '>
               {item.value || item.specvalue}
             </span>
           )}
