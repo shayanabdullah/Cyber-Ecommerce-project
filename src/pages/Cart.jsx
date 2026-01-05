@@ -1,11 +1,14 @@
 import Container from "@/components/common/Container";
 import React from "react";
 import iphone17 from "../assets/products-images/iphone-17pro.png";
+import watch from "../assets/watch.svg";
+import macbook from "../assets/macbook-air.png";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 import { smartphones } from "@/data/smartphonesApi";
 import { IoCloseOutline } from "react-icons/io5";
+import Form from "@/components/common/Form";
 const Cart = () => {
     const price = smartphones[0].discountPrice 
   return (
@@ -14,7 +17,7 @@ const Cart = () => {
         <Container>
           <div className="main grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="">
-              <div className="header pb-10">
+              <div className="header ">
                 <h2 className="font-poppins font-semibold  text-2xl leading-6 text-black">
                   Shopping Cart
                 </h2>
@@ -22,7 +25,7 @@ const Cart = () => {
               {/* cart items */}
    
    <div className="">
-       <div className="pb-10 border-b border-[#A3A3A3] last:border-b-0">
+       <div className="py-10 border-b border-[#A3A3A3] last:border-b-0">
                 <div className="cart py-4  flex items-center gap-4">
                 <div className="img max-w-[90px] w-full">
                   <img src={iphone17} alt="" />
@@ -63,18 +66,18 @@ const Cart = () => {
                 </div>
               </div>
       </div>
-      <div className="pb-10 border-b border-[#A3A3A3] last:border-b-0">
+      <div className="py-10 border-b border-[#A3A3A3] last:border-b-0">
                 <div className="cart py-4  flex items-center gap-4">
                 <div className="img max-w-[90px] w-full">
-                  <img src={iphone17} alt="" />
+                  <img src={watch} alt="" />
                 </div>
                 <div className="cart-details w-full flex flex-col md:flex-row justify-between">
                   <div className="text pb-2">
                     <h2 className="font-poppins font-medium text-base leading-6 text-black max-w-[190px] pb-2">
-                      Iphone 17 pro 256gb
+                     Apple Watch Series 9 GPS 41mm Starlight Aluminium 
                     </h2>
                     <p className="font-sf-pro font-normal text-sm leading-6 text-black/70">
-                      #25139526913984
+                     #63632324
                     </p>
                   </div>
                <div className="flex items-center justify-center md:justify-between gap-6">
@@ -94,7 +97,7 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="price">
-                    <p className="font-poppins font-medium  text-xl leading-6 text-black">${price}</p>
+                    <p className="font-poppins font-medium  text-xl leading-6 text-black">$499</p>
                   </div>
                   <div className="close text-xl cursor-pointer">
                     <IoCloseOutline />
@@ -104,18 +107,18 @@ const Cart = () => {
                 </div>
               </div>
       </div>
-      <div className="pb-10 border-b border-[#A3A3A3] last:border-b-0">
+      <div className="py-10 border-b border-[#A3A3A3] last:border-b-0">
                 <div className="cart py-4  flex items-center gap-4">
                 <div className="img max-w-[90px] w-full">
-                  <img src={iphone17} alt="" />
+                  <img src={macbook} alt="" />
                 </div>
                 <div className="cart-details w-full flex flex-col md:flex-row justify-between">
                   <div className="text pb-2">
                     <h2 className="font-poppins font-medium text-base leading-6 text-black max-w-[190px] pb-2">
-                      Iphone 17 pro 256gb
+                      Apple MacBook Air M4 13-inch 256GB
                     </h2>
                     <p className="font-sf-pro font-normal text-sm leading-6 text-black/70">
-                      #25139526913984
+                     #53459358345
                     </p>
                   </div>
                <div className="flex items-center justify-center md:justify-between gap-6">
@@ -135,7 +138,7 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="price">
-                    <p className="font-poppins font-medium  text-xl leading-6 text-black">${price}</p>
+                    <p className="font-poppins font-medium  text-xl leading-6 text-black">$899</p>
                   </div>
                   <div className="close text-xl cursor-pointer">
                     <IoCloseOutline />
@@ -146,6 +149,11 @@ const Cart = () => {
               </div>
       </div>
    </div>
+
+
+            </div>
+            <div className="">
+              <Form/>
             </div>
           </div>
         </Container>
