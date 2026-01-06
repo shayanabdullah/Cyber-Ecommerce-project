@@ -90,17 +90,17 @@ const NavberSection = () => {
                 </NavLink>
               ))}
               <div className=" flex items-center gap-10 text-2xl w-full">
-                <a href="#">
+                
                   <IoIosHeartEmpty />
-                </a>
+                
               <Link to='/cart'>
-                <a href="#">
+              
                   <PiShoppingCartLight />
-                </a>
+              
               </Link>
-                <a href="#">
+              
                   <FiUser />
-                </a>
+              
               </div>
             </div>
           </div>

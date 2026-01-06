@@ -8,18 +8,12 @@ import ProductCard from "./ProductCard";
 import Container from "./Container";
 
 const RelatedProducts = () => {
-  const [wishlist, setWishList] = useState({});
-  const handleWish = (id) => {
-    setWishList((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+ 
 const maxProd = 4;
 const [startIndex, setStartIndex] = useState(0);
 useEffect(() => {
   const maxStart = smartphones.length - maxProd; // 21 - 4 = 17
-  const random = Math.floor(Math.random() * (maxStart + 1)); // 17 + 7 = 18 * random
+  const random = Math.floor(Math.random() * (maxStart + 1)); // 17 + 1 = 18 * random
   setStartIndex(random);
 }, []);
 const relatedProducts = smartphones.slice(
