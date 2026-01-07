@@ -7,6 +7,7 @@ import Shop from './pages/Shop'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
 import Cart from './pages/Cart'
 import Address from './pages/Address'
+import ShippningPage from './pages/ShippningPage'
 
 const App = () => {
 
@@ -19,7 +20,8 @@ const App = () => {
       { path: "shop/:category", element: <Shop /> },
       { path: "shop/phones/:details", element: <ProductDetails/> },
       { path: "cart", element: <Cart/> },
-      { path: "cart/:step", element: <Address/> },
+      { path: "cart/address", element: <Address/> },
+      { path: "cart/shipping", element: <ShippningPage/> },
       { path: "*", element: 'No Data Found' },
     ],
   },
