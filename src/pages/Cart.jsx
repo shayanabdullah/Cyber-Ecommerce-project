@@ -55,6 +55,12 @@ const Cart = () => {
     setCarts((prev) => prev.map(item => item.id == id ? {...item, quantity : item.quantity > 1 ? item.quantity - 1 : 1} : item));
   };
 
+  let subtotal = 0;
+  carts.map((item)=> (
+    subtotal += item.price * item.quantity
+  ))
+
+
 
   const price = smartphones[0].discountPrice;
   return (
@@ -136,7 +142,8 @@ const Cart = () => {
               </div>
          
             </div>
-            <div className="">{carts.length > 0 && <Form />}</div>
+            
+            <div className="">{carts.length > 0 && <Form subtotal={subtotal}/>}</div>
           </div>
           {/* EMPTY CART message */}
                {carts.length === 0 && (

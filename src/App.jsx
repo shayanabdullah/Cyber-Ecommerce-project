@@ -6,6 +6,7 @@ import Layout from './layout/Layout'
 import Shop from './pages/Shop'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
 import Cart from './pages/Cart'
+import Address from './pages/Address'
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const App = () => {
       { path: "shop/:category", element: <Shop /> },
       { path: "shop/phones/:details", element: <ProductDetails/> },
       { path: "cart", element: <Cart/> },
+      { path: "cart/:step", element: <Address/> },
       { path: "*", element: 'No Data Found' },
     ],
   },
