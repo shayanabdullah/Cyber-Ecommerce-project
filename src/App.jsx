@@ -8,6 +8,7 @@ import ProductDetails from './pages/ProductDetails/ProductDetails'
 import Cart from './pages/Cart'
 import Address from './pages/Address'
 import ShippningPage from './pages/ShippningPage'
+import Payment from './components/common/Payment'
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
       { path: "cart", element: <Cart/> },
       { path: "cart/address", element: <Address/> },
       { path: "cart/shipping", element: <ShippningPage/> },
+      { path: "cart/payment", element: <Payment/> },
       { path: "*", element: 'No Data Found' },
     ],
   },
