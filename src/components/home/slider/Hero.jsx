@@ -31,7 +31,7 @@ const Hero = () => {
         whileInView={"show"}
         viewport={{ once: true }}
         className="bg-linear-to-l from-[#211C24] to-[#211C24] cursor-pointer pt-[73px] hidden lg:block"
-      >banner
+      >
         <Container>
           <Slider {...settings}>
             <div className="banner flex! items-center justify-between px-5 max-w-[1420px]">

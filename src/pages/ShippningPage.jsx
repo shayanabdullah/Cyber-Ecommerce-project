@@ -33,11 +33,11 @@ const ShippningPage = () => {
                     <div className="flex items-center gap-4">
                       <input
                         type="radio"
-                        id="address"
+                      name="shipping" id="free"
                         className="w-6 h-6 accent-black"
                       />
                       <label
-                        htmlFor="address"
+                        htmlFor="free"
                         className="font-sf-pro font-medium text-lg leading-6 text-[#17183B]"
                       >
                         Free
@@ -60,11 +60,11 @@ const ShippningPage = () => {
                     <div className="flex items-center gap-4">
                       <input
                         type="radio"
-                        id="address"
+                       name="shipping" id="express" 
                         className="w-6 h-6 accent-black"
                       />
                       <label
-                        htmlFor="address"
+                        htmlFor="express"
                         className="font-sf-pro font-normal text-lg leading-6 text-[#A2A3B1]"
                       >
                        $25
@@ -88,11 +88,11 @@ const ShippningPage = () => {
                     <div className="flex items-center gap-4">
                       <input
                         type="radio"
-                        id="address"
+                       name="shipping" id="schedule" 
                         className="w-6 h-6 accent-black"
                       />
                       <label
-                        htmlFor="address"
+                        htmlFor="schedule"
                         className="font-sf-pro font-normal text-lg leading-6 text-[#A2A3B1]"
                       >
                        Schedule
