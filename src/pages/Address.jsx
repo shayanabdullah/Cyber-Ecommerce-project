@@ -339,7 +339,7 @@ const Address = () => {
                   className="border-black! text-black!"
                 />
               </Link>
-              <Link to="/cart/shipping">
+              <Link to="/checkout/shipping">
                 {" "}
                 <ShopButton
                   text={"Next"}

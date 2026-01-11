@@ -35,7 +35,7 @@ const Steps = ({TitleclassNameFirst, iconClassNameFirst, TitleclassNameSecond, i
 
             <img src={line} alt="" className="w-full hidden md:block" />
 
-       <div className={`hidden md:block ${hideCalssThird}`}>
+       <div className={`hidden lg:block ${hideCalssThird}`}>
              <div className="flex items-center gap-3 w-full md:px-8 ">
               <i className={`p-1 rounded-full bg-black/30 text-white w-6 h-6 ${iconClassNameThird}`}>
                 <MdOutlinePayment />

@@ -129,9 +129,9 @@ const NavberSection = () => {
             <a href="#">
               <IoIosHeartEmpty />
             </a>
-            <a href="#">
+            <Link to="/cart">
               <PiShoppingCartLight />
-            </a>
+            </Link>
             <a href="#">
               <FiUser />
             </a>
@@ -161,6 +161,7 @@ const NavberSection = () => {
               <IoClose />
             </i>
           </div>
+
           <nav className="flex flex-col h-[calc(100vh-160px)] overflow-y-auto py-10 gap-6 px-5 ">
             <p className="text-sm font-semibold font-poppins text-white/50">
               Quick Links
@@ -201,6 +202,9 @@ const NavberSection = () => {
               </div>
             </div>
           </nav>
+
+
+
           {/* icons */}
           <div className=" border border-gray-150 py-2 bg-gray-200 px-3 absolute bottom-0 left-0 w-full ">
             <p className="text-lg font-semibold font-poppins  ">Subscribe</p>

@@ -22,19 +22,19 @@ const Payment = () => {
     <>
       <Steps
         TitleclassNameFirst={"text-black/30!"}
-        hideCalssFirst={"hidden md:block"}
+        hideCalssFirst={"hidden lg:block"}
         iconClassNameFirst={"bg-black/30!"}
         TitleclassNameSecond={"text-black/30!"}
         iconClassNameSecond={"bg-black/30!"}
         TitleclassNameThird={"text-black!"}
         iconClassNameThird={"text-white! bg-black!"}
         hideCalssThird={"block!"}
-        imgHideFirst={"hidden! md:block!"}
+        imgHideFirst={"hidden! lg:block!"}
       />
 
       <section className="pt-6 pb-18">
         <Container>
-          <div className="main grid grid-cols-1 md:grid-cols-2 md:gap-24 gap-y-18">
+          <div className="main grid grid-cols-1 lg:grid-cols-2 md:gap-24 gap-y-18">
             <div className="right py-8 px-6 rounded-xl border border-[#EBEBEB]">
               <div className="heading pb-6">
                 <h2 className="font-poppins font-semibold text-xl leading-6 text-[#000]">
@@ -181,7 +181,7 @@ const Payment = () => {
                 </TabList>
 
                 <TabPanels>
-                  <TabPanel>
+                  <TabPanel >
                     <div className="img pb-10">
                       <img
                         src={credit}
@@ -237,7 +237,7 @@ const Payment = () => {
 
                       {/*Buttons */}
                       <div className="flex items-center w-full  gap-8">
-                        <Link to="/cart/shipping" className="w-full!">
+                        <Link to="/checkout/shipping" className="w-full!">
                           <ShopButton
                             text={"Back"}
                             className="border-black! text-black! w-full"

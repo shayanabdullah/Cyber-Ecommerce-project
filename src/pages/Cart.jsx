@@ -30,7 +30,7 @@ const Cart = () => {
       img: watch,
       sku: "#63632324",
       quantity : 1,
-      stock : 25,
+      stock : 1,
       price : 599
     },
     {
@@ -67,7 +67,7 @@ const Cart = () => {
     <>
       <section className="py-[72px] px-4">
         <Container>
-          <div className="main grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="main grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div className="">
               <div className="header ">
                 <h2 className="font-poppins font-semibold  text-2xl leading-6 text-black">

@@ -9,6 +9,7 @@ import Cart from './pages/Cart'
 import Address from './pages/Address'
 import ShippningPage from './pages/ShippningPage'
 import Payment from './components/common/Payment'
+import Products from './components/common/Test'
 
 const App = () => {
 
@@ -21,9 +22,10 @@ const App = () => {
       { path: "shop/:category", element: <Shop /> },
       { path: "shop/phones/:details", element: <ProductDetails/> },
       { path: "cart", element: <Cart/> },
-      { path: "cart/address", element: <Address/> },
-      { path: "cart/shipping", element: <ShippningPage/> },
-      { path: "cart/payment", element: <Payment/> },
+      { path: "checkout/address", element: <Address/> },
+      { path: "checkout/shipping", element: <ShippningPage/> },
+      { path: "checkout/payment", element: <Payment/> },
+      { path: "/test", element: <Products/> },
       { path: "*", element: 'No Data Found' },
     ],
   },

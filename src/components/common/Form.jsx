@@ -186,7 +186,7 @@ useEffect(() => {
                   )}
                 </div>
               </div>
-          <Link to='/cart/address'>
+          <Link to='/checkout/address'>
               <ShopButton
                 className={"w-full bg-black! text-white!"}
                 text={"Checkout"}

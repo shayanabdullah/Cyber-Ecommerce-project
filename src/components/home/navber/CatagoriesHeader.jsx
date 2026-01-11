@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaMobileAlt, FaTabletAlt } from "react-icons/fa";
 import { FiHeadphones } from "react-icons/fi";
 import { HiComputerDesktop } from "react-icons/hi2";
@@ -14,6 +14,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { LuLaptop } from "react-icons/lu";
+import axios from "axios";
+import { BiSolidCategoryAlt } from "react-icons/bi";
 export const categories = [
   {
     id: 0,
@@ -54,7 +56,15 @@ export const categories = [
 ];
 
 
+
 const CatagoriesHeader = ({ className }) => {
+ const [catagories, setCatagories] = useState([])
+useEffect(()=> {
+  axios.get('https://dummyjson.com/products/categories')
+  .then(res => setCatagories(res.data))
+})
+console.log(catagories);
+
   const settings = {
     infinite: true,
     slidesToShow: 2,
@@ -72,14 +82,34 @@ const CatagoriesHeader = ({ className }) => {
     >
       <div className="hidden lg:block">
         <Container>
-          <div className="catagory-contents flex items-center justify-between ">
-            {categories.map((item) => (
-              <div className="catagory" key={item.id}>
-                <i className="text-2xl">{item.icon}</i>
-                <Link to={item.path} href={`# ${item.text}`}>{item.text}</Link >
-              </div>
-            ))}
-          </div>
+            <Swiper
+              slidesPerView={6}
+              spaceBetween={2}
+              loop={true}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              navigation={true}
+              modules={[Navigation, Autoplay]}
+            >
+              {categories.map((item) => (
+                <SwiperSlide>
+                  <div className="catagory" key={item.id}>
+                    <i className="text-2xl">{item.icon}</i>
+                    <a href={`# ${item.text}`}>{item.text}</a>
+                  </div>
+                </SwiperSlide>
+              ))}
+              {catagories.map((item, index) => (
+                <SwiperSlide>
+                  <div className="catagory" key={index}>
+                    <i className="text-2xl"><BiSolidCategoryAlt /></i>
+                    <Link to={item.url}>{item.name}</Link>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
         </Container>
       </div>
 
