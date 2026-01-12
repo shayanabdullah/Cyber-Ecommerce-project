@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaMobileAlt, FaTabletAlt } from "react-icons/fa";
 import { FiHeadphones } from "react-icons/fi";
 import { HiComputerDesktop } from "react-icons/hi2";
@@ -16,41 +16,42 @@ import { Link } from "react-router-dom";
 import { LuLaptop } from "react-icons/lu";
 import axios from "axios";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-export const categories = [
+import { DataContext } from "../../../Context/DataContext";
+export const Mycategories = [
   {
     id: 0,
     text: "Phones",
-    path: "/shop/phones",
+    path: "/phones",
     icon: <FaMobileAlt />,
   },
   {
     id: 1,
     text: "Laptop",
-    path: "/shop/computers",
+    path: "/computers",
     icon: <LuLaptop />,
   },
   {
     id: 2,
     text: "Smart Watches",
-    path: "/shop/smart-watches",
+    path: "/smartwatches",
     icon: <BsSmartwatch />,
   },
   {
     id: 3,
     text: "Tablet",
-    path: "/shop/cameras",
+    path: "/cameras",
     icon: <FaTabletAlt />,
   },
   {
     id: 4,
     text: "Headphones",
-    path: "/shop/headphones",
+    path: "/headphones",
     icon: <FiHeadphones />,
   },
   {
     id: 5,
     text: "Gaming",
-    path: "/shop/gaming",
+    path: "/gaming",
     icon: <MdVideogameAsset />,
   },
 ];
@@ -58,12 +59,21 @@ export const categories = [
 
 
 const CatagoriesHeader = ({ className }) => {
- const [catagories, setCatagories] = useState([])
-useEffect(()=> {
-  axios.get('https://dummyjson.com/products/categories')
-  .then(res => setCatagories(res.data))
-})
-console.log(catagories);
+
+const { categories, fetchCategories } = useContext(DataContext);
+
+useEffect(() => {
+  fetchCategories();
+}, []);
+
+
+
+
+
+
+
+
+
 
   const settings = {
     infinite: true,
@@ -86,29 +96,30 @@ console.log(catagories);
               slidesPerView={6}
               spaceBetween={2}
               loop={true}
-              autoplay={{
-                delay: 4000,
-                disableOnInteraction: false,
-              }}
               navigation={true}
               modules={[Navigation, Autoplay]}
             >
-              {categories.map((item) => (
+              {Mycategories?.map((item) => (
                 <SwiperSlide>
                   <div className="catagory" key={item.id}>
                     <i className="text-2xl">{item.icon}</i>
-                    <a href={`# ${item.text}`}>{item.text}</a>
+                    <a href={`/products/category${item.path}`}>{item.text}</a>
                   </div>
                 </SwiperSlide>
               ))}
-              {catagories.map((item, index) => (
-                <SwiperSlide>
-                  <div className="catagory" key={index}>
+
+
+              {categories?.map((item, index) => (
+                <SwiperSlide key={index}>
+              <Link to={`/products/category/${item.slug}`} className="cursor-pointe">
+                  <div className="catagory cursor-pointer" >
                     <i className="text-2xl"><BiSolidCategoryAlt /></i>
-                    <Link to={item.url}>{item.name}</Link>
+                    <h2 className="cursor-pointe" >{item.name}</h2>
                   </div>
+              </Link>
                 </SwiperSlide>
               ))}
+
             </Swiper>
         </Container>
       </div>

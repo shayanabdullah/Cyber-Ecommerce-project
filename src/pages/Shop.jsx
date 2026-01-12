@@ -5,14 +5,15 @@ import PriceRange from "@/components/common/PriceRange";
 import { builtInMemory } from "@/data/phoneMemory";
 import { smartpohonesBrands } from "@/data/smartphonesBrands";
 import { specsAccordionData } from "@/data/specsAccordion";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaCheck, FaChevronDown } from "react-icons/fa";
 import { smartphones } from "@/data/smartphonesApi";
 import { FiFilter } from "react-icons/fi";
 import ProductCard from "@/components/common/ProductCard";
 import Pagination from "@/components/common/Pagination";
 import { HiX } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { DataContext } from "../Context/DataContext";
 
 const Shop = () => {
   const [dropDownOpen, setDropDownOpen] = useState(false);
@@ -27,6 +28,16 @@ const Shop = () => {
   const end = start + pageNumber;
 
   const [filterOpen, setFilteropen] = useState(false);
+
+  const { slug } = useParams();
+  const { products, fetchProductsByCategory } = useContext(DataContext);
+
+  useEffect(() => {
+    if (!slug) return;
+    fetchProductsByCategory(slug);
+  }, [slug]);
+
+  console.log(products);
 
   return (
     <>
@@ -144,23 +155,52 @@ const Shop = () => {
                     </div>
                   </div>
                 </div>
+
+                {slug.includes("phones") && (
+                  <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
+                    {smartphones.slice(start, end).map((phone) => (
+                      <Link to={`/shop/phones/${phone.brand + phone.name}`}>
+                        <ProductCard
+                          name={phone.name}
+                          brand={phone.brand}
+                          img={phone.img}
+                          reviews={phone.reviews}
+                          discountPercentage={phone.discountPercentage}
+                          discountPrice={phone.discountPrice}
+                          mainPrice={phone.price}
+                          key={phone.id}
+                          alt={`${phone.name}img`}
+                          wishId={phone.id}
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
-                  {smartphones.slice(start, end).map((phone) => (
-                    <Link to={`/shop/phones/${phone.brand + phone.name}`}>
-                      <ProductCard
-                        name={phone.name}
-                        brand={phone.brand}
-                        img={phone.img}
-                        reviews={phone.reviews}
-                        discountPercentage={phone.discountPercentage}
-                        discountPrice={phone.discountPrice}
-                        mainPrice={phone.price}
-                        key={phone.id}
-                        alt={`${phone.name}img`}
-                        wishId={phone.id}
-                      />
-                    </Link>
-                  ))}
+                  {products.slice(start, end).map((item) => {
+                    const fixedDiscountPercentage = Math.floor(item.discountPercentage )
+                 const originalPrice = Math.round(fixedDiscountPercentage + item.price)
+   
+  
+    
+
+                    return (
+                      <Link key={item.id}>
+                        <ProductCard
+                          name={item.title}
+                          reviews={item.rating}
+                          img={item.images?.[0] || "placeholder.jpg"}
+
+                          discountPercentage={fixedDiscountPercentage}
+                          discountPrice={item.price} 
+                          mainPrice={originalPrice}
+                          alt={`${item.title} image`}
+                          wishId={item.id}
+                        />
+                      </Link>
+                    );
+                  })}
                 </div>
 
                 {/* Pagination */}

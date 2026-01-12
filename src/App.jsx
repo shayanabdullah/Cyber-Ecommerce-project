@@ -19,7 +19,7 @@ const App = () => {
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "shop/:category", element: <Shop /> },
+      { path: "/products/category/:slug", element: <Shop /> },
       { path: "shop/phones/:details", element: <ProductDetails/> },
       { path: "cart", element: <Cart/> },
       { path: "checkout/address", element: <Address/> },

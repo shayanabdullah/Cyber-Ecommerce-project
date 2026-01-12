@@ -59,9 +59,11 @@ const BrowseCatagorySection = () => {
    <>
  <motion.section
   variants={fadeIn('up', 0.4)}
-       initial='hidden'
-       whileInView={'show'}
-       viewport={{once: true}} className='py-20 px-4'>
+       initial='show'
+      
+       viewport={{once: true}} className='py-20 px-4'
+       id='catagories'
+       >
    <Container>
      <div className="header flex justify-between items-center pb-8">
       <motion.h3  variants={textVariant(0.6)} className='font-poppins font-medium text-2xl leading-8 text-black'>Browse By Category</motion.h3>

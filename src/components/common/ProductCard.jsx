@@ -79,7 +79,9 @@ const ProductCard = ({img, brand, name, reviews, mainPrice, discountPercentage, 
           <div className="">
             <div className="flex items-center gap-3 pt-2 pb-2.5">
               <p className="font-inter font-medium text-sm md:text-base text-[#81859C] line-through">
-                ${mainPrice}.00
+                {
+                  mainPrice >= 10 ? (`$${mainPrice}`) : (`$${mainPrice}.00`)
+                }
               </p>
               <div className="font-inter font-medium text-xs md:text-sm text-[#102B6B] bg-[#E9F0FF] p-0.5 rounded-sm ">
                 <p>-{discountPercentage}%</p>
@@ -87,7 +89,9 @@ const ProductCard = ({img, brand, name, reviews, mainPrice, discountPercentage, 
             </div>
             <div className="main-price pb-5">
               <h2 className="font-inter font-semibold text-[19px] md:text-[27px] text-[#363842] ">
-                ${discountPrice}.00
+          
+                 ${discountPrice}
+                
               </h2>
             </div>
           </div>

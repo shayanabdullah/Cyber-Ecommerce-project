@@ -6,9 +6,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { DataProvider } from './Context/DataContext.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+<DataProvider>
+    <StrictMode>
     <App />
   </StrictMode>,
+</DataProvider>
 )
