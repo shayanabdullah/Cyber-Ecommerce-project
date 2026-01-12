@@ -6,7 +6,7 @@ import { IoIosHeartEmpty, IoIosHelpCircleOutline } from "react-icons/io";
 import { PiShoppingCartLight } from "react-icons/pi";
 import { FiUser } from "react-icons/fi";
 import { motion } from "motion/react";
-import CatagoriesHeader from "./CatagoriesHeader";
+import CatagoriesHeader, { Mycategories } from "./CatagoriesHeader";
 import { fadeIn } from "../../../utils/motion/variants";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
@@ -22,6 +22,7 @@ import {
 import { IoCallSharp, IoClose } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 import { catagories } from "../browseCatagory/BrowseCatagorySection";
+
 
 const navLinks = [
   {
@@ -110,7 +111,7 @@ const NavberSection = () => {
       </motion.nav>
 
       {/* mobile navber */}
-      <div className="xxl:hidden sticky top-0 bg-white z-99 overflow-hidden">
+      <div className="xxl:hidden sticky top-0 bg-white z-999 overflow-hidden">
 <Container>
           <motion.nav
           className="py-6 bg-gray-100/10 flex justify-between px-4 border-b border-black/34 "
@@ -190,14 +191,17 @@ const NavberSection = () => {
                   isDropDownOpen == false ? "dropdown-open" : "dropdown"
                 }`}
               >
-                {catagories.map((catagory) => (
+                {Mycategories.map((catagory) => (
+           <Link to={`${catagory.path == "/tablets" ? `/products/category/tablets` : `/products/category${catagory.path}` }`}>
                   <div
                     className="catagory text-white! flex gap-2 g"
                     key={catagory.id}
+                    onClick={()=> setIsMenuOpen(false)}
                   >
                     <i className="text-2xl">{catagory.icon}</i>
                     <a href={`# ${catagory.text}`}>{catagory.text}</a>
                   </div>
+           </Link>
                 ))}
               </div>
             </div>

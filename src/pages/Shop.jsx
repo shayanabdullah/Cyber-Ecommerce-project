@@ -16,6 +16,8 @@ import { Link, useParams } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
 
 const Shop = () => {
+    const { slug } = useParams();
+  const { products, fetchProductsByCategory } = useContext(DataContext);
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [sortType, setSortType] = useState("Default");
   const [perPage, setPerPage] = useState(9);
@@ -24,13 +26,13 @@ const Shop = () => {
 
   const pageNumber = perPage;
   const numOfPage = Math.ceil(smartphones.length / pageNumber);
+  const numOfPage2 = Math.ceil(products.length / pageNumber);
   const start = currentPageActive * pageNumber;
   const end = start + pageNumber;
 
   const [filterOpen, setFilteropen] = useState(false);
 
-  const { slug } = useParams();
-  const { products, fetchProductsByCategory } = useContext(DataContext);
+
 
   useEffect(() => {
     if (!slug) return;
@@ -74,7 +76,7 @@ const Shop = () => {
                     <h2 className="font-poppins font-medium text-[11px] xs:text-sm md:text-lg text-gray-dark-400 flex items-center gap-1 xs:gap-2  ">
                       Showing
                       <span className="text-xs xs:text-sm md:text-xl text-black">
-                        {smartphones.slice(start, end).length} products:
+                        { slug.includes("phones") ? smartphones.slice(start, end).length : products.slice(start, end).length} products:
                       </span>
                     </h2>
                   </div>
@@ -157,6 +159,7 @@ const Shop = () => {
                 </div>
 
                 {slug.includes("phones") && (
+     <>
                   <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
                     {smartphones.slice(start, end).map((phone) => (
                       <Link to={`/shop/phones/${phone.brand + phone.name}`}>
@@ -175,6 +178,15 @@ const Shop = () => {
                       </Link>
                     ))}
                   </div>
+                          <Pagination
+                  currentPage={currentPageActive}
+                  setCurrentPage={setCurrentPageActive}
+                  totalPages={numOfPage}
+                  perPage={perPage}
+                  setPerPage={setPerPage}
+                />
+     </>
+                  
                 )}
 
                 <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
@@ -207,7 +219,7 @@ const Shop = () => {
                 <Pagination
                   currentPage={currentPageActive}
                   setCurrentPage={setCurrentPageActive}
-                  totalPages={numOfPage}
+                  totalPages={numOfPage2}
                   perPage={perPage}
                   setPerPage={setPerPage}
                 />

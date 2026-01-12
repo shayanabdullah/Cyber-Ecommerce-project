@@ -1,5 +1,5 @@
 import Container from '@/components/common/Container'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go'
 import { SlScreenSmartphone } from "react-icons/sl";
 import { RiComputerLine } from "react-icons/ri";
@@ -12,6 +12,11 @@ import "swiper/css";
 import { Autoplay, Navigation } from 'swiper/modules';
 import { motion } from 'motion/react';
 import { fadeIn, textVariant } from '@/utils/motion/variants';
+import { BiSolidCategoryAlt } from 'react-icons/bi';
+import { DataContext } from '../../../Context/DataContext';
+import { Link } from 'react-router-dom';
+import { Mycategories } from '../navber/CatagoriesHeader';
+import { categoryIcons } from '../../../data/catagoryIcon';
 export const catagories = [
   {
     id: 0,
@@ -55,6 +60,12 @@ export const catagories = [
 ];
 
 const BrowseCatagorySection = () => {
+  
+  const { categories, fetchCategories } = useContext(DataContext);
+  
+  useEffect(() => {
+    fetchCategories();
+  }, []);
   return (
    <>
  <motion.section
@@ -108,14 +119,30 @@ const BrowseCatagorySection = () => {
               }
               modules={[Navigation, Autoplay]}>
        {
-        catagories.map((catagory)=> (
+        Mycategories.map((catagory)=> (
       <SwiperSlide key={catagory.id} className=''>
+     <Link to={`${catagory.path == "/tablets" ? `/products/category/tablets` : `/products/category${catagory.path}` }`}>
             <motion.div
             variants={fadeIn('down', 0.6)}
             className="py-6 rounded-[15px] bg-gray-200 flex flex-col items-center justify-center cursor-pointer">
             <i className='text-3xl pb-2'>{catagory.icon}</i>
             <motion.h3  variants={textVariant(0.7)} className='font-poppins font-medium text-base text-black leading-6'>{catagory.text}</motion.h3>
           </motion.div>
+     </Link>
+      </SwiperSlide>
+        ))
+      }
+       {
+        categories.map((catagory)=> (
+      <SwiperSlide key={catagory.id} className=''>
+        <Link to={`/products/category/${catagory.slug}`}>
+            <motion.div
+            variants={fadeIn('down', 0.6)}
+            className="py-6 rounded-[15px] bg-gray-200 flex flex-col items-center justify-center cursor-pointer min-h-[110px]">
+           <i className="text-2xl pb-3"> {categoryIcons[catagory.slug] || <BiSolidCategoryAlt />}</i>
+            <motion.h3  variants={textVariant(0.7)} className='font-poppins font-medium text-base text-black leading-6'>{catagory.name}</motion.h3>
+          </motion.div>
+        </Link>
       </SwiperSlide>
         ))
       }

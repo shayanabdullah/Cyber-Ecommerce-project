@@ -12,11 +12,12 @@ import Slider from "react-slick";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { LuLaptop } from "react-icons/lu";
 import axios from "axios";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { DataContext } from "../../../Context/DataContext";
+import { categoryIcons } from "../../../data/catagoryIcon";
 export const Mycategories = [
   {
     id: 0,
@@ -39,7 +40,7 @@ export const Mycategories = [
   {
     id: 3,
     text: "Tablet",
-    path: "/cameras",
+    path: "/tablets",
     icon: <FaTabletAlt />,
   },
   {
@@ -56,22 +57,14 @@ export const Mycategories = [
   },
 ];
 
-
-
 const CatagoriesHeader = ({ className }) => {
+  const {slug} = useParams()
 
 const { categories, fetchCategories } = useContext(DataContext);
 
 useEffect(() => {
   fetchCategories();
 }, []);
-
-
-
-
-
-
-
 
 
 
@@ -103,7 +96,8 @@ useEffect(() => {
                 <SwiperSlide>
                   <div className="catagory" key={item.id}>
                     <i className="text-2xl">{item.icon}</i>
-                    <a href={`/products/category${item.path}`}>{item.text}</a>
+                    <Link to={`${item.path == "/tablets" ? `/products/category/tablets` : `/products/category${item.path}` }`} >{item.text}</Link>
+                    
                   </div>
                 </SwiperSlide>
               ))}
@@ -113,7 +107,9 @@ useEffect(() => {
                 <SwiperSlide key={index}>
               <Link to={`/products/category/${item.slug}`} className="cursor-pointe">
                   <div className="catagory cursor-pointer" >
-                    <i className="text-2xl"><BiSolidCategoryAlt /></i>
+                    <i className="text-2xl">
+                      {categoryIcons[item.slug] || <BiSolidCategoryAlt />}
+                      </i>
                     <h2 className="cursor-pointe" >{item.name}</h2>
                   </div>
               </Link>

@@ -12,6 +12,6 @@ createRoot(document.getElementById('root')).render(
 <DataProvider>
     <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 </DataProvider>
 )
