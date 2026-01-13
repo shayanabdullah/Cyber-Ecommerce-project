@@ -6,6 +6,9 @@ export const DataContext = createContext(null);
 export const DataProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [productDetail, setProductDetail] = useState([]);
+ 
+ 
 
   const fetchCategories = async () => {
     try {
@@ -29,6 +32,19 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+
+  const fetchProductDetails = async (id) => {
+    try {
+      const res = await axios.get(
+        `https://dummyjson.com/products/${id}`
+      );
+      setProductDetail(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
     <DataContext.Provider
       value={{
@@ -36,6 +52,8 @@ export const DataProvider = ({ children }) => {
         products,
         fetchCategories,
         fetchProductsByCategory,
+        fetchProductDetails,
+        productDetail
       }}
     >
       {children}

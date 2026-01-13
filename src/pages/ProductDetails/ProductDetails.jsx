@@ -1,10 +1,10 @@
 import Container from "@/components/common/Container";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import iphone17 from "@/assets/products-images/iphone-17pro.png";
 import iphone17blue from "@/assets/products-images/iphone-17-blue.jpeg";
 import iphone17silver from "@/assets/products-images/iphone-17-silver.jpeg";
 import { GoChevronRight } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { FiTruck } from "react-icons/fi";
 import { BsShop } from "react-icons/bs";
@@ -17,13 +17,17 @@ import { FiSmartphone, FiCpu, FiCamera, FiBattery } from "react-icons/fi";
 import { BsCpu, BsCameraVideo } from "react-icons/bs";
 import ReviewSection from "@/components/common/ReviewSection";
 import RelatedProducts from "@/components/common/RelatedProducts";
+import { DataContext } from "../../Context/DataContext";
+import BreadCrums from "../../components/common/BreadCrums";
 
 const ProductDetails = () => {
   const [previewImg, setPreviewImg] = useState(iphone17);
   const [readMore, setreadMore] = useState(false);
   const [detailsReadMore, setdetailsReadMore] = useState(false);
   const [viewMore, setViewMore] = useState(false);
-
+  const [productDetailData, setProductDetailData] = useState({})
+  const {id} = useParams()
+  const { productDetail, fetchProductDetails } = useContext(DataContext);
   const [varinatPrice, setVariant] = useState({
     price: 1099,
     prePrice: 1199,
@@ -70,6 +74,16 @@ const ProductDetails = () => {
     },
   ];
 
+  
+    useEffect(() => {
+      if (!id) return;
+      fetchProductDetails(id);
+      setProductDetailData(productDetail)
+    }, [id]);
+
+    console.log(productDetailData);
+    
+
   const handleVarinatPrice = (id) => {
     const selectedSize = productData[0].variants.find((item) => item.id === id);
     if (selectedSize) {
@@ -89,44 +103,13 @@ const ProductDetails = () => {
           {/* Temporary BredCrums */}
           <div className="py-10">
             <Container>
-              <div className="main flex flex-wrap items-center gap-1 gap-y-2 md:gap-4 pb-6">
-                <h2 className="font-poppins font-medium text-xs md:text-base text-gray-750">
-                  Home
-                </h2>
-                <i className="text-2xl text-gray-750">
-                  <GoChevronRight />
-                </i>
-                <h2 className="font-poppins font-medium text-xs md:text-base text-gray-750">
-                  Catalog
-                </h2>
-                <i className="text-2xl text-gray-750">
-                  <GoChevronRight />
-                </i>
-                <Link to={"/shop/phones"}>
-                  <h2 className="font-poppins font-medium text-xs md:text-base text-gray-750 cursor-pointer!">
-                    Smartphones
-                  </h2>
-                </Link>
-                <i className="text-2xl text-gray-750">
-                  <GoChevronRight />
-                </i>
-                <h2 className="font-poppins font-medium text-xs md:text-base text-gray-750">
-                  Apple
-                </h2>
-                <i className="text-2xl text-gray-750">
-                  <GoChevronRight />
-                </i>
-                {/* active last  */}
-                <h2 className="font-poppins font-semibold text-xs md:text-base text-black">
-                  iPhone 17 Pro Max
-                </h2>
-              </div>
+             <BreadCrums slug={productDetail.title} category={productDetail.category} name={productDetail.brand}/>
             </Container>
           </div>
           {/* Temporary BredCrums */}
 
           {/* Products preview section */}
-          <div className="main pb-28 md:py-28 hidden md:block">
+                <div className="main pb-28 md:py-28 hidden md:block">
             <div className="product">
               <div className="flex flex-col md:flex-row justify-center items-center gap-12">
                 {/* left */}
@@ -563,6 +546,7 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
+
         </div>
 
         {!viewMore && (
@@ -579,6 +563,7 @@ const ProductDetails = () => {
         )}
       </section>
       {/* Products details */}
+      
 
       {/* Reviews */}
       <ReviewSection />

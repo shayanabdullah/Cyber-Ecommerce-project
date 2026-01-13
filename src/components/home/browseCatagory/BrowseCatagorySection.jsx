@@ -79,10 +79,10 @@ const BrowseCatagorySection = () => {
      <div className="header flex justify-between items-center pb-8">
       <motion.h3  variants={textVariant(0.6)} className='font-poppins font-medium text-2xl leading-8 text-black'>Browse By Category</motion.h3>
       <div className="flex items-center gap-2 text-4xl">
-        <button className='cursor-pointer next'>
+        <button className='cursor-pointer prev'>
           <GoChevronLeft />
         </button>
-        <button className='cursor-pointer prev'>
+        <button className='cursor-pointer next'>
           <GoChevronRight />
         </button>
       </div>

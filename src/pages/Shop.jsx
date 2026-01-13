@@ -16,7 +16,7 @@ import { Link, useParams } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
 
 const Shop = () => {
-    const { slug } = useParams();
+  const { slug } = useParams();
   const { products, fetchProductsByCategory } = useContext(DataContext);
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [sortType, setSortType] = useState("Default");
@@ -29,22 +29,28 @@ const Shop = () => {
   const numOfPage2 = Math.ceil(products.length / pageNumber);
   const start = currentPageActive * pageNumber;
   const end = start + pageNumber;
-
   const [filterOpen, setFilteropen] = useState(false);
-
-
 
   useEffect(() => {
     if (!slug) return;
     fetchProductsByCategory(slug);
   }, [slug]);
 
-  console.log(products);
+const sortedProducts = [...products].sort((a, b) => {
+  if (sortType === "Price Low to High") {
+    return a.price - b.price;
+  }
+  if (sortType === "Price High to Low") {
+    return b.price - a.price;
+  }
+  return 0;
+});
+
 
   return (
     <>
       <main className="px-4 xl:px-0">
-        <BreadCrums />
+        <BreadCrums slug={slug}/>
         <section className="">
           <Container>
             <div className="main flex gap-8">
@@ -53,7 +59,9 @@ const Shop = () => {
                   <div className={``}>
                     <PriceRange />
                   </div>
-                  <div className="flex flex-col gap-y-6">
+                {
+                  slug.includes("phones") && 
+                    <div className="flex flex-col gap-y-6">
                     <Catagory title={"Brand"} arrMap={smartpohonesBrands} />
                     <Catagory
                       title={"Built-in memory"}
@@ -68,6 +76,7 @@ const Shop = () => {
                       />
                     ))}
                   </div>
+                }
                 </div>
               </div>
               <div className="right pb-8 lg:w-[70%] mx-auto">
@@ -76,7 +85,10 @@ const Shop = () => {
                     <h2 className="font-poppins font-medium text-[11px] xs:text-sm md:text-lg text-gray-dark-400 flex items-center gap-1 xs:gap-2  ">
                       Showing
                       <span className="text-xs xs:text-sm md:text-xl text-black">
-                        { slug.includes("phones") ? smartphones.slice(start, end).length : products.slice(start, end).length} products:
+                        {slug.includes("phones")
+                          ? smartphones.slice(start, end).length
+                          : products.slice(start, end).length}{" "}
+                        products:
                       </span>
                     </h2>
                   </div>
@@ -159,53 +171,45 @@ const Shop = () => {
                 </div>
 
                 {slug.includes("phones") && (
-     <>
-                  <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
-                    {smartphones.slice(start, end).map((phone) => (
-                      <Link to={`/shop/phones/${phone.brand + phone.name}`}>
-                        <ProductCard
-                          name={phone.name}
-                          brand={phone.brand}
-                          img={phone.img}
-                          reviews={phone.reviews}
-                          discountPercentage={phone.discountPercentage}
-                          discountPrice={phone.discountPrice}
-                          mainPrice={phone.price}
-                          key={phone.id}
-                          alt={`${phone.name}img`}
-                          wishId={phone.id}
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                          <Pagination
-                  currentPage={currentPageActive}
-                  setCurrentPage={setCurrentPageActive}
-                  totalPages={numOfPage}
-                  perPage={perPage}
-                  setPerPage={setPerPage}
-                />
-     </>
-                  
+                  <>
+                    <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
+                      {smartphones.slice(start, end).map((phone) => (
+                        <Link to={`/shop/phones/${phone.brand + phone.name}`}>
+                          <ProductCard
+                            name={phone.name}
+                            brand={phone.brand}
+                            img={phone.img}
+                            reviews={phone.reviews}
+                            discountPercentage={phone.discountPercentage}
+                            discountPrice={phone.discountPrice}
+                            mainPrice={phone.price}
+                            key={phone.id}
+                            alt={`${phone.name}img`}
+                            wishId={phone.id}
+                          />
+                        </Link>
+                      ))}
+                    </div>
+                  </>
                 )}
 
                 <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
-                  {products.slice(start, end).map((item) => {
-                    const fixedDiscountPercentage = Math.floor(item.discountPercentage )
-                 const originalPrice = Math.round(fixedDiscountPercentage + item.price)
-   
-  
-    
+                  {sortedProducts.slice(start, end).map((item) => {
+                    const fixedDiscountPercentage = Math.floor(
+                      item.discountPercentage
+                    );
+                    const originalPrice = Math.round(
+                      fixedDiscountPercentage + item.price
+                    );
 
                     return (
-                      <Link key={item.id}>
+                      <Link key={item.id} to={`/shop/category/${item?.brand}/${item?.id}`}>
                         <ProductCard
                           name={item.title}
                           reviews={item.rating}
                           img={item.images?.[0] || "placeholder.jpg"}
-
                           discountPercentage={fixedDiscountPercentage}
-                          discountPrice={item.price} 
+                          discountPrice={item.price}
                           mainPrice={originalPrice}
                           alt={`${item.title} image`}
                           wishId={item.id}
@@ -216,13 +220,29 @@ const Shop = () => {
                 </div>
 
                 {/* Pagination */}
-                <Pagination
-                  currentPage={currentPageActive}
-                  setCurrentPage={setCurrentPageActive}
-                  totalPages={numOfPage2}
-                  perPage={perPage}
-                  setPerPage={setPerPage}
-                />
+                {slug.includes("phones") ? (
+                  <>
+                    {/* phones grid */}
+                    <Pagination
+                      currentPage={currentPageActive}
+                      setCurrentPage={setCurrentPageActive}
+                      totalPages={numOfPage}
+                      perPage={perPage}
+                      setPerPage={setPerPage}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {/* api products grid */}
+                    <Pagination
+                      currentPage={currentPageActive}
+                      setCurrentPage={setCurrentPageActive}
+                      totalPages={numOfPage2}
+                      perPage={perPage}
+                      setPerPage={setPerPage}
+                    />
+                  </>
+                )}
               </div>
             </div>
 

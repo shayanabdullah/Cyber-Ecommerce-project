@@ -28,7 +28,7 @@ export const Mycategories = [
   {
     id: 1,
     text: "Laptop",
-    path: "/computers",
+    path: "/laptops",
     icon: <LuLaptop />,
   },
   {
@@ -67,6 +67,9 @@ useEffect(() => {
 }, []);
 
 
+const filteredCategories = categories.filter(item=> item.slug !== 'laptops' && item.slug !== 'smartphones' )
+
+
 
   const settings = {
     infinite: true,
@@ -75,6 +78,7 @@ useEffect(() => {
     autoplay: true,
     autoplaySpeed: 2500,
   };
+  
   return (
     <motion.div
       variants={fadeIn("up", 0.4)}
@@ -96,16 +100,16 @@ useEffect(() => {
                 <SwiperSlide>
                   <div className="catagory" key={item.id}>
                     <i className="text-2xl">{item.icon}</i>
-                    <Link to={`${item.path == "/tablets" ? `/products/category/tablets` : `/products/category${item.path}` }`} >{item.text}</Link>
+                    <Link to={`${item.path == "/tablets" ? `/shop/category/tablets` : `/shop/category${item.path}` }`} >{item.text}</Link>
                     
                   </div>
                 </SwiperSlide>
               ))}
 
 
-              {categories?.map((item, index) => (
+              {filteredCategories?.map((item, index) => (
                 <SwiperSlide key={index}>
-              <Link to={`/products/category/${item.slug}`} className="cursor-pointe">
+              <Link to={`/shop/category/${item.slug}`} className="cursor-pointe">
                   <div className="catagory cursor-pointer" >
                     <i className="text-2xl">
                       {categoryIcons[item.slug] || <BiSolidCategoryAlt />}
