@@ -7,7 +7,7 @@ export const DataProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [productDetail, setProductDetail] = useState([]);
- 
+ const [loading, setLoading] = useState(true)
  
 
   const fetchCategories = async () => {
@@ -16,6 +16,7 @@ export const DataProvider = ({ children }) => {
         "https://dummyjson.com/products/categories"
       );
       setCategories(res.data);
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -27,6 +28,7 @@ export const DataProvider = ({ children }) => {
         `https://dummyjson.com/products/category/${slug}`
       );
       setProducts(res.data.products);
+   setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -39,6 +41,7 @@ export const DataProvider = ({ children }) => {
         `https://dummyjson.com/products/${id}`
       );
       setProductDetail(res.data);
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +56,8 @@ export const DataProvider = ({ children }) => {
         fetchCategories,
         fetchProductsByCategory,
         fetchProductDetails,
-        productDetail
+        productDetail,
+        loading
       }}
     >
       {children}

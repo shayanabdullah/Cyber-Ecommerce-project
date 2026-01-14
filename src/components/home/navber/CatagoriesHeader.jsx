@@ -17,7 +17,7 @@ import { LuLaptop } from "react-icons/lu";
 import axios from "axios";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { DataContext } from "../../../Context/DataContext";
-import { categoryIcons } from "../../../data/catagoryIcon";
+import { categoryIcons } from "../../../data/Icons";
 export const Mycategories = [
   {
     id: 0,
@@ -68,6 +68,8 @@ useEffect(() => {
 
 
 const filteredCategories = categories.filter(item=> item.slug !== 'laptops' && item.slug !== 'smartphones' )
+
+console.log(categories);
 
 
 

@@ -16,7 +16,7 @@ import { BiSolidCategoryAlt } from 'react-icons/bi';
 import { DataContext } from '../../../Context/DataContext';
 import { Link } from 'react-router-dom';
 import { Mycategories } from '../navber/CatagoriesHeader';
-import { categoryIcons } from '../../../data/catagoryIcon';
+import { categoryIcons } from '../../../data/Icons';
 export const catagories = [
   {
     id: 0,

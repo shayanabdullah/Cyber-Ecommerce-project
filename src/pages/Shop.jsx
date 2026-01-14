@@ -16,8 +16,8 @@ import { Link, useParams } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
 
 const Shop = () => {
-  const { slug } = useParams();
-  const { products, fetchProductsByCategory } = useContext(DataContext);
+  const { slug, id } = useParams();
+  const { products, fetchProductsByCategory, fetchProductDetails,loading } = useContext(DataContext);
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [sortType, setSortType] = useState("Default");
   const [perPage, setPerPage] = useState(9);
@@ -46,6 +46,14 @@ const sortedProducts = [...products].sort((a, b) => {
   return 0;
 });
 
+const slugify = (text) =>
+  text.toLowerCase().replace(/\s+/g, "-");
+
+
+
+if(loading) {
+  return <p>...loading</p>
+}
 
   return (
     <>
@@ -203,7 +211,7 @@ const sortedProducts = [...products].sort((a, b) => {
                     );
 
                     return (
-                      <Link key={item.id} to={`/shop/category/${item?.brand}/${item?.id}`}>
+                      <Link key={item.id} to={`/shop/category/${slugify(item.brand)}/${item.id}`}>
                         <ProductCard
                           name={item.title}
                           reviews={item.rating}

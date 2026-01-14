@@ -19,15 +19,18 @@ import ReviewSection from "@/components/common/ReviewSection";
 import RelatedProducts from "@/components/common/RelatedProducts";
 import { DataContext } from "../../Context/DataContext";
 import BreadCrums from "../../components/common/BreadCrums";
+import { categoryMap } from "../../data/specsTemplate .JS";
+import { archetypeSpecs } from "../../data/specsTemplate .JS";
+import { specIcons } from "../../data/Icons";
 
 const ProductDetails = () => {
-  const [previewImg, setPreviewImg] = useState(iphone17);
+
   const [readMore, setreadMore] = useState(false);
   const [detailsReadMore, setdetailsReadMore] = useState(false);
   const [viewMore, setViewMore] = useState(false);
-  const [productDetailData, setProductDetailData] = useState({})
-  const {id} = useParams()
-  const { productDetail, fetchProductDetails } = useContext(DataContext);
+
+  const { id } = useParams();
+  const { productDetail, fetchProductDetails, loading } = useContext(DataContext);
   const [varinatPrice, setVariant] = useState({
     price: 1099,
     prePrice: 1199,
@@ -65,7 +68,7 @@ const ProductDetails = () => {
       id: 3,
       text: "Guaranteed",
       icon: <MdVerified />,
-      p: "1 year",
+      p: productDetail.warrantyInformation,
     },
     {
       id: 4,
@@ -74,15 +77,37 @@ const ProductDetails = () => {
     },
   ];
 
-  
-    useEffect(() => {
-      if (!id) return;
-      fetchProductDetails(id);
-      setProductDetailData(productDetail)
-    }, [id]);
+useEffect(() => {
+  if (!id) return;
+  fetchProductDetails(id);
+}, [id]);
 
-    console.log(productDetailData);
-    
+useEffect(() => {
+  if (productDetail?.images?.length) {
+    setPreviewImg(productDetail.images?.[0]);
+  }
+}, [productDetail]);
+
+
+
+
+  const isLong = productDetail?.description?.length > 200;
+
+  const oldPrice =
+    productDetail?.price / (1 - productDetail?.discountPercentage / 100);
+
+  const archetype = categoryMap[productDetail.category] || "generic";
+
+  const specsCard = archetypeSpecs[archetype];
+
+  const specs = [
+    { label: "Brand", value: productDetail?.brand },
+    { label: "Category", value: productDetail?.category },
+    { label: "Rating", value: productDetail?.rating },
+    { label: "Stock", value: productDetail?.stock },
+  ];
+
+    const [previewImg, setPreviewImg] = useState();
 
   const handleVarinatPrice = (id) => {
     const selectedSize = productData[0].variants.find((item) => item.id === id);
@@ -94,43 +119,57 @@ const ProductDetails = () => {
     }
   };
 
+  const handleSetPreview= (img) => {
+  setPreviewImg(img)
+  };
+
+
+if(loading) {
+  return <p>...loading</p>
+}
+
   const phone = phoneDetails[0];
 
   return (
     <>
       <section className="px-4">
         <Container>
-          {/* Temporary BredCrums */}
           <div className="py-10">
             <Container>
-             <BreadCrums slug={productDetail.title} category={productDetail.category} name={productDetail.brand}/>
+              <BreadCrums
+                slug={productDetail.title}
+                category={productDetail.category}
+                name={productDetail.brand}
+              />
             </Container>
           </div>
-          {/* Temporary BredCrums */}
 
           {/* Products preview section */}
-                <div className="main pb-28 md:py-28 hidden md:block">
+          <div className="main pb-28 md:py-18 hidden md:block">
             <div className="product">
               <div className="flex flex-col md:flex-row justify-center items-center gap-12">
                 {/* left */}
 
                 <div className="md:w-[45%] flex flex-col md:flex-row gap-6 md:items-start">
                   <div className="md:w-[15%] flex md:flex-col gap-y-5 items-center pt-10 ">
-                    {gallery.map((img, i) => (
+                  {
+                    !loading &&   productDetail?.images?.map((img, i) => (
                       <div
                         className="w-full h-full cursor-pointer"
-                        onClick={() => setPreviewImg(img.img)}
+                        onClick={() => handleSetPreview(img)}
                         key={i}
                       >
                         <img
-                          src={img.img}
+                          src={img}
                           alt=""
                           className={`max-w-19 md:max-w-28 w-full transition-all duration-200 ease-in-out ${
-                            previewImg === img.img ? "scale-120 " : "opacity-70"
+                            previewImg === img ? "scale-120 " : "opacity-70"
                           }`}
                         />
                       </div>
-                    ))}
+                    ))
+                    
+                  }
                   </div>
                   <div className="w-[85%]">
                     <img
@@ -144,103 +183,92 @@ const ProductDetails = () => {
                 {/* right */}
                 <div className="md:w-[55%] ">
                   {/* details */}
-                  <div className="right">
-                    <h2 className="font-sf-pro font-bold text-[40px] leading-10 pb-6">
-                      Apple iPhone 17 Pro
+               {
+                    !loading &&    
+                      <div className="right">
+                    <h2 className="font-sf-pro font-bold text-[40px] leading-12 pb-6">
+                      {productDetail?.title}
                     </h2>
+
                     <div className="price flex items-center gap-4 pb-4">
                       <p className="font-poppins font-semibold text-[32px] leading-12 text-black">
                         {" "}
-                        ${varinatPrice.price}
+                        ${productDetail?.price}
                       </p>
                       <p className="font-sf-pro font-normal text-2xl leading-12 text-[#A0A0A0] line-through">
                         {" "}
-                        ${varinatPrice.prePrice}
+                        ${Math.round(oldPrice)}
                       </p>
-                    </div>
-                    <div className="colors flex items-center gap-6 pb-6">
-                      <p className="font-sf-pro font-normal text-sm">
-                        Select color :
-                      </p>
-                      <div className="color-box flex items-center gap-2">
-                        <button
-                          className=" w-8 h-8 rounded-full bg-[#ff821c] cursor-pointer"
-                          onClick={() => setPreviewImg(iphone17)}
-                        ></button>
-                        <button
-                          className=" w-8 h-8 rounded-full bg-[#050439] cursor-pointer"
-                          onClick={() => setPreviewImg(iphone17blue)}
-                        ></button>
-                        <button
-                          className=" w-8 h-8 rounded-full bg-[#C0C0C0] cursor-pointer"
-                          onClick={() => setPreviewImg(iphone17silver)}
-                        ></button>
-                      </div>
                     </div>
 
+                    {/* Colors  */}
+                    {productDetail?.images?.length > 1 && (
+                      <div className="flex items-center gap-5 pb-5">
+                        {productDetail.images.map((img) => (
+                          <div className="colors w-24 h-24 rounded-sm border cursor-pointer" onClick={()=> handleSetPreview(img)}>
+                            <img src={img} alt="" className="w-full" />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     <div className="varients flex items-center gap-4 pb-6">
-                      {productData.map((detail) =>
-                        detail.variants.map((varnt) => (
-                          <button
-                            key={varnt.id}
-                            className={`py-3 px-6 rounded-lg border  cursor-pointer font-poppins font-medium text-sm  ${
-                              varinatPrice.price === varnt.price
-                                ? "border-black text-black font-semibold"
-                                : "border-[#D5D5D5] text-[#6F6F6F]"
-                            }`}
-                            onClick={() => handleVarinatPrice(varnt.id)}
-                          >
-                            {varnt.variant}
-                          </button>
-                        ))
+                      {specs.map(
+                        (spec, i) =>
+                          spec.value && (
+                            <div
+                              key={i}
+                              className="spec-card flex items-center gap-2 py-3 px-6 rounded-lg border font-poppins font-medium text-sm "
+                            >
+                              <p>{spec.label}:</p>
+                              <p>{spec.value}</p>
+                            </div>
+                          )
                       )}
                     </div>
 
                     {/* specs */}
-                    <div className="grid grid-cols-2 md:grid-cols-3 items-center gap-4 pb-6">
-                      {productData.map((item) =>
-                        item.specs.map((spec) => (
-                          <div
-                            className="flex items-center gap-2 py-4 px-4 bg-[#F4F4F4] min-h-21 rounded-lg"
-                            key={spec.id}
-                          >
-                            <i className="text-[#4E4E4E] text-2xl">
-                              {iconMap[spec.icon]}
-                            </i>
-                            <div className="h-full flex flex-col justify-center ">
-                              <h2 className="font-sf-pro font-normal text-sm text-gray-800 ">
-                                {spec.title}
-                              </h2>
-                              <p className="text-xs font-sf-pro font-medium text-[#4E4E4E]">
-                                {spec.value}
-                              </p>
-                            </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 items-center gap-4 pb-6">
+                      {specsCard?.map((item, index) => (
+                        <div
+                          className="flex items-center gap-3 py-3 px-3 bg-[#F4F4F4] min-h-21 rounded-lg"
+                          key={index}
+                        >
+                          <i className="text-[#4E4E4E] text-2xl">
+                            {specIcons[item?.icon] || specIcons?.default}
+                          </i>
+
+                          <div className="h-full flex flex-col justify-centergap-3 ">
+                            <h2 className="font-sf-pro font-normal text-sm text-gray-800 ">
+                              {item?.label}
+                            </h2>
+                            <p className="text-xs font-sf-pro font-medium text-[#4E4E4E]">
+                              {item.value}
+                            </p>
                           </div>
-                        ))
-                      )}
+                        </div>
+                      ))}
                     </div>
 
                     {/* description */}
                     <div className="">
-                      {productData.map((item) => (
-                        <>
-                          <div className="" key={item.id}>
-                            <p
-                              className={`font-sf-pro font-normal text-sm text-gray-dark-400 leading-6 transition-all duration-500 ease-in-out overflow-y-hidden ${
-                                readMore ? "max-h-[300px]" : "max-h-[72px]"
-                              }`}
-                            >
-                              {item.description}
-                            </p>
-                            <span
-                              className="text-gray-dark-700 underline cursor-pointer font-semibold"
-                              onClick={() => setreadMore((prev) => !prev)}
-                            >
-                              {readMore ? "less" : "more"}
-                            </span>
-                          </div>
-                        </>
-                      ))}
+                      <div className="">
+                        <p
+                          className={`font-sf-pro font-normal text-sm text-gray-dark-400 leading-6 transition-all duration-500 ease-in-out overflow-y-hidden ${
+                            readMore ? "max-h-[300px]" : "max-h-[72px]"
+                          }`}
+                        >
+                          {productDetail.description}
+                        </p>
+                        {isLong && (
+                          <span
+                            onClick={() => setreadMore((p) => !p)}
+                            className="text-gray-dark-700 underline cursor-pointer font-semibold"
+                          >
+                            {readMore ? "less" : "more"}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     {/* buttons */}
@@ -278,7 +306,32 @@ const ProductDetails = () => {
                         </div>
                       ))}
                     </div>
+
+                    {/* tags */}
+                    {
+                      productDetail.tags &&
+                          <div className="pt-8">
+              <h2 className="font-poppins font-medium text-sm text-[#717171] pb-3">Keywords :</h2>
+                     <div className="flex items-center gap-5 w-full ">
+                    
+                      {productDetail.tags.map((tag, index) => (
+                        <div
+                          className=""
+                          key={index}
+                        >
+                          <div className="p-2.5 bg-gray-100 rounded-sm border">
+                            <p className="font-poppins font-medium text-sm text-black capitalize">
+                              {tag}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+             </div>
+                    }
+         
                   </div>
+                  }
                 </div>
               </div>
             </div>
@@ -546,7 +599,6 @@ const ProductDetails = () => {
               </div>
             </div>
           </div>
-
         </div>
 
         {!viewMore && (
@@ -563,17 +615,15 @@ const ProductDetails = () => {
         )}
       </section>
       {/* Products details */}
-      
 
       {/* Reviews */}
       <ReviewSection />
 
       {/* Reviews */}
-      
-      {/* related Products */}
-      <RelatedProducts/>
-      {/* related Products */}
 
+      {/* related Products */}
+      <RelatedProducts />
+      {/* related Products */}
     </>
   );
 };
