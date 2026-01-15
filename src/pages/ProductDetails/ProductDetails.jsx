@@ -11,7 +11,7 @@ import { BsShop } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import ShopButton from "@/components/common/ShopButton";
 import { FaChevronDown, FaShieldAlt } from "react-icons/fa";
-import { phoneDetails, productData } from "@/data/phoneDetails";
+import { phoneDetails, productData } from "@/data/Details";
 import SpecsSection from "@/components/common/SpecsSection";
 import { FiSmartphone, FiCpu, FiCamera, FiBattery } from "react-icons/fi";
 import { BsCpu, BsCameraVideo } from "react-icons/bs";
@@ -19,18 +19,22 @@ import ReviewSection from "@/components/common/ReviewSection";
 import RelatedProducts from "@/components/common/RelatedProducts";
 import { DataContext } from "../../Context/DataContext";
 import BreadCrums from "../../components/common/BreadCrums";
-import { categoryMap } from "../../data/specsTemplate .JS";
-import { archetypeSpecs } from "../../data/specsTemplate .JS";
+import { categoryMap } from "../../utils/category/specsTemplate .JS";
+import { archetypeSpecs } from "../../utils/category/specsTemplate .JS";
 import { specIcons } from "../../data/Icons";
+import { specifications } from "../../data/Details";
+import { getCategoryType } from "../../utils/category/specsTemplate .JS";
+
 
 const ProductDetails = () => {
-
   const [readMore, setreadMore] = useState(false);
   const [detailsReadMore, setdetailsReadMore] = useState(false);
   const [viewMore, setViewMore] = useState(false);
 
   const { id } = useParams();
-  const { productDetail, fetchProductDetails, loading } = useContext(DataContext);
+  const { productDetail, fetchProductDetails, loading } =
+    useContext(DataContext);
+
   const [varinatPrice, setVariant] = useState({
     price: 1099,
     prePrice: 1199,
@@ -77,19 +81,16 @@ const ProductDetails = () => {
     },
   ];
 
-useEffect(() => {
-  if (!id) return;
-  fetchProductDetails(id);
-}, [id]);
+  useEffect(() => {
+    if (!id) return;
+    fetchProductDetails(id);
+  }, [id]);
 
-useEffect(() => {
-  if (productDetail?.images?.length) {
-    setPreviewImg(productDetail.images?.[0]);
-  }
-}, [productDetail]);
-
-
-
+  useEffect(() => {
+    if (productDetail?.images?.length) {
+      setPreviewImg(productDetail.images?.[0]);
+    }
+  }, [productDetail]);
 
   const isLong = productDetail?.description?.length > 200;
 
@@ -107,7 +108,7 @@ useEffect(() => {
     { label: "Stock", value: productDetail?.stock },
   ];
 
-    const [previewImg, setPreviewImg] = useState();
+  const [previewImg, setPreviewImg] = useState();
 
   const handleVarinatPrice = (id) => {
     const selectedSize = productData[0].variants.find((item) => item.id === id);
@@ -119,16 +120,33 @@ useEffect(() => {
     }
   };
 
-  const handleSetPreview= (img) => {
-  setPreviewImg(img)
+  const handleSetPreview = (img) => {
+    setPreviewImg(img);
   };
+const specType = getCategoryType(productDetail?.category);
+const DEFAULT_SECTIONS = 2;
+
+const specsByCategory = specifications[specType] || {};
+
+const specEntries = Object.entries(specsByCategory);
+
+const visibleSpecs = viewMore
+  ? specEntries
+  : specEntries.slice(0, DEFAULT_SECTIONS);
 
 
-if(loading) {
-  return <p>...loading</p>
-}
+console.log(specType);
+
+
+
+  if (loading) {
+    return <p>...loading</p>;
+  }
 
   const phone = phoneDetails[0];
+
+
+  
 
   return (
     <>
@@ -152,24 +170,22 @@ if(loading) {
 
                 <div className="md:w-[45%] flex flex-col md:flex-row gap-6 md:items-start">
                   <div className="md:w-[15%] flex md:flex-col gap-y-5 items-center pt-10 ">
-                  {
-                    !loading &&   productDetail?.images?.map((img, i) => (
-                      <div
-                        className="w-full h-full cursor-pointer"
-                        onClick={() => handleSetPreview(img)}
-                        key={i}
-                      >
-                        <img
-                          src={img}
-                          alt=""
-                          className={`max-w-19 md:max-w-28 w-full transition-all duration-200 ease-in-out ${
-                            previewImg === img ? "scale-120 " : "opacity-70"
-                          }`}
-                        />
-                      </div>
-                    ))
-                    
-                  }
+                    {!loading &&
+                      productDetail?.images?.map((img, i) => (
+                        <div
+                          className="w-full h-full cursor-pointer"
+                          onClick={() => handleSetPreview(img)}
+                          key={i}
+                        >
+                          <img
+                            src={img}
+                            alt=""
+                            className={`max-w-19 md:max-w-28 w-full transition-all duration-200 ease-in-out ${
+                              previewImg === img ? "scale-120 " : "opacity-70"
+                            }`}
+                          />
+                        </div>
+                      ))}
                   </div>
                   <div className="w-[85%]">
                     <img
@@ -183,155 +199,153 @@ if(loading) {
                 {/* right */}
                 <div className="md:w-[55%] ">
                   {/* details */}
-               {
-                    !loading &&    
-                      <div className="right">
-                    <h2 className="font-sf-pro font-bold text-[40px] leading-12 pb-6">
-                      {productDetail?.title}
-                    </h2>
+                  {!loading && (
+                    <div className="right">
+                      <h2 className="font-sf-pro font-bold text-[40px] leading-12 pb-6">
+                        {productDetail?.title}
+                      </h2>
 
-                    <div className="price flex items-center gap-4 pb-4">
-                      <p className="font-poppins font-semibold text-[32px] leading-12 text-black">
-                        {" "}
-                        ${productDetail?.price}
-                      </p>
-                      <p className="font-sf-pro font-normal text-2xl leading-12 text-[#A0A0A0] line-through">
-                        {" "}
-                        ${Math.round(oldPrice)}
-                      </p>
-                    </div>
+                      <div className="price flex items-center gap-4 pb-4">
+                        <p className="font-poppins font-semibold text-[32px] leading-12 text-black">
+                          {" "}
+                          ${productDetail?.price}
+                        </p>
+                        <p className="font-sf-pro font-normal text-2xl leading-12 text-[#A0A0A0] line-through">
+                          {" "}
+                          ${Math.round(oldPrice)}
+                        </p>
+                      </div>
 
-                    {/* Colors  */}
-                    {productDetail?.images?.length > 1 && (
-                      <div className="flex items-center gap-5 pb-5">
-                        {productDetail.images.map((img) => (
-                          <div className="colors w-24 h-24 rounded-sm border cursor-pointer" onClick={()=> handleSetPreview(img)}>
-                            <img src={img} alt="" className="w-full" />
+                      {/* Colors  */}
+                      {productDetail?.images?.length > 1 && (
+                        <div className="flex items-center gap-5 pb-5">
+                          {productDetail.images.map((img) => (
+                            <div
+                              className="colors w-24 h-24 rounded-sm border cursor-pointer"
+                              onClick={() => handleSetPreview(img)}
+                            >
+                              <img src={img} alt="" className="w-full" />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="varients flex items-center gap-4 pb-6">
+                        {specs.map(
+                          (spec, i) =>
+                            spec.value && (
+                              <div
+                                key={i}
+                                className="spec-card flex items-center gap-2 py-3 px-6 rounded-lg border font-poppins font-medium text-sm "
+                              >
+                                <p>{spec.label}:</p>
+                                <p>{spec.value}</p>
+                              </div>
+                            )
+                        )}
+                      </div>
+
+                      {/* specs */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 items-center gap-4 pb-6">
+                        {specsCard?.map((item, index) => (
+                          <div
+                            className="flex items-center gap-3 py-3 px-3 bg-[#F4F4F4] min-h-21 rounded-lg"
+                            key={index}
+                          >
+                            <i className="text-[#4E4E4E] text-2xl">
+                              {specIcons[item?.icon] || specIcons?.default}
+                            </i>
+
+                            <div className="h-full flex flex-col justify-centergap-3 ">
+                              <h2 className="font-sf-pro font-normal text-sm text-gray-800 ">
+                                {item?.label}
+                              </h2>
+                              <p className="text-xs font-sf-pro font-medium text-[#4E4E4E]">
+                                {item.value}
+                              </p>
+                            </div>
                           </div>
                         ))}
                       </div>
-                    )}
 
-                    <div className="varients flex items-center gap-4 pb-6">
-                      {specs.map(
-                        (spec, i) =>
-                          spec.value && (
-                            <div
-                              key={i}
-                              className="spec-card flex items-center gap-2 py-3 px-6 rounded-lg border font-poppins font-medium text-sm "
+                      {/* description */}
+                      <div className="">
+                        <div className="">
+                          <p
+                            className={`font-sf-pro font-normal text-sm text-gray-dark-400 leading-6 transition-all duration-500 ease-in-out overflow-y-hidden ${
+                              readMore ? "max-h-[300px]" : "max-h-[72px]"
+                            }`}
+                          >
+                            {productDetail.description}
+                          </p>
+                          {isLong && (
+                            <span
+                              onClick={() => setreadMore((p) => !p)}
+                              className="text-gray-dark-700 underline cursor-pointer font-semibold"
                             >
-                              <p>{spec.label}:</p>
-                              <p>{spec.value}</p>
+                              {readMore ? "less" : "more"}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* buttons */}
+                      <div className="flex items-center py-8 gap-4 w-full">
+                        <ShopButton
+                          text={"Add to Wishlist"}
+                          className={
+                            "border-black! text-black! w-full flex justify-center"
+                          }
+                        />
+                        <ShopButton
+                          text={"Add to Cart"}
+                          className={"bg-black! w-full flex justify-center"}
+                        />
+                      </div>
+
+                      {/* services */}
+                      <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-5 w-full">
+                        {serviceFeatures.map((service) => (
+                          <div
+                            className="flex items-center gap-3 w-full"
+                            key={service.id}
+                          >
+                            <div className="icon p-4 bg-gray-100 rounded-xl">
+                              {service.icon}
                             </div>
-                          )
+                            <div className="">
+                              <h3 className="font-poppins font-medium text-sm text-[#717171]">
+                                {service.text}
+                              </h3>
+                              <p className="font-poppins font-medium text-sm  text-black">
+                                {service?.p}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* tags */}
+                      {productDetail.tags && (
+                        <div className="pt-8">
+                          <h2 className="font-poppins font-medium text-sm text-[#717171] pb-3">
+                            Keywords :
+                          </h2>
+                          <div className="flex items-center gap-5 w-full ">
+                            {productDetail.tags.map((tag, index) => (
+                              <div className="" key={index}>
+                                <div className="p-2.5 bg-gray-100 rounded-sm border">
+                                  <p className="font-poppins font-medium text-sm text-black capitalize">
+                                    {tag}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       )}
                     </div>
-
-                    {/* specs */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 items-center gap-4 pb-6">
-                      {specsCard?.map((item, index) => (
-                        <div
-                          className="flex items-center gap-3 py-3 px-3 bg-[#F4F4F4] min-h-21 rounded-lg"
-                          key={index}
-                        >
-                          <i className="text-[#4E4E4E] text-2xl">
-                            {specIcons[item?.icon] || specIcons?.default}
-                          </i>
-
-                          <div className="h-full flex flex-col justify-centergap-3 ">
-                            <h2 className="font-sf-pro font-normal text-sm text-gray-800 ">
-                              {item?.label}
-                            </h2>
-                            <p className="text-xs font-sf-pro font-medium text-[#4E4E4E]">
-                              {item.value}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* description */}
-                    <div className="">
-                      <div className="">
-                        <p
-                          className={`font-sf-pro font-normal text-sm text-gray-dark-400 leading-6 transition-all duration-500 ease-in-out overflow-y-hidden ${
-                            readMore ? "max-h-[300px]" : "max-h-[72px]"
-                          }`}
-                        >
-                          {productDetail.description}
-                        </p>
-                        {isLong && (
-                          <span
-                            onClick={() => setreadMore((p) => !p)}
-                            className="text-gray-dark-700 underline cursor-pointer font-semibold"
-                          >
-                            {readMore ? "less" : "more"}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* buttons */}
-                    <div className="flex items-center py-8 gap-4 w-full">
-                      <ShopButton
-                        text={"Add to Wishlist"}
-                        className={
-                          "border-black! text-black! w-full flex justify-center"
-                        }
-                      />
-                      <ShopButton
-                        text={"Add to Cart"}
-                        className={"bg-black! w-full flex justify-center"}
-                      />
-                    </div>
-
-                    {/* services */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-5 w-full">
-                      {serviceFeatures.map((service) => (
-                        <div
-                          className="flex items-center gap-3 w-full"
-                          key={service.id}
-                        >
-                          <div className="icon p-4 bg-gray-100 rounded-xl">
-                            {service.icon}
-                          </div>
-                          <div className="">
-                            <h3 className="font-poppins font-medium text-sm text-[#717171]">
-                              {service.text}
-                            </h3>
-                            <p className="font-poppins font-medium text-sm  text-black">
-                              {service?.p}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* tags */}
-                    {
-                      productDetail.tags &&
-                          <div className="pt-8">
-              <h2 className="font-poppins font-medium text-sm text-[#717171] pb-3">Keywords :</h2>
-                     <div className="flex items-center gap-5 w-full ">
-                    
-                      {productDetail.tags.map((tag, index) => (
-                        <div
-                          className=""
-                          key={index}
-                        >
-                          <div className="p-2.5 bg-gray-100 rounded-sm border">
-                            <p className="font-poppins font-medium text-sm text-black capitalize">
-                              {tag}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-             </div>
-                    }
-         
-                  </div>
-                  }
+                  )}
                 </div>
               </div>
             </div>
@@ -524,81 +538,33 @@ if(loading) {
             <h2 className="font-poppins font-medium text-2xl leading-6 pb-8">
               Details
             </h2>
-            {phoneDetails.map((item) => (
-              <>
-                <p
-                  className={`font-poppins font-medium text-sm leading-6 text-[#9D9D9D]  transition-all duration-500 ease-in-out overflow-y-hidden ${
-                    detailsReadMore ? "max-h-[500px]" : "max-h-[72px]"
-                  }`}
-                >
-                  {item.overview.description}
-                </p>
+
+            <div className="">
+              <p
+                className={`font-poppins font-medium text-sm leading-6 text-[#9D9D9D]  transition-all duration-500 ease-in-out overflow-y-hidden ${
+                  detailsReadMore ? "max-h-[500px]" : "max-h-[72px]"
+                }`}
+              >
+                {productDetail.description}
+              </p>
+              {isLong && (
                 <span
+                  onClick={() => setreadMore((p) => !p)}
                   className="text-gray-dark-700 underline cursor-pointer font-semibold"
-                  onClick={() => setdetailsReadMore((prev) => !prev)}
                 >
-                  {detailsReadMore ? "less" : "more.."}
+                  {readMore ? "less" : "more"}
                 </span>
-              </>
-            ))}
-          </div>
-
-          {/* Screen */}
-
-          <div className="">
-            <div>
-              <div className="flex flex-col gap-y-10 pb-5">
-                <SpecsSection
-                  title={phone.display.title}
-                  specs={phone.display.specs}
-                />
-                <SpecsSection
-                  title={phone.processor.title}
-                  specs={phone.processor.specs}
-                />
-                <SpecsSection
-                  title={phone.memory.title}
-                  specs={phone.memory.specs}
-                />
-                <SpecsSection
-                  title={phone.battery.title}
-                  specs={phone.battery.specs}
-                />
-                <SpecsSection
-                  title={phone.connectivity.title}
-                  specs={phone.connectivity.specs}
-                />
-                <SpecsSection
-                  title={phone.build.title}
-                  specs={phone.build.specs}
-                />
-                <SpecsSection
-                  title={phone.software.title}
-                  specs={phone.software.specs}
-                />
-              </div>
-              <div className="flex flex-col gap-y-10 pb-8">
-                <h2 className="font-poppins font-medium text-lg md:text-2xl leading-6">
-                  Camera
-                </h2>
-
-                <SpecsSection title="Rear Camera" specs={phone.camera.rear} />
-                <SpecsSection title="Front Camera" specs={phone.camera.front} />
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <h2 className="font-poppins font-medium text-lg md:text-2xl leading-6">
-                  {phone.sensors.title}
-                </h2>
-
-                <ul className="grid grid-cols-2 gap-2 font-sf-pro font-normal text-sm text-black">
-                  {phone.sensors.specs.map((sensor, i) => (
-                    <li key={i}>• {sensor}</li>
-                  ))}
-                </ul>
-              </div>
+              )}
             </div>
           </div>
+
+    {visibleSpecs.map(([section, items]) => (
+  <SpecsSection
+    key={section}
+    specs={items}
+  />
+))}
+
         </div>
 
         {!viewMore && (

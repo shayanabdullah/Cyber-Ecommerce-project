@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Container from "./Container";
 import { BsStarFill } from "react-icons/bs";
 import { CiStar } from "react-icons/ci";
@@ -10,6 +10,7 @@ import reviewer2 from '@/assets/reviewer/reviewer-1.svg'
 import reviewer3 from '@/assets/reviewer/reviewer-3.svg'
 import StarRating from "./StarRating ";
 import ShopButton from "./ShopButton";
+import { DataContext } from "../../Context/DataContext";
 
 const { totalReviews, averageRating, ratingsBreakdown } = reviewSummary;
 const ReviewSection = () => {
@@ -17,7 +18,12 @@ const ReviewSection = () => {
  return Math.round((count / totalReviews)*100); 
  }
  const [viewMore, setViewMore] = useState(false)
+  const { productDetail, loading} = useContext(DataContext);
 
+  if (loading) {
+    return <p>...loading</p>;
+  }
+  
   return (
     <section className="py-20 px-3">
       <Container>
@@ -34,18 +40,38 @@ const ReviewSection = () => {
               <div className="rating flex items-center md:flex-col gap-x-4 flex-wrap justify-center">
                 <div className="">
                   <h2 className="font-poppins font-medium text-[56px] leading-14 pb-4">
-                   {averageRating}
+                   {productDetail?.rating}
                   </h2>
                   <h2 className="font-poppins font-medium text-[15px] leading-4 pb-4 text-black/30">
-                    of {totalReviews} reviews
+                    of {productDetail?.reviews?.length} reviews
                   </h2>
                 </div>
-                <div className="stars flex items-center gap-1 text-[#FFB547]  text-2xl">
+                <div className="">
+               {
+                productDetail?.rating >= 3 ? 
+          (   <div className="stars flex items-center gap-1 text-[#FFB547]  text-2xl">
+                   <FaStar />
                   <FaStar />
                   <FaStar />
+                  <FaStarHalfAlt /> 
+             </div>)
+                  : productDetail?.rating  < 3 ?  (
+                      <div className="stars flex items-center gap-1 text-[#FFB547]  text-2xl">
+                   <FaStar />
+                  <FaStar />
+
+                  <FaStarHalfAlt /> 
+             </div> ):
+                  
+                  productDetail?.rating >= 4 && (
+                      <div className="stars flex items-center gap-1 text-[#FFB547]  text-2xl">
+                   <FaStar />
                   <FaStar />
                   <FaStar />
-                  <FaStarHalfAlt />
+                  <FaStarHalfAlt /> 
+             </div>
+                  )
+               }
                 </div>
               </div>
             </div>
@@ -83,6 +109,10 @@ const ReviewSection = () => {
             </div>
           </div>
      </div>
+
+
+
+     
             {/* main reviews */}
            <div className={`flex flex-col gap-y-6 relative transition-all duration-500 ease-in-out overflow-hidden ${ viewMore ? "max-h-[5000px]" : "max-h-[800px]"} `}>
             

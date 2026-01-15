@@ -97,7 +97,7 @@ export const archetypeSpecs = {
 
 export const categoryMap = {
   smartphones: "mobile",
-  tablets: "mobile",
+  tablets: "tablets",
   laptops: "laptops",
 
   "mens-watches": "watches",
@@ -128,4 +128,9 @@ export const categoryMap = {
 
   motorcycle: "vehicle",
   vehicle: "vehicle",
+};
+
+
+export const getCategoryType = (slug) => {
+  return categoryMap[slug] || "generic";
 };

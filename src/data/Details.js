@@ -209,3 +209,220 @@ export const productData = [
     ],
   },
 ];
+
+
+
+
+export const specifications = {
+  mobile: {
+    display: {
+      "Screen Size": "6.5 inch",
+      "Panel Type": "AMOLED",
+      "Refresh Rate": "120Hz",
+    },
+    performance: {
+      Processor: "Snapdragon 8 Gen 3",
+      RAM: "12GB",
+      Storage: "256GB",
+    },
+    battery: {
+      Capacity: "5000mAh",
+      Charging: "65W Fast Charging",
+    },
+  },
+
+  laptops: {
+    display: {
+      "Screen Size": "15.6 inch",
+      Resolution: "1920x1080",
+      Panel: "IPS",
+    },
+    performance: {
+      CPU: "Intel i7 13th Gen",
+      GPU: "RTX 4060",
+      RAM: "16GB",
+    },
+    storage: {
+      SSD: "1TB NVMe",
+    },
+    battery: {
+      Backup: "8 hours",
+    },
+  },
+
+  watch: {
+    display: {
+      "Screen Type": "AMOLED",
+      Size: "1.4 inch",
+    },
+    features: {
+      "Heart Rate Monitor": "Yes",
+      SpO2: "Yes",
+      "Sleep Tracking": "Yes",
+    },
+    battery: {
+      "Battery Life": "7 days",
+      "Charging Time": "2 hours",
+    },
+  },
+
+  headphones: {
+    audio: {
+      "Driver Size": "40mm",
+      "Noise Cancellation": "Active",
+    },
+    connectivity: {
+      "Bluetooth Version": "5.3",
+      "Wired Support": "Yes",
+    },
+    battery: {
+      "Playback Time": "30 hours",
+    },
+  },
+
+  tablets: {
+    display: {
+      "Screen Size": "11 inch",
+    },
+    Resolution : {
+  Resolution: "2388x1668",
+    },
+    performance: {
+      Processor: "Apple M2 / SD gen 5",
+    },
+    ram :{
+ RAM: "8GB",
+    },
+    battery: {
+      "Usage Time": "10 hours",
+    },
+  },
+
+   fashion: {
+    material: {
+      Material: "Cotton / Polyester / Leather",
+      Fit: "Regular / Slim",
+    },
+    size: {
+      Sizes: "S, M, L, XL",
+    },
+    care: {
+      "Wash Care": "Machine / Hand wash",
+      Origin: "Imported / Local",
+    },
+  },
+
+  /* 👜 Bags, Jewellery, Sunglasses */
+  accessories: {
+    material: {
+      Material: "PU Leather / Metal / Plastic",
+      Finish: "Matte / Glossy",
+    },
+    usage: {
+      Occasion: "Casual / Party / Daily",
+      Gender: "Unisex",
+    },
+    warranty: {
+      Warranty: "6 Months",
+    },
+  },
+
+  /* 💄 Beauty items */
+  beauty: {
+    product: {
+      Type: "Cosmetic / Skincare",
+      SkinType: "All skin types",
+    },
+    details: {
+      Quantity: "100ml / 50g",
+      "Shelf Life": "24 Months",
+    },
+    safety: {
+      "Dermatologically Tested": "Yes",
+      Organic: "No",
+    },
+  },
+
+  /* 🛒 Groceries */
+  groceries: {
+    product: {
+      Category: "Food / Daily Essentials",
+      Weight: "1kg / 500g",
+    },
+    quality: {
+      "Expiry Date": "6–12 Months",
+      Organic: "No",
+    },
+    storage: {
+      Storage: "Cool & Dry Place",
+    },
+  },
+
+  /* 🪑 Furniture */
+  furniture: {
+    material: {
+      Material: "Wood / Metal / Engineered Wood",
+      Finish: "Polished / Matte",
+    },
+    dimensions: {
+      Size: "Standard",
+      Weight: "10–40 kg",
+    },
+    warranty: {
+      Warranty: "1 Year",
+      Assembly: "Required",
+    },
+  },
+
+  /* 🖼 Home Decoration */
+  "home-decoration": {
+    material: {
+      Material: "Glass / Ceramic / Wood",
+    },
+    style: {
+      Style: "Modern / Classic",
+      Placement: "Indoor",
+    },
+    care: {
+      Cleaning: "Dry / Wet cloth",
+    },
+  },
+
+  /* 🍳 Kitchen Accessories */
+  "kitchen-accessories": {
+    material: {
+      Material: "Stainless Steel / Plastic",
+      Safe: "Food Grade",
+    },
+    usage: {
+      DishwasherSafe: "Yes",
+      HeatResistant: "Yes",
+    },
+    warranty: {
+      Warranty: "6 Months",
+    },
+  },
+
+  /* 🏍 Vehicles */
+  vehicle: {
+    engine: {
+      Type: "Petrol / Electric",
+      Capacity: "150cc – 500cc",
+    },
+    performance: {
+      Mileage: "40–60 km/l",
+      Transmission: "Manual / Automatic",
+    },
+    safety: {
+      Brakes: "Disc / ABS",
+    },
+  },
+
+  /* 🧩 Fallback (for unknown categories) */
+  generic: {
+    info: {
+      Brand: "Generic",
+      Warranty: "Not specified",
+    },
+  },
+};

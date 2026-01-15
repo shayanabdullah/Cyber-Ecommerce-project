@@ -1,41 +1,34 @@
-import React from 'react'
+import React from "react";
 
-const SpecsSection = ({title, specs}) => {
+const SpecsSection = ({ title, specs }) => {
   return (
-<>
-     <div className="screen">
-           <div className="pb-4">
-             <h2 className="font-poppins font-medium text-lg md:text-2xl leading-6 ">
-              {title}
-            </h2>
-           </div>
-            {
-                specs.map((item, i)=> 
-        ( <div
-          key={i}
-          className="flex justify-between w-full py-2 border-b border-[#CDCDCD]"
-        >
-          <p className='font-sf-pro font-normal text-sm md:font-base leading-6 text-black'>{item.label}</p>
-          {Array.isArray(item.value) ? (
-            <ul className="text-right space-y-1">
-              {item.value.map((feature, index) => (
-                <li key={index} className='font-sf-pro font-normal text-[13px] md:text-[15px] text-black '>{feature.feature}</li>
-              ))}
-            </ul>
-          ) : (
-          
-            <span className='font-sf-pro font-normal text-[13px] md:text-[15px] text-black '>
-              {item.value || item.specvalue}
-            </span>
-          )}
-        </div>
-        )
-                )
-            }
-   </div>
-    
-</>
-  )
-}
+    <div className="w-full">
+      {specs &&
+        Object.entries(specs).map(([section, values]) => (
+          <div
+            key={section}
+            className="flex justify-between  w-full py-2 border-b border-[#CDCDCD]"
+          >
+            {/* Left: Section name */}
+            <h3 className="font-sf-pro font-normal text-sm leading-6 text-black capitalize">
+              {section}
+            </h3>
 
-export default SpecsSection
+            {/* Right: Specs */}
+            <div className="flex flex-col text-right gap-1">
+            
+                <div  className="text-black">
+                  <span className="text-[13px] md:text-[15px] font-medium">
+                    {values}
+                  </span>
+           
+                </div>
+       
+            </div>
+          </div>
+        ))}
+    </div>
+  );
+};
+
+export default SpecsSection;

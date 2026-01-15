@@ -1,6 +1,6 @@
 import ShopButton from "@/components/common/ShopButton";
 import { discountProducts } from "@/data/discountProducts";
-import { productData } from "@/data/phoneDetails";
+import { productData } from "@/data/Details";
 import { smartphones } from "@/data/smartphonesApi";
 import React, { useEffect, useState } from "react";
 import { FaFire, FaHeart, FaRegHeart } from "react-icons/fa";
