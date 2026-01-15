@@ -69,7 +69,7 @@ useEffect(() => {
 
 const filteredCategories = categories.filter(item=> item.slug !== 'laptops' && item.slug !== 'smartphones' )
 
-console.log(categories);
+
 
 
 

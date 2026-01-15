@@ -36,6 +36,8 @@ const Shop = () => {
     fetchProductsByCategory(slug);
   }, [slug]);
 
+
+
 const sortedProducts = [...products].sort((a, b) => {
   if (sortType === "Price Low to High") {
     return a.price - b.price;
@@ -46,8 +48,7 @@ const sortedProducts = [...products].sort((a, b) => {
   return 0;
 });
 
-const slugify = (text) =>
-  text.toLowerCase().replace(/\s+/g, "-");
+const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
 
 
 
@@ -211,7 +212,7 @@ if(loading) {
                     );
 
                     return (
-                      <Link key={item.id} to={`/shop/category/${slugify(item.brand)}/${item.id}`}>
+                      <Link key={item.id}   to={`/shop/category/${slugify(item.title || item.name)}/${item.id}`}>
                         <ProductCard
                           name={item.title}
                           reviews={item.rating}

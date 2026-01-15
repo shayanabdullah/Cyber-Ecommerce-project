@@ -24,6 +24,23 @@ const ReviewSection = () => {
     return <p>...loading</p>;
   }
   
+const formatDateTime = (dateString) => {
+  return new Date(dateString).toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+const getRandomAvatar = (id) => {
+  return `https://i.pravatar.cc/150?img=${id}`;
+};
+
+
+
+
   return (
     <section className="py-20 px-3">
       <Container>
@@ -117,22 +134,23 @@ const ReviewSection = () => {
            <div className={`flex flex-col gap-y-6 relative transition-all duration-500 ease-in-out overflow-hidden ${ viewMore ? "max-h-[5000px]" : "max-h-[800px]"} `}>
             
          {
-          reviewsData.map((review)=> (
+          productDetail?.reviews?.map((review, index)=> (
              <div className="py-6 pl-4 pr-6 bg-gray-50 rounded-[10px] flex  gap-5">
               <div className="img max-w-14 max-h-14 rounded-full overflow-hidden">
-                <img src={review.avatar} alt="" className="" />
+                <img src={getRandomAvatar((index+1) % 70)} alt={review.reviewerName} className="" />
               </div>
               
               <div className="review w-full ">
                 <div className="heading w-full flex justify-between items-center">
              <div className="pb-2">
-                   <h2 className="font-sf-pro font-bold text-lg leading-6 text-black pb-2">{review.name}</h2>
+                   <h2 className="font-sf-pro font-bold text-lg leading-6 text-black pb-1">{review.reviewerName}</h2>
+                   <h2 className="font-sf-pro font-medium text-sm leading-6 text-gray-700 pb-2">{review.reviewerEmail}</h2>
                   <div className="stars text-2xl">
                     <StarRating rating={review.rating}/>
          
                 </div>
              </div>
-                  <p className="font-poppins font-medium text-sm leading-6 text-black/20">{review.date}</p>
+                  <p className="font-poppins font-medium text-sm leading-6 text-black/20">{formatDateTime(review.date)}</p>
                 </div>
                 <div className="review-main">
                   <p className="font-poppins font-medium text-base text-[#7E7E7E] leading-6 pb-2">
