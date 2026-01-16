@@ -12,7 +12,7 @@ const BreadCrums = ({slug, category, name}) => {
     <>
       <section className="py-10">
         <Container>
-            <div className="main flex items-center gap-4 pb-6">
+            <div className="main flex items-center gap-4 pb-6 flex-wrap overflow-x-hidden">
               <Link to={"/"}>
            <div className="flex items-center gap-4 cursor-pointer!">
                <h2 className="font-poppins font-medium text-sm md:text-base text-gray-750 cursor-pointer! capitalize">Home</h2>
@@ -28,7 +28,7 @@ const BreadCrums = ({slug, category, name}) => {
            <div className="">
             {
               !isLast ? (
-                   <div className="flex items-center gap-4 cursor-pointer" key={index}>
+                   <div className="flex items-center gap-4 cursor-pointer flex-wrap" key={index}>
                    <Link >
                 <h2 className="font-poppins font-medium text-sm md:text-base text-gray-750 capitalize ">{path.replace("-", " ")}</h2>
              </Link>

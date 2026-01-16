@@ -54,7 +54,7 @@ const getRandomAvatar = (id) => {
           </div>
           <div className="reviews flex flex-col md:flex-row items-center gap-15 pb-12">
             <div className="review-count p-8 bg-gray-50 rounded-3xl text-center w-full md:max-w-[180px] flex flex-col items-center">
-              <div className="rating flex items-center md:flex-col gap-x-4 flex-wrap justify-center">
+              <div className="rating flex items-center flex-col gap-x-4 flex-wrap justify-center">
                 <div className="">
                   <h2 className="font-poppins font-medium text-[56px] leading-14 pb-4">
                    {productDetail?.rating}
@@ -135,22 +135,22 @@ const getRandomAvatar = (id) => {
             
          {
           productDetail?.reviews?.map((review, index)=> (
-             <div className="py-6 pl-4 pr-6 bg-gray-50 rounded-[10px] flex  gap-5">
-              <div className="img max-w-14 max-h-14 rounded-full overflow-hidden">
+             <div className="py-6  md:pl-4 px-1 md:pr-6 bg-gray-50 rounded-[10px] flex  gap-5">
+              <div className="img max-w-10 md:max-w-14 md:max-h-14 rounded-full overflow-hidden">
                 <img src={getRandomAvatar((index+1) % 70)} alt={review.reviewerName} className="" />
               </div>
               
               <div className="review w-full ">
                 <div className="heading w-full flex justify-between items-center">
              <div className="pb-2">
-                   <h2 className="font-sf-pro font-bold text-lg leading-6 text-black pb-1">{review.reviewerName}</h2>
-                   <h2 className="font-sf-pro font-medium text-sm leading-6 text-gray-700 pb-2">{review.reviewerEmail}</h2>
-                  <div className="stars text-2xl">
+                   <h2 className="font-sf-pro font-bold text-sm md:text-lg leading-6 text-black pb-1">{review.reviewerName}</h2>
+                   <h2 className="font-sf-pro font-medium text-[10px] md:text-sm leading-6 text-gray-700 pb-2">{review.reviewerEmail}</h2>
+                  <div className="stars md:text-2xl">
                     <StarRating rating={review.rating}/>
          
                 </div>
              </div>
-                  <p className="font-poppins font-medium text-sm leading-6 text-black/20">{formatDateTime(review.date)}</p>
+                  <p className="font-poppins font-medium text-[10px] md:text-sm leading-6 text-black/20">{formatDateTime(review.date)}</p>
                 </div>
                 <div className="review-main">
                   <p className="font-poppins font-medium text-base text-[#7E7E7E] leading-6 pb-2">

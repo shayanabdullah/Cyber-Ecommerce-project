@@ -16,7 +16,7 @@ import { Link, useParams } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
 
 const Shop = () => {
-  const { slug, id } = useParams();
+  const { category, id } = useParams();
   const { products, fetchProductsByCategory, fetchProductDetails,loading } = useContext(DataContext);
   const [dropDownOpen, setDropDownOpen] = useState(false);
   const [sortType, setSortType] = useState("Default");
@@ -32,9 +32,9 @@ const Shop = () => {
   const [filterOpen, setFilteropen] = useState(false);
 
   useEffect(() => {
-    if (!slug) return;
-    fetchProductsByCategory(slug);
-  }, [slug]);
+    if (!category) return;
+    fetchProductsByCategory(category);
+  }, [category]);
 
 
 

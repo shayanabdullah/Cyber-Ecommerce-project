@@ -7,7 +7,7 @@ const SpecsSection = ({ title, specs }) => {
         Object.entries(specs).map(([section, values]) => (
           <div
             key={section}
-            className="flex justify-between  w-full py-2 border-b border-[#CDCDCD]"
+            className="flex justify-between w-full py-2 border-b border-[#CDCDCD] px-1"
           >
             {/* Left: Section name */}
             <h3 className="font-sf-pro font-normal text-sm leading-6 text-black capitalize">

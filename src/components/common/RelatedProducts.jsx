@@ -7,20 +7,31 @@ import { FaFire, FaHeart, FaRegHeart } from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import Container from "./Container";
 import { DataContext } from "../../Context/DataContext";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 const RelatedProducts = () => {
-const { id } = useParams();
+const { id,} = useParams();
 const currentId = Number(id);
-
-const { products, loading } = useContext(DataContext);
+const { products, loading, fetchProductsByCategory,productDetail } = useContext(DataContext);
 
 const maxProd = 4;
 const [startIndex, setStartIndex] = useState(0);
 
+const category  = productDetail?.category
+
+console.log(category);
+
+
+useEffect(() => {
+  if (!category) return;
+  fetchProductsByCategory(category);
+}, [category]);
+
+
+
 useEffect(() => {
   if (!products?.length) return;
-
   const filtered = products.filter(
     (item) => item.id !== currentId
   );
@@ -29,9 +40,13 @@ useEffect(() => {
   const random = Math.floor(Math.random() * (maxStart + 1));
 
   setStartIndex(random);
+
+  
 }, [products, currentId]);
 
 
+
+const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
 
 const currentProd =  products.filter((item) => item.id !== currentId)
 
@@ -40,9 +55,11 @@ const relatedProducts = currentProd?.slice(startIndex, startIndex+maxProd)
 
 const maxProdShow =  relatedProducts.length >= 3
 
-console.log(currentProd);
 
 
+if(loading) {
+  return <p>....loading</p>
+}
   return (
     <>
     <section className="py-20 px-4">
@@ -52,7 +69,7 @@ console.log(currentProd);
         </div>
           <div className={`main grid grid-cols-2 md:grid-cols-3 gap-4 ${maxProdShow ? 'lg:grid-cols-4' : ''}`}>
               {
-                relatedProducts.map((item)=> {
+                relatedProducts?.map((item)=> {
                        const fixedDiscountPercentage = Math.floor(
                       item.discountPercentage
                     );
@@ -63,7 +80,8 @@ console.log(currentProd);
 
                     return (
                          <div className="" key={item.id}>
-                 <ProductCard
+                           <Link key={item.id}   to={`/shop/category/${slugify(item.title || item.name)}/${item.id}`}>
+                                 <ProductCard
                           name={item.title}
                           reviews={item.rating}
                           img={item.images?.[0] || "placeholder.jpg"}
@@ -73,6 +91,8 @@ console.log(currentProd);
                           alt={`${item.title} image`}
                           wishId={item.id}
                         />
+                           </Link>
+           
              </div>
                     )
                 })

@@ -249,7 +249,7 @@ const NavberSection = () => {
         ></div>
 
         {/* search btn */}
-        <div className="px-3 py-3">
+        <div className="px-3 py-3 overflow-hidden">
           <div className="search relative w-full border-2 rounded-lg border-gray-500 focus-within:border-black">
             <i className="absolute top-3.5 left-2.5  text-2xl text-gray-850 ">
               <CiSearch />
