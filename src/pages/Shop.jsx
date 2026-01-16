@@ -59,7 +59,7 @@ if(loading) {
   return (
     <>
       <main className="px-4 xl:px-0">
-        <BreadCrums slug={slug}/>
+        <BreadCrums category={category}/>
         <section className="">
           <Container>
             <div className="main flex gap-8">
@@ -69,7 +69,7 @@ if(loading) {
                     <PriceRange />
                   </div>
                 {
-                  slug.includes("phones") && 
+                  category.includes("phones") && 
                     <div className="flex flex-col gap-y-6">
                     <Catagory title={"Brand"} arrMap={smartpohonesBrands} />
                     <Catagory
@@ -94,7 +94,7 @@ if(loading) {
                     <h2 className="font-poppins font-medium text-[11px] xs:text-sm md:text-lg text-gray-dark-400 flex items-center gap-1 xs:gap-2  ">
                       Showing
                       <span className="text-xs xs:text-sm md:text-xl text-black">
-                        {slug.includes("phones")
+                        {category.includes("phones")
                           ? smartphones.slice(start, end).length
                           : products.slice(start, end).length}{" "}
                         products:
@@ -179,7 +179,7 @@ if(loading) {
                   </div>
                 </div>
 
-                {slug.includes("phones") && (
+                {category.includes("phones") && (
                   <>
                     <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 items-center gap-4 md:gap-6 lg:gap-4 transition-all duration-200 ease-in-out">
                       {smartphones.slice(start, end).map((phone) => (
@@ -229,7 +229,7 @@ if(loading) {
                 </div>
 
                 {/* Pagination */}
-                {slug.includes("phones") ? (
+                {category.includes("phones") ? (
                   <>
                     {/* phones grid */}
                     <Pagination

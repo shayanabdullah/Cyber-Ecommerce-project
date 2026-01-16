@@ -12,8 +12,10 @@ import StarRating from "./StarRating ";
 import ShopButton from "./ShopButton";
 import { DataContext } from "../../Context/DataContext";
 
-const { totalReviews, averageRating, ratingsBreakdown } = reviewSummary;
+const { totalReviews, ratingsBreakdown } = reviewSummary;
 const ReviewSection = () => {
+
+
  const getPercent = (count) => {
  return Math.round((count / totalReviews)*100); 
  }

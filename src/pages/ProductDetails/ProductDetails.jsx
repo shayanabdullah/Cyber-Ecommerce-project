@@ -27,36 +27,19 @@ import { getCategoryType } from "../../utils/category/specsTemplate .JS";
 import ImageZoom from "react-image-zooom";
 import InnerImageZoom from "react-inner-image-zoom";
 import 'react-inner-image-zoom/lib/styles.min.css';
-import ModalImage from "react-modal-image";
+
 
 const ProductDetails = () => {
   const [readMore, setreadMore] = useState(false);
   const [detailsReadMore, setdetailsReadMore] = useState(false);
   const [viewMore, setViewMore] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { id } = useParams();
   const { productDetail, fetchProductDetails, loading } =
     useContext(DataContext);
 
-  const [varinatPrice, setVariant] = useState({
-    price: 1099,
-    prePrice: 1199,
-  });
 
-  const iconMap = {
-    smartphone: <FiSmartphone />,
-    cpu: <FiCpu />,
-    cores: <BsCpu />,
-    camera: <FiCamera />,
-    frontCamera: <BsCameraVideo />,
-    battery: <FiBattery />,
-  };
-
-  const gallery = [
-    { img: iphone17 },
-    { img: iphone17blue },
-    { img: iphone17silver },
-  ];
 
   const serviceFeatures = [
     {
@@ -113,15 +96,7 @@ const ProductDetails = () => {
 
   const [previewImg, setPreviewImg] = useState();
 
-  const handleVarinatPrice = (id) => {
-    const selectedSize = productData[0].variants.find((item) => item.id === id);
-    if (selectedSize) {
-      setVariant({
-        price: selectedSize.price,
-        prePrice: selectedSize.previousPrice,
-      });
-    }
-  };
+
 
   const handleSetPreview = (img) => {
     setPreviewImg(img);
@@ -141,7 +116,7 @@ const ProductDetails = () => {
     return <p>...loading</p>;
   }
 
-  const phone = phoneDetails[0];
+
 
   return (
     <>
@@ -187,12 +162,26 @@ const ProductDetails = () => {
                           ))}
                       </div>
                       <div className="w-[85%]">
-                        <InnerImageZoom
+                        { 
+                        
+                        <div className="w-full" onClick={() => setIsModalOpen(true)}>
+                               <InnerImageZoom
                           src={previewImg}
                           zoomSrc={previewImg}
                           zoomType="hover"
                           zoomPreload={true}
                         />
+                      </div>
+                      
+                      
+                        }
+                     {
+                      isModalOpen && <div className="w-full h-screen fixed top-0 left-0 bg-[#00000075] backdrop-blur-md z-90000 flex items-center justify-center" onClick={()=> setIsModalOpen(false)}>
+                       <div className="img w-full max-w-[800px] mx-auto bg-white ">
+                        <img src={previewImg} alt=""  className="w-full max-w-[800px]"/>
+                       </div>
+                      </div>
+                     }
                       </div>
 
                     </div>
