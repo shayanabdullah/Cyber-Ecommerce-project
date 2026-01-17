@@ -100,7 +100,9 @@ const NavberSection = () => {
               
               </Link>
               
+              <Link to={'/login'}>
                   <FiUser />
+              </Link>
               
               </div>
             </div>

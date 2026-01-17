@@ -14,6 +14,7 @@ import Pagination from "@/components/common/Pagination";
 import { HiX } from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
+import ShopSkeleton from "../skeleton/ShopPageSkeleton";
 
 const Shop = () => {
   const { category, id } = useParams();
@@ -53,7 +54,7 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
 
 
 if(loading) {
-  return <p>...loading</p>
+  return <ShopSkeleton/>
 }
 
   return (

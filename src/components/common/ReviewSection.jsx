@@ -15,7 +15,6 @@ import { DataContext } from "../../Context/DataContext";
 const { totalReviews, ratingsBreakdown } = reviewSummary;
 const ReviewSection = () => {
 
-
  const getPercent = (count) => {
  return Math.round((count / totalReviews)*100); 
  }
@@ -42,6 +41,7 @@ const getRandomAvatar = (id) => {
 
 
 
+  const isLong = productDetail?.reviews?.length >= 4;
 
   return (
     <section className="py-20 px-3">
@@ -133,7 +133,16 @@ const getRandomAvatar = (id) => {
 
      
             {/* main reviews */}
-           <div className={`flex flex-col gap-y-6 relative transition-all duration-500 ease-in-out overflow-hidden ${ viewMore ? "max-h-[5000px]" : "max-h-[800px]"} `}>
+            <div className="">
+              {
+                 <div className="w-full flex flex-col justify-center items-center py-20">
+                  <p className="font-sf-pro font-medium text-2xl text-gray-750">No reviews yet. Be the first to share your experience.</p>
+                 </div>
+              }
+            </div>
+
+
+           {/* <div className={`flex flex-col gap-y-6 relative transition-all duration-500 ease-in-out overflow-hidden ${ viewMore ? "max-h-[5000px]" : "max-h-[800px]"} `}>
             
          {
           productDetail?.reviews?.map((review, index)=> (
@@ -172,10 +181,12 @@ const getRandomAvatar = (id) => {
          }
 
         {
-          !viewMore &&  <div className="w-full h-[180px] bg-linear-to-b from-white/0 backdrop-blur-[0.7px] to-white absolute bottom-0 "></div>
+        !viewMore && isLong &&   <div className="w-full h-[180px] bg-linear-to-b from-white/0 backdrop-blur-[0.7px] to-white absolute bottom-0 "></div>
         }
-           </div>
-           {!viewMore && (
+           </div> */}
+
+
+           {!viewMore && isLong && (
           <div className="view more w-full pt-8 flex justify-center">
             <ShopButton
               text={`View more`}

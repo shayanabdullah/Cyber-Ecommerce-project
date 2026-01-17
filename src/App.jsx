@@ -10,6 +10,8 @@ import Address from './pages/Address'
 import ShippningPage from './pages/ShippningPage'
 import Payment from './components/common/Payment'
 import Products from './components/common/Test'
+import Register from './pages/Register'
+import Login from './pages/Login'
 
 const App = () => {
 
@@ -26,6 +28,8 @@ const App = () => {
       { path: "checkout/address", element: <Address/> },
       { path: "checkout/shipping", element: <ShippningPage/> },
       { path: "checkout/payment", element: <Payment/> },
+      { path: "/register", element: <Register/> },
+      { path: "/login", element: <Login/> },
       { path: "/test", element: <Products/> },
       { path: "*", element: 'No Data Found' },
     ],

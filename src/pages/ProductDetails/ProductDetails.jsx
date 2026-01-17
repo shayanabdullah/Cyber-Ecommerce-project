@@ -26,8 +26,10 @@ import { specifications } from "../../data/Details";
 import { getCategoryType } from "../../utils/category/specsTemplate .JS";
 import ImageZoom from "react-image-zooom";
 import InnerImageZoom from "react-inner-image-zoom";
-import 'react-inner-image-zoom/lib/styles.min.css';
-
+import "react-inner-image-zoom/lib/styles.min.css";
+import { IoClose } from "react-icons/io5";
+import ProductDetailsSkeleton from "../../skeleton/ProductDetailsSkeleton ";
+import ImageSkeleton from "../../skeleton/ImageSkeleton";
 
 const ProductDetails = () => {
   const [readMore, setreadMore] = useState(false);
@@ -38,8 +40,6 @@ const ProductDetails = () => {
   const { id } = useParams();
   const { productDetail, fetchProductDetails, loading } =
     useContext(DataContext);
-
-
 
   const serviceFeatures = [
     {
@@ -94,9 +94,7 @@ const ProductDetails = () => {
     { label: "Stock", value: productDetail?.stock },
   ];
 
-  const [previewImg, setPreviewImg] = useState();
-
-
+  const [previewImg, setPreviewImg] = useState(null);
 
   const handleSetPreview = (img) => {
     setPreviewImg(img);
@@ -113,10 +111,9 @@ const ProductDetails = () => {
     : specEntries.slice(0, DEFAULT_SECTIONS);
 
   if (loading) {
-    return <p>...loading</p>;
+return <ProductDetailsSkeleton/>
+ 
   }
-
-
 
   return (
     <>
@@ -161,29 +158,37 @@ const ProductDetails = () => {
                             </div>
                           ))}
                       </div>
-                      <div className="w-[85%]">
-                        { 
-                        
-                        <div className="w-full" onClick={() => setIsModalOpen(true)}>
-                               <InnerImageZoom
-                          src={previewImg}
-                          zoomSrc={previewImg}
-                          zoomType="hover"
-                          zoomPreload={true}
-                        />
-                      </div>
-                      
-                      
-                        }
-                     {
-                      isModalOpen && <div className="w-full h-screen fixed top-0 left-0 bg-[#00000075] backdrop-blur-md z-90000 flex items-center justify-center" onClick={()=> setIsModalOpen(false)}>
-                       <div className="img w-full max-w-[800px] mx-auto bg-white ">
-                        <img src={previewImg} alt=""  className="w-full max-w-[800px]"/>
-                       </div>
-                      </div>
-                     }
-                      </div>
 
+                      <div className="w-[85%]">
+                        {
+                          <div
+                            className="w-full"
+                            onClick={() => setIsModalOpen(true)}
+                          >
+                            <InnerImageZoom
+                              src={previewImg}
+                              zoomSrc={previewImg}
+                              zoomType="hover"
+                              zoomPreload={true}
+                             
+                            />
+                          </div>
+                        }
+                        {isModalOpen && (
+                          <div
+                            className="w-full h-screen fixed top-0 left-0 bg-[#00000075] backdrop-blur-md z-90000 flex items-center justify-center"
+                            onClick={() => setIsModalOpen(false)}
+                          >
+                            <div className="img w-full max-w-[800px] mx-auto bg-white ">
+                              <img
+                                src={previewImg}
+                                alt=""
+                                className="w-full max-w-[800px]"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
 
                     {/* right */}
@@ -231,7 +236,7 @@ const ProductDetails = () => {
                                     <p>{spec.label}:</p>
                                     <p>{spec.value}</p>
                                   </div>
-                                )
+                                ),
                             )}
                           </div>
 
@@ -347,13 +352,42 @@ const ProductDetails = () => {
                   <div className="flex flex-col  justify-center items-center gap-12">
                     {/* left */}
                     <div className="flex flex-col gap-6 ">
-                      <div className="w-full mx-auto">
-                        <ImageZoom
-                          src={previewImg}
-                          alt=""
-                          className=" w-full h-full"
-                        />
+                      <div className="w-full h-full mx-auto ">
+                        <div
+                          className="w-full"
+                          onClick={() => setIsModalOpen(true)}
+                        >
+                          <img src={previewImg} />
+                        </div>
+
+                        <div className="">
+                          {isModalOpen && (
+                            <div className="w-full relative">
+                              <div
+                                className="w-full h-screen fixed top-0 left-0 bg-[#000000]  z-90000 flex items-center justify-center"
+                                onClick={() => setIsModalOpen(false)}
+                              >
+                                <div className="img w-full max-w-[800px] mx-auto bg-white ">
+                                  <img
+                                    src={previewImg}
+                                    alt=""
+                                    className="w-full max-w-[800px]"
+                                  />
+                                </div>
+                                <div
+                                  className="close absolute top-5 right-2 z-99999 cursor-pointer"
+                                  onClick={() => setIsModalOpen(false)}
+                                >
+                                  <i className="text-white! text-2xl ">
+                                    <IoClose />
+                                  </i>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
+
                       <div className="w-full flex  items-center justify-center pt-10 ">
                         {productDetail?.images?.map((img, i) => (
                           <div
@@ -407,7 +441,7 @@ const ProductDetails = () => {
                                     <p>{spec.label}:</p>
                                     <p>{spec.value}</p>
                                   </div>
-                                )
+                                ),
                             )}
                           </div>
 
