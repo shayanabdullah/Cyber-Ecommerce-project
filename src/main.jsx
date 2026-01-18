@@ -8,10 +8,15 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { DataProvider } from './Context/DataContext.jsx';
 import firebaseConfig from './firebaseConfig .js';
+import { Provider } from 'react-redux';
+import { store } from './redux/store.js';
 createRoot(document.getElementById('root')).render(
 <DataProvider>
     <StrictMode>
-    <App />
+      <Provider store={store}>
+        <App />
+        </Provider>
+    
   </StrictMode>
 </DataProvider>
 )

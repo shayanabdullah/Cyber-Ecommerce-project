@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Container from "../../common/Container";
 import logo from "../../../assets/Logo.png";
 import { CiSearch } from "react-icons/ci";
@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import CatagoriesHeader, { Mycategories } from "./CatagoriesHeader";
 import { fadeIn } from "../../../utils/motion/variants";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   FaChevronDown,
   FaChevronUp,
@@ -26,6 +26,8 @@ import { LuLogOut } from "react-icons/lu";
 import { DataContext } from "../../../Context/DataContext";
 import { categoryIcons } from "../../../data/Icons";
 import { SwiperSlide } from "swiper/react";
+import { useDispatch, useSelector } from "react-redux";
+import { authInfo } from "../../../redux/authSlice";
 
 const navLinks = [
   {
@@ -52,20 +54,49 @@ const navLinks = [
 ];
 
 const NavberSection = () => {
+const dispatch = useDispatch()
+  useEffect(()=> {
+const auth = getAuth()
+const unsub = onAuthStateChanged(auth, (user) => {
+  if (user) {
+    dispatch(authInfo({
+      uid: user.uid,
+      email : user.email,
+      name : user.displayName,
+    }))
+  } 
+
+  return () => unsub()
+});
+  }, [])
+
+   const loggedUser = useSelector((state) => state.auth.value);
+
+   
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+
+
   const handleMenuOpen = () => {
     setIsMenuOpen(true);
   };
+
+
   const handleMenuClose = () => {
     setIsMenuOpen(false);
   };
 
   const { categories } = useContext(DataContext);
+
+
   const filteredCategories = categories.filter(
     (item) => item.slug !== "laptops" && item.slug !== "smartphones",
   );
+
+
   return (
     <>
       <motion.nav
@@ -112,12 +143,9 @@ const NavberSection = () => {
                 <Link to="/cart">
                   <PiShoppingCartLight />
                 </Link>
-                {/*               
-              <Link to={'/login'}>
-                    <FiUser />
-              </Link> */}
-
-                <button
+           {
+            loggedUser ? (
+               <button
                   onClick={() => setIsProfileOpen((prev) => !prev)}
                   className={`relative z-100000 }`}
                 >
@@ -136,11 +164,11 @@ const NavberSection = () => {
                         />
                       </div>
                       <div className="text-start">
-                        <h2 className="font-poppins font-medium text-xs text-black">
-                          Your Name
+                        <h2 className="font-poppins font-medium text-base text-black capitalize">
+                        {loggedUser?.name}
                         </h2>
                         <p className="font-poppins font-normal text-xs text-[#6B7280]">
-                          yourname@gmail.com
+                        {loggedUser?.email}
                         </p>
                       </div>
                     </div>
@@ -161,7 +189,18 @@ const NavberSection = () => {
                       </div>
                     </div>
                   </div>
-                </button>
+                </button> 
+            ) : (
+                                 
+              <Link to={'/login'}>
+                    <FiUser />
+              </Link> 
+            )
+           }
+ 
+               
+
+                
               </div>
             </div>
           </div>

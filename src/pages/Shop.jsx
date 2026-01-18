@@ -56,11 +56,13 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
 if(loading) {
   return <ShopSkeleton/>
 }
+console.log(category);
+
 
   return (
     <>
       <main className="px-4 xl:px-0">
-        <BreadCrums category={category}/>
+        <BreadCrums  slug={category}/>
         <section className="">
           <Container>
             <div className="main flex gap-8">

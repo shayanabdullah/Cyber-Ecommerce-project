@@ -40,7 +40,7 @@ const Profile = () => {
                   </div>
                   <div className="">
                     <h2 className="font-sf-pro font-medium text-xl ">
-                      Profile Picture
+                      Your Name
                     </h2>
                     <h2 className="font-sf-pro font-medium text-sm text-gray-dark-400 ">
                       JPG, GIF or PNG. Max size of 2mb
