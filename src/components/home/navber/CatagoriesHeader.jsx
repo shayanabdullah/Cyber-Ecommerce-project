@@ -132,12 +132,8 @@ const filteredCategories = categories.filter(item=> item.slug !== 'laptops' && i
           <div className="">
             <Swiper
               slidesPerView={1}
-              spaceBetween={10}
+              spaceBetween={5}
               loop={true}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-              }}
               breakpoints={{
                 375 : {
                   slidesPerView: 2,
@@ -153,16 +149,33 @@ const filteredCategories = categories.filter(item=> item.slug !== 'laptops' && i
                 },
               }}
               navigation={true}
-              modules={[Navigation, Autoplay]}
+              modules={[Navigation,]}
             >
-              {categories.map((item) => (
+                {Mycategories?.map((item) => (
                 <SwiperSlide>
-                  <div className="catagory " key={item.id}>
+                  <div className="catagory" key={item.id}>
                     <i className="text-2xl">{item.icon}</i>
-                    <a href={`# ${item.text}`}>{item.text}</a>
+                    <Link to={`${item.path == "/tablets" ? `/shop/category/tablets` : `/shop/category${item.path}` }`} >{item.text}</Link>
+                    
                   </div>
                 </SwiperSlide>
               ))}
+         
+              {filteredCategories?.map((item, index) => (
+                <SwiperSlide key={index}>
+              <Link to={`/shop/category/${item.slug}`} className="cursor-pointer">
+                  <div className="catagory cursor-pointer" >
+                    <i className="text-[22px]">
+                      {categoryIcons[item.slug] || <BiSolidCategoryAlt />}
+                      </i>
+                    <h2 className="cursor-pointer text-sm!" >{item.name}</h2>
+                  </div>
+              </Link>
+                </SwiperSlide>
+              ))}
+
+
+
             </Swiper>
           </div>
         </Container>

@@ -10,8 +10,9 @@ import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Check, CheckSquare } from "lucide-react";
 import login from '../assets/login2.avif'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const Login = () => {
-
+const auth = getAuth();
     const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
@@ -43,11 +44,27 @@ const Login = () => {
         email: "",
         password: "",
       });
+      signInWithEmailAndPassword(auth, formData.email, formData.password)
+  .then((userCredential) => {
+     
+    const user = userCredential.user;
       setisFormSubmitted(true);
+
       setTimeout(() => {
         setisFormSubmitted(false);
        navigate('/')
-      }, 3000);
+      }, 2000); 
+  })
+  .catch((error) => {
+   if (error.code === "auth/email-already-in-use") {
+        setErrors({ email: "Email already in use" });
+      } else if (error.code === "auth/weak-password") {
+        setErrors({ password: "Password is too weak" });
+      } else if('auth/wrong-password' || errorCode === 'auth/invalid-credential'){
+        setErrors({ email: "Incorrect email or password." });
+      }  
+  });
+     
 
     }
   };
@@ -57,7 +74,7 @@ const Login = () => {
   return (
     <>
       <motion.section
-        variants={fadeIn("right", 0.4)}
+        variants={fadeIn("left", 0.4)}
         initial="hidden"
         whileInView={"show"}
         viewport={{ once: true }}
@@ -135,7 +152,7 @@ const Login = () => {
 
   <div className="buttons w-full">
     <ShopButton
-      text={"Register"}
+      text={"Login"}
       className={"w-full bg-black! rounded-lg!"}
     />
   </div>

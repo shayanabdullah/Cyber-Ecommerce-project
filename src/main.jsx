@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { DataProvider } from './Context/DataContext.jsx';
-
+import firebaseConfig from './firebaseConfig .js';
 createRoot(document.getElementById('root')).render(
 <DataProvider>
     <StrictMode>

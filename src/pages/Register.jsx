@@ -9,9 +9,14 @@ import { fadeIn } from "../utils/motion/variants";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Check, CheckSquare } from "lucide-react";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider,signInWithPopup, FacebookAuthProvider , } from "firebase/auth";
 const Register = () => {
+  const auth = getAuth();
 
-    const navigate = useNavigate()
+const provider = new GoogleAuthProvider();
+
+  
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -52,25 +57,68 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
+
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!validate()) return;
+
+  createUserWithEmailAndPassword(auth, formData.email, formData.password)
+    .then((userCredential) => {
+      return updateProfile(userCredential.user, {
+        displayName: formData.name,
+      });     
+    })
+    .then(() => {
+      setisFormSubmitted(true);
+
+      setTimeout(() => {
+        setisFormSubmitted(false);
+        navigate("/login");
+      }, 3000);
+
       setFormData({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
       });
+    })
+    .catch((error) => {
+      if (error.code === "auth/email-already-in-use") {
+        setErrors({ email: "Email already in use" });
+      } else if (error.code === "auth/weak-password") {
+        setErrors({ password: "Password is too weak" });
+      } else {
+        setErrors({ email: "Something went wrong. Try again." });
+      }
+    });
+};
+
+const handleGoogleSignIn = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+
       setisFormSubmitted(true);
+
       setTimeout(() => {
         setisFormSubmitted(false);
-       navigate('/login')
-      }, 3000);
+        navigate("/");
+      }, 2000);
+    })
+    .catch((error) => {
+      console.log(error.code);
+      alert("Google sign in failed");
+    });
+};
 
-    }
-  };
 
-  console.log(formData);
+
+const handleFacebookSignIn = () => {
+ alert("this feature is temporary unavailable")
+};
 
   return (
     <>
@@ -89,138 +137,139 @@ const Register = () => {
               </div>
             </div>
             <div className="left md:py-24 md:px-24 ">
-         <form className="pb-8" onSubmit={handleSubmit}>
-  <div className="heding pb-10">
-    <h2 className="font-poppins font-semibold text-3xl capitalize">
-      Register
-    </h2>
-  </div>
+              <form className="pb-8" onSubmit={handleSubmit}>
+                <div className="heding pb-10">
+                  <h2 className="font-poppins font-semibold text-3xl capitalize">
+                    Register
+                  </h2>
+                </div>
 
-  <div className="inputs flex flex-col gap-y-4 pb-6">
-    {/* Name */}
-    <div className="name w-full relative">
-      <input
-        type="text"
-        placeholder="Full Name:"
-        value={formData.name}
-        className="py-3 pl-4 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
-        onChange={(e) =>
-          setFormData((prev) => ({
-            ...prev,
-            name: e.target.value,
-          }))
-        }
-      />
-    </div>
+                <div className="inputs flex flex-col gap-y-4 pb-6">
+                  {/* Name */}
+                  <div className="name w-full relative">
+                    <input
+                      type="text"
+                      placeholder="Full Name:"
+                      value={formData.name}
+                      className="py-3 pl-4 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
 
-    {errors.name && (
-      <div className="error">
-        <p className="font-poppins font-medium text-xs text-red-400 pl-2">
-          {errors.name}!
-        </p>
-      </div>
-    )}
+                  {errors.name && (
+                    <div className="error">
+                      <p className="font-poppins font-medium text-xs text-red-400 pl-2">
+                        {errors.name}!
+                      </p>
+                    </div>
+                  )}
 
-    {/* Email */}
-    <div className="email w-full relative">
-      <input
-        type="email"
-        placeholder="Your email:"
-        value={formData.email}
-        className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
-        onChange={(e) =>
-          setFormData((prev) => ({
-            ...prev,
-            email: e.target.value,
-          }))
-        }
-        required
-      />
-      <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
-        <FiMail />
-      </i>
-    </div>
+                  {/* Email */}
+                  <div className="email w-full relative">
+                    <input
+                      type="email"
+                      placeholder="Your email:"
+                      value={formData.email}
+                      className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
+                      required
+                    />
+                    <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
+                      <FiMail />
+                    </i>
+                  </div>
 
-    {errors.email && (
-      <div className="error">
-        <p className="font-poppins font-medium text-xs text-red-400 pl-2">
-          {errors.email}!
-        </p>
-      </div>
-    )}
+                  {errors.email && (
+                    <div className="error">
+                      <p className="font-poppins font-medium text-xs text-red-400 pl-2">
+                        {errors.email}!
+                      </p>
+                    </div>
+                  )}
 
-    {/* Password */}
-    <div className="password w-full relative">
-      <input
-        type={passType}
-        placeholder="Your password:"
-        value={formData.password}
-        className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
-        onChange={(e) =>
-          setFormData((prev) => ({
-            ...prev,
-            password: e.target.value,
-          }))
-        }
-        required
-      />
-      <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
-        <FiLock />
-      </i>
-      <i
-        className="absolute top-[13px] right-4 text-xl text-[#969696]"
-        onClick={() =>
-          setPassType(passType === "password" ? "text" : "password")
-        }
-      >
-        {passType === "password" ? <FiEyeOff /> : <FiEye />}
-      </i>
-    </div>
+                  {/* Password */}
+                  <div className="password w-full relative">
+                    <input
+                      type={passType}
+                      placeholder="Your password:"
+                      value={formData.password}
+                      className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          password: e.target.value,
+                        }))
+                      }
+                      required
+                    />
+                    <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
+                      <FiLock />
+                    </i>
+                    <i
+                      className="absolute top-[13px] right-4 text-xl text-[#969696]"
+                      onClick={() =>
+                        setPassType(
+                          passType === "password" ? "text" : "password",
+                        )
+                      }
+                    >
+                      {passType === "password" ? <FiEyeOff /> : <FiEye />}
+                    </i>
+                  </div>
 
-    {errors.password && (
-      <div className="error">
-        <p className="font-poppins font-medium text-xs text-red-400 pl-2">
-          {errors.password}!
-        </p>
-      </div>
-    )}
+                  {errors.password && (
+                    <div className="error">
+                      <p className="font-poppins font-medium text-xs text-red-400 pl-2">
+                        {errors.password}!
+                      </p>
+                    </div>
+                  )}
 
-    {/* Confirm Password */}
-    <div className="confirm password w-full relative">
-      <input
-        type="password"
-        placeholder="Confirm password:"
-        value={formData.confirmPassword}
-        className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
-        onChange={(e) =>
-          setFormData((prev) => ({
-            ...prev,
-            confirmPassword: e.target.value,
-          }))
-        }
-      />
-      <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
-        <FiLock />
-      </i>
-    </div>
-  </div>
+                  {/* Confirm Password */}
+                  <div className="confirm password w-full relative">
+                    <input
+                      type="password"
+                      placeholder="Confirm password:"
+                      value={formData.confirmPassword}
+                      className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          confirmPassword: e.target.value,
+                        }))
+                      }
+                    />
+                    <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
+                      <FiLock />
+                    </i>
+                  </div>
+                </div>
 
-  {errors.confirmPassword && (
-    <div className="error pb-6">
-      <p className="font-poppins font-medium text-xs text-red-400 pl-2">
-        {errors.confirmPassword}!
-      </p>
-    </div>
-  )}
+                {errors.confirmPassword && (
+                  <div className="error pb-6">
+                    <p className="font-poppins font-medium text-xs text-red-400 pl-2">
+                      {errors.confirmPassword}!
+                    </p>
+                  </div>
+                )}
 
-  <div className="buttons w-full">
-    <ShopButton
-      text={"Register"}
-      className={"w-full bg-black! rounded-lg!"}
-    />
-  </div>
-</form>
-
+                <div className="buttons w-full">
+                  <ShopButton
+                    text={"Register"}
+                    className={"w-full bg-black! rounded-lg!"}
+                  />
+                </div>
+              </form>
 
               <div className="or ">
                 <div className="w-full flex items-center justify-between pb-5">
@@ -235,7 +284,7 @@ const Register = () => {
 
                 {/* sing up with google */}
                 <div className="main flex items-center gap-5 justify-between pb-10">
-                  <div className="google py-2 w-full rounded-lg border border-[#E0E2E9] flex items-center gap-4 justify-center cursor-pointer">
+                  <div className="google py-2 w-full rounded-lg border border-[#E0E2E9] flex items-center gap-4 justify-center cursor-pointer" onClick={handleGoogleSignIn}>
                     <div className="img">
                       <img src={google} alt="" />
                     </div>
@@ -243,7 +292,7 @@ const Register = () => {
                       Google
                     </h2>
                   </div>
-                  <div className="facebook py-2 w-full rounded-lg border border-[#E0E2E9] flex items-center gap-4 justify-center cursor-pointer">
+                  <div className="facebook py-2 w-full rounded-lg border border-[#E0E2E9] flex items-center gap-4 justify-center cursor-pointer" onClick={handleFacebookSignIn}>
                     <div className="img text-2xl">
                       <FaFacebook />
                     </div>
@@ -276,7 +325,7 @@ const Register = () => {
                   <CheckSquare />
                 </i>
                 <p className="font-poppins font-medium text-sm ">
-                 Welcome! Your account has been created.
+                  Welcome! Your account has been created.
                 </p>
               </div>
             </div>

@@ -22,30 +22,45 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  const fetchProductsByCategory = async (slug) => {
-    try {
-      const res = await axios.get(
-        `https://dummyjson.com/products/category/${slug}`
-      );
+ const fetchProductsByCategory = async (slug) => {
+
+
+  try {
+    const res = await axios.get(
+      `https://dummyjson.com/products/category/${slug}`
+    );
+
+    if (res.data?.products?.length) {
       setProducts(res.data.products);
-   setLoading(false)
-    } catch (err) {
-      console.log(err);
+    } else {
+      setProducts([]);
     }
-  };
+  } catch (err) {
+    console.log(err);
+    setProducts([]);
+  } finally {
+    setLoading(false); 
+  }
+};
 
 
-  const fetchProductDetails = async (id) => {
-    try {
-      const res = await axios.get(
-        `https://dummyjson.com/products/${id}`
-      );
-      setProductDetail(res.data);
-      setLoading(false)
-    } catch (err) {
-      console.log(err);
-    }
-  };
+const fetchProductDetails = async (id) => {
+
+
+  try {
+    const res = await axios.get(
+      `https://dummyjson.com/products/${id}`
+    );
+    setProductDetail(res.data);
+
+  } catch (err) {
+    console.log(err);
+    setProductDetail(null);
+  } finally {
+    setLoading(false); 
+  }
+};
+
 
 
   return (

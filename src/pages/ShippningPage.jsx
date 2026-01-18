@@ -151,7 +151,7 @@ const ShippningPage = () => {
                         </p>
                       </div>
                       <div className="">
-                        <DatePicker isActive={isActive} />
+                        <DatePicker isActive={isActive} label={'Select:'}/>
                       </div>
                     </div>
                   </div>

@@ -27,7 +27,7 @@ function isValidDate(date) {
   return date instanceof Date && !isNaN(date.getTime())
 }
 
-export default function DatePicker({isActive}) {
+export default function DatePicker({isActive, label, className}) {
   const [open, setOpen] = React.useState(false)
   const [date, setDate] = React.useState(new Date())
   const [month, setMonth] = React.useState(date)
@@ -35,9 +35,9 @@ export default function DatePicker({isActive}) {
 
   return (
     <div className="flex flex-col gap-3">
-      <Label    className={`font-poppins font-medium text-sm md:text-base leading-6   ${
+      <Label    className={`font-poppins font-medium text-sm md:text-base leading-6  ${className}  ${
                             isActive == 3 ? "text-[#17183B]" : "text-[#A2A3B1]" 
-                          }`}>Select Date</Label>
+                          }`}>{label}</Label>
 
       <div className="relative flex gap-2 ">
         <Input

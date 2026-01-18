@@ -132,17 +132,21 @@ const getRandomAvatar = (id) => {
 
 
      
-            {/* main reviews */}
-            <div className="">
-              {
+            {
+               productDetail?.reviews?.length <= 0 && 
+                           <div className="">
+              
                  <div className="w-full flex flex-col justify-center items-center py-20">
                   <p className="font-sf-pro font-medium text-2xl text-gray-750">No reviews yet. Be the first to share your experience.</p>
                  </div>
-              }
+              
             </div>
+            }
 
 
-           {/* <div className={`flex flex-col gap-y-6 relative transition-all duration-500 ease-in-out overflow-hidden ${ viewMore ? "max-h-[5000px]" : "max-h-[800px]"} `}>
+
+            {/* main reviews */}
+           <div className={`flex flex-col gap-y-6 relative transition-all duration-500 ease-in-out overflow-hidden ${ viewMore ? "max-h-[5000px]" : "max-h-[800px]"} `}>
             
          {
           productDetail?.reviews?.map((review, index)=> (
@@ -183,7 +187,7 @@ const getRandomAvatar = (id) => {
         {
         !viewMore && isLong &&   <div className="w-full h-[180px] bg-linear-to-b from-white/0 backdrop-blur-[0.7px] to-white absolute bottom-0 "></div>
         }
-           </div> */}
+           </div>
 
 
            {!viewMore && isLong && (

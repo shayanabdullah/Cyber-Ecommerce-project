@@ -3,14 +3,14 @@ import Container from "./Container";
 import { GoChevronRight } from "react-icons/go";
 import { Link, useLocation, useParams } from "react-router-dom";
 
-const BreadCrums = ({slug, category, name}) => {
+const BreadCrums = ({slug, className}) => {
 
   const location = useLocation();
   const paths = location.pathname.split("/").filter(Boolean)
   let currentPath = ''
   return (
     <>
-      <section className="py-10">
+      <section className={`py-10  ${className}`}>
         <Container>
             <div className="main flex items-center gap-4 pb-6 flex-wrap overflow-x-hidden">
               <Link to={"/"}>
