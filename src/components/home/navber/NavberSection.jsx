@@ -9,7 +9,7 @@ import { motion } from "motion/react";
 import CatagoriesHeader, { Mycategories } from "./CatagoriesHeader";
 import { fadeIn } from "../../../utils/motion/variants";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import {
   FaChevronDown,
   FaChevronUp,
@@ -20,14 +20,15 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { IoCallSharp, IoClose } from "react-icons/io5";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { catagories } from "../browseCatagory/BrowseCatagorySection";
 import { LuLogOut } from "react-icons/lu";
 import { DataContext } from "../../../Context/DataContext";
 import { categoryIcons } from "../../../data/Icons";
 import { SwiperSlide } from "swiper/react";
 import { useDispatch, useSelector } from "react-redux";
-import { authInfo } from "../../../redux/authSlice";
+import { authInfo, logout } from "../../../redux/authSlice";
+import ShopButton from "../../common/ShopButton";
 
 const navLinks = [
   {
@@ -54,36 +55,48 @@ const navLinks = [
 ];
 
 const NavberSection = () => {
-const dispatch = useDispatch()
-  useEffect(()=> {
-const auth = getAuth()
-const unsub = onAuthStateChanged(auth, (user) => {
-  if (user) {
-    dispatch(authInfo({
-      uid: user.uid,
-      email : user.email,
-      name : user.displayName,
-    }))
-  } 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [userData, setuserData] = useState({
+    name: "",
+    email: "",
+  });
+  const auth = getAuth();
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(
+          authInfo({
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName,
+          }),
+        );
+      }
 
-  return () => unsub()
-});
-  }, [])
+      return () => unsub();
+    });
+  }, []);
 
-   const loggedUser = useSelector((state) => state.auth.value);
+  const loggedUser = useSelector((state) => state.auth.value);
 
-   
+  useEffect(() => {
+    if (loggedUser) {
+      setuserData({
+        name: loggedUser.name,
+        email: loggedUser.email,
+      });
+    }
+  }, [loggedUser]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-
+  const [isDeleteMsg, setIsDeleteMsg] = useState(false);
 
   const handleMenuOpen = () => {
     setIsMenuOpen(true);
   };
-
 
   const handleMenuClose = () => {
     setIsMenuOpen(false);
@@ -91,11 +104,30 @@ const unsub = onAuthStateChanged(auth, (user) => {
 
   const { categories } = useContext(DataContext);
 
-
   const filteredCategories = categories.filter(
     (item) => item.slug !== "laptops" && item.slug !== "smartphones",
   );
 
+  const handleLogOut = async () => {
+    setIsProfileOpen(false);
+    try {
+      await signOut(auth);
+      dispatch(logout());
+      setIsDeleteMsg(false);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteMsg = () => {
+    setIsProfileOpen(false);
+    setIsDeleteMsg(true);
+  };
+  const handleClose = () => {
+    setIsProfileOpen(false);
+    setIsDeleteMsg(false);
+  };
 
   return (
     <>
@@ -143,67 +175,87 @@ const unsub = onAuthStateChanged(auth, (user) => {
                 <Link to="/cart">
                   <PiShoppingCartLight />
                 </Link>
-           {
-            loggedUser ? (
-               <button
-                  onClick={() => setIsProfileOpen((prev) => !prev)}
-                  className={`relative z-100000 }`}
-                >
-                  <FiUser />
-                  {/* profile */}
-
+                {loggedUser ? (
                   <div
-                    className={`absolute -left-30 min-w-[310px] py-5 px-4 z-9999 rounded-3xl bg-white border border-black/25 flex flex-col gap-4 transition-all duration-300 ${isProfileOpen ? " -bottom-[250px]" : "bottom-15"}`}
+                    onClick={() => setIsProfileOpen((prev) => !prev)}
+                    className={`relative z-100000 }`}
                   >
-                    <div className="flex items-center justify-between md:gap-4 md:justify-start pb-4 border-b border-gray-300">
-                      <div className="img rounded-full overflow-hidden">
-                        <img
-                          src="https://testingbot.com/free-online-tools/random-avatar/70"
-                          alt=""
-                          className="max-w-[150px] w-full"
-                        />
+                    <FiUser />
+                    {/* profile */}
+                    <div
+                      className={`absolute -left-30 min-w-[310px] py-5 px-4 z-9999 rounded-3xl bg-white border border-black/25 flex flex-col gap-4 transition-all duration-300 ${!isProfileOpen ? "bottom-15" : " -bottom-[250px]"}`}
+                    >
+                      <div className="flex items-center justify-between md:gap-4 md:justify-start pb-4 border-b border-gray-300">
+                        <div className="img rounded-full overflow-hidden">
+                          <img
+                            src="https://testingbot.com/free-online-tools/random-avatar/70"
+                            alt=""
+                            className="max-w-[150px] w-full"
+                          />
+                        </div>
+                        <div className="text-start">
+                          <h2 className="font-poppins font-medium text-base text-black capitalize">
+                            {userData?.name}
+                          </h2>
+                          <p className="font-poppins font-normal text-xs text-[#6B7280]">
+                            {userData?.email}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-start">
-                        <h2 className="font-poppins font-medium text-base text-black capitalize">
-                        {loggedUser?.name}
-                        </h2>
-                        <p className="font-poppins font-normal text-xs text-[#6B7280]">
-                        {loggedUser?.email}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <div className="profile py-2.5 pl-2.5 hover:bg-gray-100 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
-                        <FiUser />
-                     <Link to="/account/profile">
-                        <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
-                          My Your Profile
-                        </h2>
-                     </Link>
-                      </div>
-                      <div className="logout py-2.5 pl-2.5  flex items-center gap-2.5 cursor-pointer hover:bg-gray-50 transition-all duration-300">
-                        <LuLogOut />
-                        <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
-                          Log Out
-                        </h2>
+
+                      <div className="flex flex-col gap-2">
+                        <div className="profile py-2.5 pl-2.5 hover:bg-gray-100 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
+                          <FiUser />
+                          <Link to="/account/profile" className="w-full">
+                            <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
+                              My Your Profile
+                            </h2>
+                          </Link>
+                        </div>
+
+                        {/* log out */}
+                        <div
+                          className="logout py-2.5 pl-2.5  flex items-center gap-2.5 cursor-pointer hover:bg-gray-50 transition-all duration-300"
+                          onClick={handleDeleteMsg}
+                        >
+                          <LuLogOut />
+                          <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
+                            Log Out
+                          </h2>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </button> 
-            ) : (
-                                 
-              <Link to={'/login'}>
+                ) : (
+                  <Link to={"/login"}>
                     <FiUser />
-              </Link> 
-            )
-           }
- 
-               
-
-                
+                  </Link>
+                )}
               </div>
             </div>
           </div>
+
+          {isDeleteMsg && (
+            <>
+              <div className="w-full absolute top-24 left-1/2 -translate-x-1/2 z-99999 min-w-[280px] max-w-[300px]">
+                <div className="modal py-5 px-3 rounded-lg border border-gray-800 bg-white">
+                  <p className="font-poppins font-medium text-lg text-red-700 text-center pb-2">
+                    Are you sure you want to Log Out?
+                  </p>
+                  <ShopButton
+                    text="Logout"
+                    className="bg-red-500! w-full"
+                    onClick={handleLogOut}
+                  />
+                </div>
+              </div>
+              <div
+                className="overlay fixed top-0 left-0 w-full h-screen bg-black/30 z-10"
+                onClick={handleClose}
+              ></div>
+            </>
+          )}
+
           {/* catagory-header */}
         </Container>
         <CatagoriesHeader className="" />

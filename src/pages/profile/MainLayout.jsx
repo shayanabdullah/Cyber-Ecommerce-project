@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from '../../components/common/Container'
 import { CreditCard, Heart,  LogOut,  MapPin, User } from 'lucide-react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import ShopButton from '../../components/common/ShopButton'
+import { getAuth, signOut } from 'firebase/auth'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../redux/authSlice'
 
 const MainLayout = () => {
     const location = useLocation()
@@ -31,9 +35,29 @@ const MainLayout = () => {
       url : 'wishlist'
     },
   ]
+  const auth = getAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {pathname} = location  
-  console.log(pathname);
+    const [isDeleteMsg, setIsDeleteMsg] = useState(false);
+
+    const handleLogOut = async () => {
+      try {
+        await signOut(auth);
+        dispatch(logout());
+        setIsDeleteMsg(false);
+        navigate("/login");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  const handleDlteShow = () => {
+    setIsDeleteMsg(true)
+  }
+  const handleClose = () => {
+    setIsDeleteMsg(false)
+  }
   
   return (
     <>
@@ -59,12 +83,32 @@ const MainLayout = () => {
                       ))
                     }
               </div>
-              <div className=" mt-4 p-2 w-full rounded-md hover:bg-red-100 group  transition-all duration-300 ease-in-out cursor-pointer flex gap-2.5 items-center">
+              <div className=" mt-4 p-2 w-full rounded-md hover:bg-red-100 group  transition-all duration-300 ease-in-out cursor-pointer flex gap-2.5 items-center" onClick={handleDlteShow}>
                   <p className='text-red-400'>{<LogOut/>}</p>
                         <p className={`font-poppins font-medium text-sm text-red-400 `}>Logout</p>
               </div>
             </div>
           </div>
+           {isDeleteMsg  &&  (
+                                       <>
+                                        <div className="w-full absolute top-24 left-1/2 -translate-x-1/2 z-99999 min-w-[280px] max-w-[300px]">
+                                          <div className="modal py-5 px-3 rounded-lg border border-gray-800 bg-white">
+                                            <p className="font-poppins font-medium text-lg text-red-700 text-center pb-2">
+                                              Are you sure you want to Log Out?
+                                            </p>
+                                            <ShopButton
+                                              text="Logout"
+                                              className="bg-red-500! w-full"
+                                              onClick={handleLogOut}
+                                            />
+                                          </div>
+                                        </div>
+                                        <div className="overlay fixed top-0 left-0 w-full h-screen bg-black/30 z-10" onClick={handleClose}>
+
+                                        </div>
+                                       </>
+                                        
+                                      )}
 
           <div className="left w-full lg:max-w-[55%]">
             <Outlet/>

@@ -9,17 +9,23 @@ import { FaPlus } from "react-icons/fa";
 import ShopButton from "@/components/common/ShopButton";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { address, deleteAddress, updateAddress } from "../redux/addressSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Address = () => {
-  const [addresses, setAddresses] = useState([]);
+ 
+const addresses = useSelector((state) => state.address.value);
 
+  const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState(1);
+  const [selectedId, setSelectedId] = useState(null);
   const [isEditing, setIsEditing] = useState(null);
   const [isDeleteMsg, setIsDeleteMsg] = useState(false);
   const [errors, setErrors] = useState({});
 
   const [deleteId, setDeleteId] = useState(null);
+
+  if (!Array.isArray(addresses)) return null;
 
   const mainForm = {
     title: "",
@@ -71,31 +77,30 @@ const Address = () => {
 
   const saveAddress = () => {
     if (!validateForm()) return;
+
     if (isEditing) {
-      setAddresses((prev) =>
-        prev.map((item) =>
-          item.id === isEditing ? { ...form, id: isEditing } : item
-        )
-      );
-      setModalOpen(false);
-    } else {
-      setAddresses((prev) => [
-        ...prev,
-        {
-          ...form,
-          id: uuidv4(),
-        },
-      ]);
+  dispatch(updateAddress({ ...form, id: isEditing }));
+  setModalOpen(false);
+  setIsEditing(null);
+} else {
       setModalOpen(false);
       setIsEditing(null);
-      setForm(mainForm);
+      dispatch(
+        address({
+          title: form.title,
+          type: form.type,
+          address: form.address,
+          phone: form.phone,
+        }),
+      );
     }
   };
 
   const removeAddress = (id) => {
-    setAddresses((prev) => prev.filter((item) => item.id !== id));
+    dispatch(deleteAddress(id));
     if (selectedId == id) setSelectedId(null);
   };
+
 
   return (
     <>

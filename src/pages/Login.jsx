@@ -10,9 +10,12 @@ import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { Check, CheckSquare } from "lucide-react";
 import login from '../assets/login2.avif'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup ,GoogleAuthProvider} from "firebase/auth";
+import { Provider } from "react-redux";
 const Login = () => {
 const auth = getAuth();
+const provider = new GoogleAuthProvider();
+
     const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
@@ -69,7 +72,23 @@ const auth = getAuth();
     }
   };
 
+const handleGoogleSignIn = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
 
+      setisFormSubmitted(true);
+
+      setTimeout(() => {
+        setisFormSubmitted(false);
+        navigate("/");
+      }, 2000);
+    })
+    .catch((error) => {
+      console.log(error.code);
+      alert("Google sign in failed");
+    });
+};
 
   return (
     <>
@@ -171,7 +190,7 @@ const auth = getAuth();
                 </div>
 
                 {/* sing up with google */}
-                <div className="main flex items-center gap-5 justify-between pb-10">
+                <div className="main flex items-center gap-5 justify-between pb-10" onClick={handleGoogleSignIn}>
                   <div className="google py-2 w-full rounded-lg border border-[#E0E2E9] flex items-center gap-4 justify-center cursor-pointer">
                     <div className="img">
                       <img src={google} alt="" />
@@ -180,6 +199,8 @@ const auth = getAuth();
                       Google
                     </h2>
                   </div>
+
+
                   <div className="facebook py-2 w-full rounded-lg border border-[#E0E2E9] flex items-center gap-4 justify-center cursor-pointer">
                     <div className="img text-2xl">
                       <FaFacebook />

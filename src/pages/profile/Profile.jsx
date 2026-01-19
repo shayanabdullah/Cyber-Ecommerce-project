@@ -1,11 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrums from "../../components/common/BreadCrums";
 import { Camera } from "lucide-react";
 import { FiMail, FiPhoneCall } from "react-icons/fi";
 import DatePicker from "../../components/common/DatePicker";
 import IOSSwitch from "../../components/common/ToogleSwich";
+import { useSelector } from "react-redux";
+import ShopButton from "../../components/common/ShopButton";
 
 const Profile = () => {
+  const [userData, setuserData] = useState({
+name: '',
+email : '',
+  })
+const loggedUser = useSelector((state) => state.auth.value) || {};
+const UserAdress = useSelector((state) => state.address.value) || {};
+
+const phone = UserAdress[0]?.phone || ''
+
+
+useEffect(()=> {
+  if(loggedUser){
+setuserData({
+  name: loggedUser.name,
+  email: loggedUser.email
+})
+  }
+}, [loggedUser])
+
+
+
   return (
     <>
       <section className="w-full px-3 lg:px-0">
@@ -39,8 +62,8 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="">
-                    <h2 className="font-sf-pro font-medium text-xl ">
-                      Your Name
+                    <h2 className="font-sf-pro font-medium text-xl capitalize">
+                    {userData.name || 'User'}
                     </h2>
                     <h2 className="font-sf-pro font-medium text-sm text-gray-dark-400 ">
                       JPG, GIF or PNG. Max size of 2mb
@@ -64,8 +87,8 @@ const Profile = () => {
                                 <div className="name w-full relative">
                     <input
                       type="text"
-                      placeholder="Your Name:"
-                      className="py-3 pl-4 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
+                      placeholder={userData.name || 'Your Name'}
+                      className="py-3 pl-4 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full capitalize"
                     />
                   </div>
                 </div>
@@ -74,7 +97,7 @@ const Profile = () => {
                         <div className="email w-full relative">         
                                     <input
                                       type="email"
-                                      placeholder="Your email:"   
+                                      placeholder={userData.email}  
                                       className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
                                     />
                                     <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
@@ -87,7 +110,7 @@ const Profile = () => {
                         <div className="email w-full relative">         
                                     <input
                                       type="text"
-                                      placeholder="Your Number:"   
+                                      placeholder={phone || 'Your Number'}  
                                       className="py-3 pl-12 border border-[#E0E2E9] rounded-lg font-poppins font-medium text-sm text-[#717279] w-full"
                                     />
                                     <i className="absolute top-[13px] left-4 text-xl text-[#969696] cursor-default!">
@@ -103,7 +126,7 @@ const Profile = () => {
                                   </div>
                 </div>
               </div>
-              <div className="">
+              <div className="pb-10">
                   <div className="heading pb-8">
                 <h2 className="font-poppins font-semibold text-xl pb-3 border-b">Preferences</h2>
               </div>
@@ -117,6 +140,14 @@ const Profile = () => {
                 </div>
               </div>
               </div>
+              
+              <div className="">
+              
+              <div className="w-full pt-4 border-t flex justify-end items-center">
+                <ShopButton text={'Save'} className={'bg-black! py-2! px-5!'}/>
+              </div>
+              </div>
+
             </div>
           </div>
         </div>
