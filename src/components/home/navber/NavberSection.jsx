@@ -178,7 +178,7 @@ const NavberSection = () => {
                 {loggedUser ? (
                   <div
                     onClick={() => setIsProfileOpen((prev) => !prev)}
-                    className={`relative z-100000 }`}
+                    className={`relative z-100000  `}
                   >
                     <FiUser />
                     {/* profile */}
@@ -195,23 +195,25 @@ const NavberSection = () => {
                         </div>
                         <div className="text-start">
                           <h2 className="font-poppins font-medium text-base text-black capitalize">
-                            {userData?.name}
+                            {userData?.name || "User"}
                           </h2>
                           <p className="font-poppins font-normal text-xs text-[#6B7280]">
-                            {userData?.email}
+                            {userData?.email || "email"}
                           </p>
                         </div>
                       </div>
 
                       <div className="flex flex-col gap-2">
-                        <div className="profile py-2.5 pl-2.5 hover:bg-gray-100 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
-                          <FiUser />
-                          <Link to="/account/profile" className="w-full">
-                            <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
-                              My Your Profile
-                            </h2>
-                          </Link>
-                        </div>
+                        <Link to="/account/profile">
+                          <div className="profile py-2.5 pl-2.5 hover:bg-gray-100 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
+                            <FiUser />
+                            <div className="w-full">
+                              <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
+                                My Your Profile
+                              </h2>
+                            </div>
+                          </div>
+                        </Link>
 
                         {/* log out */}
                         <div
@@ -284,51 +286,64 @@ const NavberSection = () => {
               <Link to="/cart">
                 <PiShoppingCartLight />
               </Link>
-
-              <button
-                onClick={() => setIsProfileOpen((prev) => !prev)}
-                className={`relative z-88! `}
-              >
-                <FiUser />
-
-                {/* profile */}
-
+              {loggedUser ? (
                 <div
-                  className={`absolute -right-12 max-w-[310px] py-5 px-4 z-9999! rounded-3xl bg-white border border-black/25 flex flex-col gap-4 transition-all duration-300 ${isProfileOpen ? " -bottom-[220px]" : "bottom-15"}`}
+                  onClick={() => setIsProfileOpen((prev) => !prev)}
+                  className={`relative z-88! `}
                 >
-                  <div className="flex items-center justify-between md:gap-4 md:justify-start pb-4 border-b border-gray-300 gap-2">
-                    <div className="img rounded-full w-10 overflow-hidden">
-                      <img
-                        src="https://testingbot.com/free-online-tools/random-avatar/70"
-                        alt=""
-                        className="max-w-[150px] w-full"
-                      />
+                  <FiUser />
+
+                  <div
+                    className={`absolute -right-12 min-w-[200px] max-w-[310px] py-5 px-4 z-9999! rounded-3xl bg-white border border-black/25 flex flex-col gap-4 transition-all duration-300 ${isProfileOpen ? " -bottom-[220px]" : "bottom-15"}`}
+                  >
+                    <div className="flex items-center  pb-4 border-b border-gray-300 gap-2">
+                      <div className="img rounded-full w-10 overflow-hidden">
+                        <img
+                          src="https://testingbot.com/free-online-tools/random-avatar/70"
+                          alt=""
+                          className="max-w-[150px] w-full"
+                        />
+                      </div>
+                      <div className="text-start">
+                        <h2 className="font-poppins font-medium text-sm text-black capitalize">
+                          {userData?.name || "User"}
+                        </h2>
+                        <p className="font-poppins font-normal text-xs text-[#6B7280]">
+                          {userData?.email || "email"}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-start">
-                      <h2 className="font-poppins font-medium text-xs text-black">
-                        Your Name
-                      </h2>
-                      <p className="font-poppins font-normal text-xs text-[#6B7280]">
-                        yourname@gmail.com
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <div className="profile py-2.5 pl-2.5 hover:bg-gray-50 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
-                      <FiUser />
-                      <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
-                        My Your Profile
-                      </h2>
-                    </div>
-                    <div className="logout py-2.5 pl-2.5  flex items-center gap-2.5 cursor-pointer hover:bg-gray-50 transition-all duration-300">
-                      <LuLogOut />
-                      <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
-                        Log Out
-                      </h2>
+
+                    <div className="flex flex-col gap-2">
+                      <Link to="/account/profile">
+                        <div className="profile py-2.5 pl-2.5 hover:bg-gray-100 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
+                          <FiUser />
+
+                          <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
+                            My Your Profile
+                          </h2>
+                        </div>
+                      </Link>
+
+                      {/* log out */}
+                      <div
+                        className="logout py-2.5 pl-2.5  flex items-center gap-2.5 cursor-pointer hover:bg-gray-50 transition-all duration-300"
+                        onClick={handleDeleteMsg}
+                      >
+                        <LuLogOut />
+                        <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
+                          Log Out
+                        </h2>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </button>
+              ) : (
+                <Link to={"/login"}>
+                  <FiUser />
+                </Link>
+              )}
+
               <div
                 className="menu-btn text-3xl cursor-pointer"
                 onClick={handleMenuOpen}
@@ -337,6 +352,27 @@ const NavberSection = () => {
               </div>
             </div>
           </motion.nav>
+
+          {isDeleteMsg && (
+            <>
+              <div className="w-full absolute top-[150%] md:top-24 left-1/2 -translate-x-1/2 z-99999 min-w-[280px] max-w-[300px]">
+                <div className="modal py-5 px-3 rounded-lg border border-gray-800 bg-white">
+                  <p className="font-poppins font-medium text-lg text-red-700 text-center pb-2">
+                    Are you sure you want to Log Out?
+                  </p>
+                  <ShopButton
+                    text="Logout"
+                    className="bg-red-500! w-full"
+                    onClick={handleLogOut}
+                  />
+                </div>
+              </div>
+              <div
+                className="overlay fixed top-0 left-0 w-full h-screen bg-black/30 z-10"
+                onClick={handleClose}
+              ></div>
+            </>
+          )}
 
           <div className="overflow-x-hidden">
             <div
@@ -410,7 +446,10 @@ const NavberSection = () => {
                         to={`/shop/category/${item.slug}`}
                         className="cursor-pointer"
                       >
-                        <div className="catagory text-white! flex gap-2">
+                        <div
+                          className="catagory text-white! flex gap-2"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
                           <i className="text-[22px]">
                             {categoryIcons[item.slug] || <BiSolidCategoryAlt />}
                           </i>

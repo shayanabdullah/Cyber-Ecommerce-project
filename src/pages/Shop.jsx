@@ -15,6 +15,9 @@ import { HiX } from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
 import { DataContext } from "../Context/DataContext";
 import ShopSkeleton from "../skeleton/ShopPageSkeleton";
+import { useDispatch } from "react-redux";
+import { addtocart } from "../redux/CartSlice";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const Shop = () => {
   const { category, id } = useParams();
@@ -31,6 +34,7 @@ const Shop = () => {
   const start = currentPageActive * pageNumber;
   const end = start + pageNumber;
   const [filterOpen, setFilteropen] = useState(false);
+
 
   useEffect(() => {
     if (!category) return;
@@ -56,11 +60,26 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
 if(loading) {
   return <ShopSkeleton/>
 }
-console.log(category);
+
+
 
 
   return (
     <>
+ <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss={false}
+draggable
+pauseOnHover={false}
+theme="light"
+transition={Bounce}
+/>
+
       <main className="px-4 xl:px-0">
         <BreadCrums  slug={category}/>
         <section className="">
@@ -215,8 +234,9 @@ console.log(category);
                     );
 
                     return (
-                      <Link key={item.id}   to={`/shop/category/${slugify(item.title || item.name)}/${item.id}`}>
+                
                         <ProductCard
+                          id={item.id}
                           name={item.title}
                           reviews={item.rating}
                           img={item.images?.[0] || "placeholder.jpg"}
@@ -225,8 +245,9 @@ console.log(category);
                           mainPrice={originalPrice}
                           alt={`${item.title} image`}
                           wishId={item.id}
+                          to={`/shop/category/${slugify(item.title || item.name)}/${item.id}`}
                         />
-                      </Link>
+               
                     );
                   })}
                 </div>

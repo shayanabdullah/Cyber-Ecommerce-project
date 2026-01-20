@@ -42,7 +42,7 @@ const App = () => {
         { path: "test", element: <Products /> },
 
 
-            {
+        {
         path: "account",
         element: <MainLayout />,  // Sidebar layout
         children: [
