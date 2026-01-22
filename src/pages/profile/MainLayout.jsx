@@ -43,6 +43,7 @@ const MainLayout = () => {
     const [isDeleteMsg, setIsDeleteMsg] = useState(false);
 
     const handleLogOut = async () => {
+      
       try {
         await signOut(auth);
         dispatch(logout());

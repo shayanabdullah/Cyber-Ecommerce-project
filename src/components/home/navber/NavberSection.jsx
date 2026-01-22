@@ -78,6 +78,7 @@ const NavberSection = () => {
     });
   }, []);
   const cartItems = useSelector((state) => state.cart.items);
+  const wishItems = useSelector((state) => state.wishlist.items);
 
   const loggedUser = useSelector((state) => state.auth.value);
 
@@ -129,9 +130,9 @@ const NavberSection = () => {
     setIsProfileOpen(false);
     setIsDeleteMsg(false);
   };
- let firstLetter = userData.name
+  let firstLetter = userData.name;
 
-  
+  const userImg = localStorage.getItem("Profile");
 
   return (
     <>
@@ -174,44 +175,72 @@ const NavberSection = () => {
                 </NavLink>
               ))}
               <div className=" flex items-center gap-10 text-2xl w-full">
-                <div className="relative">
-                  <IoIosHeartEmpty />
-                </div>
-
-              <Link to={'/cart'}>
-                <div className="relative">
-                  <div className="absolute -top-1.5 cursor-pointer -right-[5px] w-4.5 h-4.5 rounded-full bg-red-500 text-white font-semibold text-sm flex items-center justify-center">
-                    {cartItems?.length || 0}
+                {loggedUser ? (
+                  <div className="relative">
+                    <div className="absolute -top-1.5 cursor-pointer -right-[5px] w-4.5 h-4.5 rounded-full bg-red-500 text-white font-semibold text-sm flex items-center justify-center">
+                      <Link to={"/wishlist"}>{wishItems?.length || 0}</Link>
+                    </div>
+                    <Link to={"/wishlist"}>
+                      <IoIosHeartEmpty />
+                    </Link>
                   </div>
-                 
-                    <PiShoppingCartLight />
-               
-                </div>
-              </Link>
+                ) : (
+                  <div className="relative">
+                    <Link to={"/ogin"}>
+                      <IoIosHeartEmpty />
+                    </Link>
+                  </div>
+                )}
+
+                {loggedUser ? (
+                  <Link to={"/cart"}>
+                    <div className="relative">
+                      <div className="absolute -top-1.5 cursor-pointer -right-[5px] w-4.5 h-4.5 rounded-full bg-red-500 text-white font-semibold text-sm flex items-center justify-center">
+                        {cartItems?.length || 0}
+                      </div>
+
+                      <PiShoppingCartLight />
+                    </div>
+                  </Link>
+                ) : (
+                  <Link to={"/login"}>
+                    <div className="relative">
+                      <PiShoppingCartLight />
+                    </div>
+                  </Link>
+                )}
 
                 {loggedUser ? (
                   <div
                     onClick={() => setIsProfileOpen((prev) => !prev)}
-                    className={`relative z-100000  `}
+                    className={`relative z-100  `}
                   >
-                      <div className="img rounded-full min-w-[30px] overflow-hidden cursor-pointer">
-                        <img
-                          src={`https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`}
-                          alt="avatar"
-                          className=" w-full"
-                        />
-                        </div>
+                    <div className="img rounded-full min-w-[30px] overflow-hidden cursor-pointer">
+                      <img
+                        src={
+                          userImg
+                            ? userImg
+                            : `https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`
+                        }
+                        alt="avatar"
+                        className=" w-full"
+                      />
+                    </div>
                     {/* profile */}
                     <div
                       className={`absolute -left-30 min-w-[310px] py-5 px-4 z-9999 rounded-3xl bg-white border border-black/25 flex flex-col gap-4 transition-all duration-300 ${!isProfileOpen ? "bottom-25" : " -bottom-[250px]"}`}
                     >
                       <div className="flex items-center justify-between md:gap-4 md:justify-start pb-4 border-b border-gray-300">
                         <div className="img rounded-full overflow-hidden">
-                        <img
-                          src={`https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`}
-                          alt="avatar"
-                          className="max-w-[150px] w-full"
-                        />
+                          <img
+                            src={
+                              userImg
+                                ? userImg
+                                : `https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`
+                            }
+                            alt="avatar"
+                            className="max-w-[100px] w-full"
+                          />
                         </div>
                         <div className="text-start">
                           <h2 className="font-poppins font-medium text-base text-black capitalize">
@@ -300,9 +329,9 @@ const NavberSection = () => {
             </div>
             {/* menu btn, cart */}
             <div className="flex gap-3 items-center text-2xl">
-              <a href="#">
+              <Link to="/wishlist">
                 <IoIosHeartEmpty />
-              </a>
+              </Link>
 
               <div className="relative">
                 <div className="absolute -top-1.5 cursor-pointer -right-[5px] w-4.5 h-4.5 rounded-full bg-red-500 text-white font-semibold text-sm flex items-center justify-center">
@@ -315,64 +344,71 @@ const NavberSection = () => {
 
               {loggedUser ? (
                 <>
-                 <div
-                  onClick={() => setIsProfileOpen((prev) => !prev)}
-                  className={`relative z-88! `}
-                >
-                  <div className="img rounded-full min-w-[30px] max-w-[30px] overflow-hidden cursor-pointer!">
-                        <img
-                          src={`https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`}
-                          alt="avatar"
-                          className=" w-full cursor-pointer!"
-                        />
-                        </div>
                   <div
-                    className={`absolute -right-12 min-w-[200px] max-w-[310px] py-5 px-4 z-9999! rounded-3xl bg-white border border-black/25 flex flex-col gap-4 transition-all duration-300 ${isProfileOpen ? " -bottom-[220px]" : "bottom-30"}`}
+                    onClick={() => setIsProfileOpen((prev) => !prev)}
+                    className={`relative z-88! `}
                   >
-                    <div className="flex items-center  pb-4 border-b border-gray-300 gap-2">
-                               <div className="img rounded-full overflow-hidden">
-                        <img
-                          src={`https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`}
-                          alt="avatar"
-                          className="max-w-[150px] w-full"
-                        />
-                        </div>
-                      <div className="text-start">
-                        <h2 className="font-poppins font-medium text-sm text-black capitalize">
-                          {userData?.name || "User"}
-                        </h2>
-                        <p className="font-poppins font-normal text-xs text-[#6B7280]">
-                          {userData?.email || "email"}
-                        </p>
-                      </div>
+                    <div className="img rounded-full min-w-[30px] max-w-[30px] overflow-hidden cursor-pointer!">
+                      <img
+                        src={
+                          userImg
+                            ? userImg
+                            : `https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`
+                        }
+                        alt="avatar"
+                        className=" w-full cursor-pointer!"
+                      />
                     </div>
+                    <div
+                      className={`absolute -right-12 min-w-[200px] max-w-[310px] py-5 px-4 z-9999! rounded-3xl bg-white border border-black/25 flex flex-col gap-4 transition-all duration-300 ${isProfileOpen ? " -bottom-[220px]" : "bottom-30"}`}
+                    >
+                      <div className="flex items-center  pb-4 border-b border-gray-300 gap-2 w-full">
+                        <div className="img rounded-full overflow-hidden w-full">
+                          <img
+                            src={
+                              userImg
+                                ? userImg
+                                : `https://api.dicebear.com/9.x/initials/svg?seed=${firstLetter}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`
+                            }
+                            alt="avatar"
+                            className="min-w-[50px] w-full"
+                          />
+                        </div>
+                        <div className="text-start">
+                          <h2 className="font-poppins font-medium text-sm text-black capitalize">
+                            {userData?.name || "User"}
+                          </h2>
+                          <p className="font-poppins font-normal text-xs text-[#6B7280]">
+                            {userData?.email || "email"}
+                          </p>
+                        </div>
+                      </div>
 
-                    <div className="flex flex-col gap-2">
-                      <Link to="/account/profile">
-                        <div className="profile py-2.5 pl-2.5 hover:bg-gray-100 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
-                          <FiUser />
+                      <div className="flex flex-col gap-2">
+                        <Link to="/account/profile">
+                          <div className="profile py-2.5 pl-2.5 hover:bg-gray-100 flex items-center gap-2.5 cursor-pointer transition-all duration-300">
+                            <FiUser />
 
+                            <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
+                              My Your Profile
+                            </h2>
+                          </div>
+                        </Link>
+
+                        {/* log out */}
+                        <div
+                          className="logout py-2.5 pl-2.5  flex items-center gap-2.5 cursor-pointer hover:bg-gray-50 transition-all duration-300"
+                          onClick={handleDeleteMsg}
+                        >
+                          <LuLogOut />
                           <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
-                            My Your Profile
+                            Log Out
                           </h2>
                         </div>
-                      </Link>
-
-                      {/* log out */}
-                      <div
-                        className="logout py-2.5 pl-2.5  flex items-center gap-2.5 cursor-pointer hover:bg-gray-50 transition-all duration-300"
-                        onClick={handleDeleteMsg}
-                      >
-                        <LuLogOut />
-                        <h2 className="font-poppins font-medium text-sm text-black cursor-pointer!">
-                          Log Out
-                        </h2>
                       </div>
                     </div>
                   </div>
-                </div>
                 </>
-               
               ) : (
                 <Link to={"/login"}>
                   <FiUser />

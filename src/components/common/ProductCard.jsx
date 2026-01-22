@@ -4,10 +4,11 @@ import { GoLaw } from "react-icons/go";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { LuMessageSquareMore } from "react-icons/lu";
 import { addtocart } from "../../redux/CartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import { addtoWishlist, removeWishlist } from "../../redux/wishlistSlice";
 
 
 const ProductCard = ({img, brand, name, reviews, mainPrice, discountPercentage, discountPrice, phoneId, alt,wishId,id, to}) => {
@@ -23,6 +24,7 @@ const [quantities, setQuantities] = useState({});
     console.log(id, wishlist);
   };
 
+  const loggedUser = useSelector((state) => state.auth.value);
 
 
 const handleIncrement = (id) => {
@@ -57,6 +59,37 @@ progress: undefined,
 theme: "light",
 transition: Bounce,
 });
+  const notifyWishlist = () => 
+toast.success(`${name} added to your wishlist`, {
+className:'font-poppins! font-medium! text-black/90! bg-white!',
+toastClassName :'bg-red!',
+progressClassName:'bg-green-600! rounded-md',
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: false,
+draggable: true,
+progress: undefined,
+theme: "light",
+transition: Bounce,
+});
+    const notifyWishlistRemove = () => 
+  toast.error(`${name} remove to your wishlist`, {
+  className:'font-poppins! font-medium! text-black/90! bg-white!',
+  toastClassName :'bg-red!',
+  progressClassName:'bg-red-500! rounded-md',
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: false,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+  transition: Bounce,
+  });
+  
 
    const handleAddTocart = () => {
 dispacth(addtocart({
@@ -70,11 +103,27 @@ dispacth(addtocart({
 notify()
 }
 
+   const handleAddToWishList = () => {
+dispacth(addtoWishlist({
+  id: id,
+  title: name,
+  price : discountPrice,
+  thumbnail : img,
+  quantity : quantities[id] || 1,
+  sku: uuidv4()
+}))
+notifyWishlist()
+}
 
+
+  const handleDelete = (id) => {
+    dispacth(removeWishlist(id));
+    notifyWishlistRemove()
+  };
   return (
     <div className="card pt-12 pb-4 pr-3 xl:pr-4.5 pl-4 w-full max-w-[330px] xl:max-w-full xl:pl-6 rounded-3xl border border-[#D8D9E0] relative cursor-pointer transition-all duration-200 ease-in-out hover:shadow-xl max-h-[550px] h-full flex flex-col justify-center ">
 <Link to={to}>
-<div className="">
+
         <div className="p-2 rounded-full bg-[#E9F0FF] transition-all duration-200 ease-in-out hover:bg-[#dadada] text-2xl absolute top-3 right-2 cursor-pointer">
         <i>
           <GoLaw />
@@ -87,22 +136,37 @@ notify()
           className=" max-h-[280px] h-full object-cover"
         />
       </div>
+        </Link>
       <div className="">
         <div className="text">
           <div className="flex items-center justify-between ">
+          <Link to={to}>
             <div className="">
               <h2 className="font-inter font-medium text-base text-[#363842] pb-2">
                 {brand} {name}
               </h2>
             </div>
+          </Link>
+          
+
             <div className="p-2 rounded-full bg-[#363842] text-white text-sm absolute top-2 left-2 md:static md:text-2xl cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#555761]" onClick={()=> handleWish(wishId)}>
-                {wishlist[wishId] ? (
-                  <IoHeart className="text-white"/>
+                {
+                  loggedUser ? (
+                    wishlist[wishId] ? (
+                  <IoHeart className="text-white" onClick={() => handleDelete(id)}/>
                 ) : (
-                  <IoHeartOutline/>
-                )}
+                  <IoHeartOutline onClick={handleAddToWishList}/>
+                )
+                  ) : (
+                    <Link to={'/login'}>
+                    <IoHeartOutline />
+                    </Link>
+                  )
+                }
             </div>
           </div>
+
+    <Link to={to}>
           {/* rating and reviews  */}
           <div className="rating flex flex-col md:flex-row md:items-center gap-3 pb-2">
             <div className="stars flex gap-1 items-center text-sm md:text-base text-[#E29823]">
@@ -141,11 +205,12 @@ notify()
             </div>
           </div>
           
+    </Link>
        
         </div>
         </div>
-</div>
-</Link>
+
+
 
         {/* button and quantity  */}
            <div className="flex flex-col md:flex-row xs:items-center gap-5 md:gap-8">
@@ -171,9 +236,19 @@ notify()
                 +
               </button>
             </div>
-            <button className=" py-2 md:py-2.5 w-full bg-[#2E2E2E] text-white rounded-lg text-xs md:text-sm font-inter font-medium cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#39393b]" onClick={handleAddTocart}>
+            {
+              loggedUser ? (
+                <button className=" py-2 md:py-2.5 w-full bg-[#2E2E2E] text-white rounded-lg text-xs md:text-sm font-inter font-medium cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#39393b]" onClick={handleAddTocart}>
               Add to cart
             </button>
+              ) : (
+                <Link to={'/login'}>
+                <button className=" py-2 md:py-2.5 w-full bg-[#2E2E2E] text-white rounded-lg text-xs md:text-sm font-inter font-medium cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#39393b]" onClick={handleAddTocart}>
+              Add to cart
+            </button>
+                </Link>
+              ) 
+            }
           </div>
  
     </div>

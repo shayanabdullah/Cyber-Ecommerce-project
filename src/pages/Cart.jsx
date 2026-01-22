@@ -42,7 +42,6 @@ const handleDelete = (id) => {
   dispatch(removeCart(id))
 }
 
-console.log(cartItems);
 
  
 

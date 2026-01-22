@@ -23,6 +23,7 @@ import MainLayout from "./pages/profile/MainLayout";
 import AddressBook from "./pages/profile/AddressBook";
 import PaymentSettings from "./pages/profile/PaymentSettings";
 import ProfileWishlist from "./pages/profile/ProfileWishlist";
+import Wishlist from "./pages/Wishlist";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -39,6 +40,7 @@ const App = () => {
         { path: "checkout/payment", element: <Payment /> },
         { path: "register", element: <Register /> },
         { path: "login", element: <Login /> },
+        { path: "wishlist", element: <Wishlist /> },
         { path: "test", element: <Products /> },
 
 

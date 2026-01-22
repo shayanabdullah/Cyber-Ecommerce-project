@@ -30,6 +30,10 @@ import "react-inner-image-zoom/lib/styles.min.css";
 import { IoClose } from "react-icons/io5";
 import ProductDetailsSkeleton from "../../skeleton/ProductDetailsSkeleton ";
 import ImageSkeleton from "../../skeleton/ImageSkeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { addtocart } from "../../redux/CartSlice";
+import { addtoWishlist } from "../../redux/wishlistSlice";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 const ProductDetails = () => {
   const [readMore, setreadMore] = useState(false);
@@ -66,6 +70,8 @@ const ProductDetails = () => {
       icon: <FaShieldAlt />,
     },
   ];
+  const loggedUser = useSelector((state) => state.auth.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!id) return;
@@ -78,6 +84,7 @@ const ProductDetails = () => {
     }
   }, [productDetail]);
 
+  const [quantities, setQuantities] = useState(1);
   const isLong = productDetail?.description?.length > 200;
 
   const oldPrice =
@@ -111,12 +118,81 @@ const ProductDetails = () => {
     : specEntries.slice(0, DEFAULT_SECTIONS);
 
   if (loading) {
-return <ProductDetailsSkeleton/>
- 
+    return <ProductDetailsSkeleton />;
   }
+
+  const notifyWishlist = () =>
+    toast.success(
+      `${productDetail?.title || "Product"} added to your wishlist`,
+      {
+        className: "font-poppins! font-medium! text-black/90! bg-white!",
+        toastClassName: "bg-red!",
+        progressClassName: "bg-green-600! rounded-md",
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      },
+    );
+
+  const notifyAddTocart = () =>
+    toast.success(
+      `${productDetail?.title || "Product"} added to your Cart`,
+      {
+        className: "font-poppins! font-medium! text-black/90! bg-white!",
+        toastClassName: "bg-red!",
+        progressClassName: "bg-green-600! rounded-md",
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      },
+    );
+
+  const handleAddToCart = () => {
+    setQuantities((prev) => prev + 1);
+    dispatch(
+      addtocart({
+        id: productDetail?.id,
+        title: productDetail?.title,
+        price: productDetail?.price,
+        thumbnail: productDetail?.thumbnail,
+        quantity: quantities,
+        sku: productDetail?.sku,
+      }),
+    );
+    notifyAddTocart()
+  };
+
+  const handleAddToWishList = () => {
+    dispatch(
+      addtoWishlist({
+        id: productDetail?.id,
+        title: productDetail?.title,
+        price: productDetail?.price,
+        thumbnail: productDetail?.thumbnail,
+        quantity: quantities,
+        sku: productDetail?.sku,
+      }),
+    );
+
+    
+    notifyWishlist();
+  };
 
   return (
     <>
+      <ToastContainer />
       {!loading && (
         <main className="overflow-x-hidden!">
           <section className="px-4">
@@ -170,7 +246,6 @@ return <ProductDetailsSkeleton/>
                               zoomSrc={previewImg}
                               zoomType="hover"
                               zoomPreload={true}
-                             
                             />
                           </div>
                         }
@@ -286,16 +361,39 @@ return <ProductDetailsSkeleton/>
 
                           {/* buttons */}
                           <div className="flex items-center py-8 gap-4 w-full">
-                            <ShopButton
-                              text={"Add to Wishlist"}
-                              className={
-                                "border-black! text-black! w-full flex justify-center"
-                              }
-                            />
-                            <ShopButton
-                              text={"Add to Cart"}
-                              className={"bg-black! w-full flex justify-center"}
-                            />
+                            {loggedUser ? (
+                              <>
+                                <ShopButton
+                                  text={"Add to Wishlist"}
+                                  className={
+                                    "border-black! text-black! w-full flex justify-center"
+                                  }
+                                  onClick={handleAddToWishList}
+                                />
+                                <ShopButton
+                                  text={"Add to Cart"}
+                                  className={
+                                    "bg-black! w-full flex justify-center"
+                                  }
+                                  onClick={handleAddToCart}
+                                />
+                              </>
+                            ) : (
+                              <Link to={"/login"}>
+                                <ShopButton
+                                  text={"Add to Wishlist"}
+                                  className={
+                                    "border-black! text-black! w-full flex justify-center"
+                                  }
+                                />
+                                <ShopButton
+                                  text={"Add to Cart"}
+                                  className={
+                                    "bg-black! w-full flex justify-center"
+                                  }
+                                />
+                              </Link>
+                            )}
                           </div>
 
                           {/* services */}

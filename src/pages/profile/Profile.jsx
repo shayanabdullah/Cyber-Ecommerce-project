@@ -6,8 +6,8 @@ import DatePicker from "../../components/common/DatePicker";
 import IOSSwitch from "../../components/common/ToogleSwich";
 import { useSelector } from "react-redux";
 import ShopButton from "../../components/common/ShopButton";
-import Test from "./test";
-import ImageUploading from "react-images-uploading";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+;
 
 const Profile = () => {
   const [userData, setuserData] = useState({
@@ -18,15 +18,28 @@ const Profile = () => {
   const UserAdress = useSelector((state) => state.address.value) || {};
 
   const phone = UserAdress[0]?.phone || "";
-  const [images, setImages] = React.useState([]);
-  const maxNumber = 1;
-const [imgModal, setimgModal] = useState(false)
-  const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
+const [tempImage, setTempImage] = useState(null); 
+const [images, setImages] = useState(() => {
+  return localStorage.getItem("Profile");
+});
 
+  const [imgModal, setimgModal] = useState(false);
+
+  const notify = () => 
+toast.success(`Image upload successfully`, {
+className:'font-poppins! font-medium! text-black/90! bg-white!',
+toastClassName :'bg-red!',
+progressClassName:'bg-green-600! rounded-md',
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: false,
+draggable: true,
+progress: undefined,
+theme: "light",
+transition: Bounce,
+});
   useEffect(() => {
     if (loggedUser) {
       setuserData({
@@ -36,16 +49,56 @@ const [imgModal, setimgModal] = useState(false)
     }
   }, [loggedUser]);
 
-const handle =() => {
-    if(images.length >= 1){
-    setimgModal(false)
-  }
-}
 
+const handleSetImg = (e) => {
+  if (!e.target.files?.length) return;
+
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    if (typeof reader.result === "string") {
+      setTempImage(reader.result); // ONLY PREVIEW
+    }
+  };
+
+  reader.readAsDataURL(file);
+  setimgModal(false);
+};
+
+
+const handleSave = () => {
+  if (!tempImage) {
+    toast.error("No image selected");
+    return;
+  }
+
+  localStorage.setItem("Profile", tempImage);
+  setImages(tempImage);
+  setTempImage(null);
+
+notify()
+};
+
+
+
+
+  const handleRemoveImg = () => {
+  setImages(null);
+  localStorage.removeItem("Profile");
+};
+
+
+const handleImgModal = () => {
+setimgModal(true)
+}
   const name = userData.name;
+
+  
 
   return (
     <>
+    <ToastContainer/>
       <section className="w-full px-3 lg:px-0">
         <div className="maim w-full">
           {/* BredCrums */}
@@ -68,116 +121,103 @@ const handle =() => {
             <div className="profile-pic w-full">
               <div className="information w-full rounded-lg py-6 px-5 bg-white">
                 <div className="">
-                  <div className="App">
-                    <ImageUploading
-                      multiple
-                      value={images}
-                      onChange={onChange}
-                      maxNumber={maxNumber}
-                      dataURLKey="data_url"
-                    >
-                      {({
-                        imageList,
-                        onImageUpload,
-                        onImageRemoveAll,
-                        onImageUpdate,
-                        onImageRemove,
-                        isDragging,
-                        dragProps,
-                      }) => (
-                        // write your building UI
-                        <>
-                          <div className="upload__image-wrapper img-box flex items-center gap-5">
-                            <button
-                              style={isDragging ? { color: "red" } : undefined}
-                              onClick={onImageUpload}
-                              {...dragProps}
-                            >
-                              <div className="inner max-w-[70px] text-white text-6xl rounded-full flex items-center justify-center font-poppins group relative overflow-hidden">
-                                {images.length < 1 ? (
-                                  <div className="img rounded-full min-w-[30px] overflow-hidden">
-                                    <img
-                                      src={`https://api.dicebear.com/9.x/initials/svg?seed=${name}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`}
-                                      alt="avatar"
-                                      className=" w-full"
-                                    />
-                                  </div>
-                                ) : (
-                                  <div className="">
-                                    {imageList.map((image, index) => (
-                                      <div
-                                        key={index}
-                                        className="image-item img rounded-full min-w-[30px] max-w-[70px] max-h-[70px] overflow-hidden"
-                                      >
-                                        <img src={image["data_url"]} alt="" />
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
-
-                                <div className="w-full h-full bg-black/40 rounded-full absolute -top-full left-0 group-hover:top-0 transition-all duration-300 flex items-center justify-center cursor-pointer">
-                                  <Camera />
-                                </div>
-                              </div>
-                            </button>
-                            <div className="">
-                              <h2 className="font-sf-pro font-medium text-xl capitalize">
-                                {userData.name || "User"}
-                              </h2>
-                              <h2 className="font-sf-pro font-medium text-sm text-gray-dark-400 ">
-                                JPG, GIF or PNG. Max size of 2mb
-                              </h2>
-                            </div>
-                          </div>
-                          <div className="btns flex items-center gap-5 pt-6">
-                            <button
-                              className="p-3 rounded-md bg-gray-200 text-sm font-poppins font-medium cursor-pointer"
-                              onClick={()=> {onImageUpdate(), setimgModal(true)}}
-                            >
-                              Change Photo
-                            </button>
-                            <button
-                              className="text-sm text-red-500 font-poppins font-medium cursor-pointer capitalize"
-                              onClick={onImageRemove}
-                            >
-                              remove
-                            </button>
-                          </div>
+                  <div className="App img-box flex items-center gap-5">
                     {
-                      imgModal  &&  <div className="">
-                            <div className=" absolute w-[500px] h-[500px] top-1/2 left-1/2 -translate-1/2 z-20 hidden md:block" onClick={onImageUpload}>
-                          <div className="w-full h-full"  >
-  <div className={`bg-white rounded-2xl shadow-lg p-6 border border-black/20  w-full h-full `} 
->
-    
-    {/* Drop Area */}
-    <div className="border-2  border-black rounded-xl p-12 flex flex-col items-center justify-center gap-4 text-center w-full h-full"   {...dragProps}
-  style={isDragging ? {background: '#b3b3b3'} : {background:'white'}}>
-      <div className="w-12 h-12 flex items-center justify-center rounded-full bg-black/5">
-     <FiPlus/>
-      </div>
-
-      <p className="text-black font-medium text-sm font-poppins">
-   Drag & drop an image here, or click to browse
-      </p>
-    </div>
-
-
-  </div>
-</div>
-
+                      <div className="inner max-w-[70px] text-white text-6xl rounded-full flex items-center justify-center font-poppins group relative overflow-hidden">
+                        <div className="w-full h-full bg-black/40 rounded-full absolute -top-full left-0 group-hover:top-0 transition-all duration-300 cursor-pointer  text-sm">
+                          <div className="absolute w-full h-full top-1/3 left-[30%] z-10">
+                            {" "}
+                            <Camera />
                           </div>
+                          <input
+                            type="file"
+                            onChange={handleSetImg}
+                            className="text-transparent absolute w-full h-full z-20"
+                          />
+                        </div>
+
+                        { !images && !tempImage ? (
+                          <div className="img rounded-full min-w-[30px] overflow-hidden">
+                            <img
+                              src={`https://api.dicebear.com/9.x/initials/svg?seed=${name}&backgroundColor=00897b,00acc1,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,039be5`}
+                              alt="avatar"
+                              className=" w-full"
+                            />
+                          </div>
+                        ) : (
+                          <div className="">
+                          {
+                            !images ? (  <div className="image-item img rounded-full min-w-[30px] max-w-[70px] max-h-[70px] overflow-hidden">
+                              <img src={tempImage} alt="" />
+                            
+                            </div>) : (
+                                <div className="image-item img rounded-full min-w-[30px] max-w-[70px] max-h-[70px] overflow-hidden">
+                              <img src={images} alt="" />
+                            </div>
+                            )
+                          }
+                          </div>
+                        )}
                       </div>
                     }
-                    {
-                       imgModal &&  
-                       <div className="overlay  fixed top-0 left-0 w-full h-screen bg-black/30 z-10" onClick={()=> setimgModal(false)}></div>
-                    }
-                      
-                        </>
-                      )}
-                    </ImageUploading>
+
+                    <div className="">
+                      <h2 className="font-sf-pro font-medium text-xl capitalize">
+                        {userData.name || "User"}
+                     
+                      </h2>
+                      <h2 className="font-sf-pro font-medium text-sm text-gray-dark-400 pb-2">
+                        JPG, GIF or PNG. Max size of 2mb
+                      </h2>
+                      {!images && tempImage &&  <p className="text-xs font-poppins font-normal text-red">note: img will not upload if you dont save*</p>}
+                    </div>
                   </div>
+                  <div className="btns flex items-center gap-5 pt-6">
+                    <button className="p-3 rounded-md bg-gray-200 text-sm font-poppins font-medium cursor-pointer overflow-hidden relative" onClick={handleImgModal}>
+                      <input
+                        type="file"
+                        className="absolute top-0 left-0 bg-transparent text-transparent w-full h-full z-10 outline-0! border-0!"
+                        onChange={handleSetImg}
+                      />
+                      Change Photo
+                    </button>
+                    <button
+                      className="text-sm text-red-500 font-poppins font-medium cursor-pointer capitalize"
+                      onClick={handleRemoveImg}
+                    >
+                      remove
+                    </button>
+                  </div>
+                                            {imgModal && <div className="">
+                           <div className=" absolute w-[500px] h-[500px] top-1/2 left-1/2 -translate-1/2 z-20 hidden lg:block" onClick={() => {
+               
+
+                           }}>
+                             <div className="w-full h-full relative">
+                              <input type="file" className="absolute top-0 left-0 w-full h-full text-transparent outline-0! border-0!" onChange={handleSetImg} />
+                               <div className={`bg-white rounded-2xl shadow-lg p-6 border border-black/20  w-full h-full `}
+                               >
+
+                                 {/* Drop Area */}
+                                 <div className="border-2  border-black rounded-xl p-12 flex flex-col items-center justify-center gap-4 text-center w-full h-full"
+                                   >
+                                   <div className="w-12 h-12 flex items-center justify-center rounded-full bg-black/5">
+                                     <FiPlus />
+                                   </div>
+
+                                   <p className="text-black font-medium text-sm font-poppins">
+                                     Drag & drop an image here, or click to browse
+                                   </p>
+                                 </div>
+
+                               </div>
+                             </div>
+
+                           </div>
+                         </div>}
+                         {imgModal &&
+                           <div className="overlay  fixed top-0 left-0 w-full h-screen bg-black/30 z-10 hidden lg:block" onClick={() => setimgModal(false)}></div>}
+
                 </div>
               </div>
             </div>
@@ -268,6 +308,7 @@ const handle =() => {
                   <ShopButton
                     text={"Save"}
                     className={"bg-black! py-2! px-5!"}
+                  onClick={handleSave}
                   />
                 </div>
               </div>
@@ -280,3 +321,5 @@ const handle =() => {
 };
 
 export default Profile;
+
+
