@@ -7,32 +7,32 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { addtocart, removeCart, updateQuantities } from "../redux/CartSlice";
 import {
-    removeWishlist,
+  removeWishlist,
   wishlistUpdateQuantities,
 } from "../redux/wishlistSlice";
 import ShopButton from "../components/common/ShopButton";
 import { Bounce, toast, ToastContainer } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
   const wishlistItems = useSelector((state) => state.wishlist.items);
 
-    const notifyWishlist = () => 
-  toast.error(`Product remove to your wishlist`, {
-  className:'font-poppins! font-medium! text-black/90! bg-white!',
-  toastClassName :'bg-red!',
-  progressClassName:'bg-red-500! rounded-md',
-  position: "top-right",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: false,
-  draggable: true,
-  progress: undefined,
-  theme: "light",
-  transition: Bounce,
-  });
-  
+  const notifyWishlist = () =>
+    toast.error(`Product remove to your wishlist`, {
+      className: "font-poppins! font-medium! text-black/90! bg-white!",
+      toastClassName: "bg-red!",
+      progressClassName: "bg-red-500! rounded-md",
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
 
   const increment = (item) => {
     dispatch(
@@ -51,10 +51,9 @@ const Wishlist = () => {
     );
   };
 
-
   const handleDelete = (id) => {
     dispatch(removeWishlist(id));
-    notifyWishlist()
+    notifyWishlist();
   };
 
   const handleAddToCart = (item) => {
@@ -69,14 +68,13 @@ const Wishlist = () => {
       }),
     );
   };
-  
-console.log(wishlistItems);
-
+const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
+;
 
   return (
     <>
       <section className="py-[72px] px-4">
-         <ToastContainer/>
+        <ToastContainer />
         <Container>
           <div className="main grid grid-cols-1 gap-12">
             <div className="">
@@ -94,29 +92,29 @@ console.log(wishlistItems);
               <div className="">
                 {wishlistItems.map((wishlist) => (
                   <div
-                    className="py-10 border-b border-[#A3A3A3] last:border-b-0"
+                    className="py-10 border-b border-[#A3A3A3] last:border-b-0 cursor-pointer"
                     key={wishlist.id}
                   >
-            <div className="w-full flex flex-col md:flex-row justify-between">
+                   <Link to={`/shop/category/${slugify(wishlist.title || wishlist.name)}/${wishlist.id}`}>
+                    <div className="w-full flex flex-col md:flex-row justify-between">
                       <div className="wishlist py-4  flex items-center gap-4">
-                      <div className="img max-w-[90px] w-full">
-                        <img src={wishlist.thumbnail} alt="" />
-                      </div>
-                      <div className="wishlist-details w-full flex flex-col md:flex-row justify-between">
-                        <div className="text pb-2">
-                          <h2 className="font-poppins font-medium text-base leading-6 text-black max-w-[190px] pb-2">
-                            {wishlist.title}
-                          </h2>
-                          <p className="font-sf-pro font-normal text-sm leading-6 text-black/70 pb-2">
-                            #{wishlist?.sku}
-                          </p>
+                        <div className="img max-w-[90px] w-full">
+                          <img src={wishlist.thumbnail} alt="" />
                         </div>
-                 
-                      </div>   
-                    </div>
-                            <div className="flex items-center flex-wrap justify-between md:justify-start gap-6">
-           <div className="flex justify-between md:justify-end items-center w-full">
-                           <div className="flex items-center gap-3">
+                        <div className="wishlist-details w-full flex flex-col md:flex-row justify-between">
+                          <div className="text pb-2">
+                            <h2 className="font-poppins font-medium text-base leading-6 text-black max-w-[190px] pb-2">
+                              {wishlist.title}
+                            </h2>
+                            <p className="font-sf-pro font-normal text-sm leading-6 text-black/70 pb-2">
+                              #{wishlist?.sku}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center flex-wrap justify-between md:justify-start gap-6">
+                        <div className="flex justify-between md:justify-end items-center w-full">
+                          <div className="flex items-center gap-3">
                             <button
                               className="py-1 px-2 rounded-md text-black text-lg font-inter font-medium cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#dddd]"
                               onClick={() => decrement(wishlist)}
@@ -137,29 +135,31 @@ console.log(wishlistItems);
                               <GoPlus />
                             </button>
                           </div>
-                 <div className="flex items-center gap-2">
-                           <div className="price">
-                            <p className="font-poppins font-medium  text-xl leading-6 text-black">
-                              ${Math.round(wishlist.price) * wishlist.quantity}
-                            </p>
+                          <div className="flex items-center gap-2">
+                            <div className="price">
+                              <p className="font-poppins font-medium  text-xl leading-6 text-black">
+                                $
+                                {Math.round(wishlist.price) * wishlist.quantity}
+                              </p>
+                            </div>
+                            <div
+                              className="close text-xl cursor-pointer"
+                              onClick={() => handleDelete(wishlist.id)}
+                            >
+                              <IoCloseOutline />
+                            </div>
                           </div>
-                          <div
-                            className="close text-xl cursor-pointer"
-                            onClick={() => handleDelete(wishlist.id)}
-                          >
-                            <IoCloseOutline />
-                          </div>
-                 </div>
-           </div>
-                    <div className="w-full text-end">
-                            <ShopButton
+                        </div>
+                        <div className="w-full text-end">
+                          <ShopButton
                             text="Add to Cart"
                             className="bg-black! py-3! px-5!"
                             onClick={() => handleAddToCart(wishlist)}
                           />
-                    </div>
                         </div>
-            </div>
+                      </div>
+                    </div>
+                   </Link>
                   </div>
                 ))}
               </div>
