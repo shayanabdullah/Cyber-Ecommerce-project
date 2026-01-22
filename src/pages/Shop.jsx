@@ -67,6 +67,7 @@ if(loading) {
   return (
     <>
  <ToastContainer
+ className={'w-[250px]!'}
 position="top-right"
 autoClose={5000}
 hideProgressBar={false}

@@ -40,6 +40,8 @@ progress: undefined,
 theme: "light",
 transition: Bounce,
 });
+
+
   useEffect(() => {
     if (loggedUser) {
       setuserData({

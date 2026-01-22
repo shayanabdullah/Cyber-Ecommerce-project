@@ -1,17 +1,9 @@
 import Container from "@/components/common/Container";
 import React, { useState } from "react";
-import iphone17 from "../assets/products-images/iphone-17pro.png";
-import watch from "../assets/watch.svg";
-import macbook from "../assets/macbook-air.png";
 import emptyWishlist1 from "../assets/emptyWishlist.svg";
-import emptyCart2 from "../assets/empty-cart-2.png";
-import emptyCart3 from "../assets/empty-cart-3.png";
-import { FaMinus, FaPlus } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
-import { smartphones } from "@/data/smartphonesApi";
 import { IoCloseOutline } from "react-icons/io5";
-import Form from "@/components/common/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { addtocart, removeCart, updateQuantities } from "../redux/CartSlice";
 import {
@@ -105,7 +97,8 @@ console.log(wishlistItems);
                     className="py-10 border-b border-[#A3A3A3] last:border-b-0"
                     key={wishlist.id}
                   >
-                    <div className="wishlist py-4  flex items-center gap-4">
+            <div className="w-full flex flex-col md:flex-row justify-between">
+                      <div className="wishlist py-4  flex items-center gap-4">
                       <div className="img max-w-[90px] w-full">
                         <img src={wishlist.thumbnail} alt="" />
                       </div>
@@ -118,8 +111,12 @@ console.log(wishlistItems);
                             #{wishlist?.sku}
                           </p>
                         </div>
-                        <div className="flex items-center justify-center md:justify-between gap-6">
-                          <div className="flex items-center gap-3">
+                 
+                      </div>   
+                    </div>
+                            <div className="flex items-center flex-wrap justify-between md:justify-start gap-6">
+           <div className="flex justify-between md:justify-end items-center w-full">
+                           <div className="flex items-center gap-3">
                             <button
                               className="py-1 px-2 rounded-md text-black text-lg font-inter font-medium cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#dddd]"
                               onClick={() => decrement(wishlist)}
@@ -140,7 +137,8 @@ console.log(wishlistItems);
                               <GoPlus />
                             </button>
                           </div>
-                          <div className="price">
+                 <div className="flex items-center gap-2">
+                           <div className="price">
                             <p className="font-poppins font-medium  text-xl leading-6 text-black">
                               ${Math.round(wishlist.price) * wishlist.quantity}
                             </p>
@@ -151,14 +149,17 @@ console.log(wishlistItems);
                           >
                             <IoCloseOutline />
                           </div>
-                          <ShopButton
+                 </div>
+           </div>
+                    <div className="w-full text-end">
+                            <ShopButton
                             text="Add to Cart"
                             className="bg-black! py-3! px-5!"
                             onClick={() => handleAddToCart(wishlist)}
                           />
-                        </div>
-                      </div>
                     </div>
+                        </div>
+            </div>
                   </div>
                 ))}
               </div>
