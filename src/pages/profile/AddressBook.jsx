@@ -208,7 +208,7 @@ const addresses = useSelector((state) => state.address.value);
 
             {/* modal */}
             <div
-              className={`w-full absolute top-[5%]  left-1/2 -translate-x-1/2 z-20 max-w-[400px]  ${
+              className={`w-full absolute top-[5%]  left-1/2 -translate-x-1/2 z-20  max-w-[350px]  ${
                 modalOpen ? "block" : "hidden"
               }`}
             >

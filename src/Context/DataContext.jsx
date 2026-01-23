@@ -7,6 +7,7 @@ export const DataProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [productDetail, setProductDetail] = useState([]);
+  const [productSearch, setProductSearch] = useState([]);
  const [loading, setLoading] = useState(true)
  
 
@@ -56,6 +57,22 @@ const fetchProductDetails = async (id) => {
   } catch (err) {
     console.log(err);
     setProductDetail(null);
+  } finally {
+    setLoading(false); 
+  }
+};
+
+
+const fetchSearchProduct = async (keyword) => {
+  try {
+    const res = await axios.get(
+      `https://dummyjson.com/products/search?q=${keyword}`
+    );
+    setProductSearch(res.data);
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+    setProductSearch(null);
   } finally {
     setLoading(false); 
   }

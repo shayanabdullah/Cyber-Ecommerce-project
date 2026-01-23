@@ -186,7 +186,7 @@ const NavberSection = () => {
                   </div>
                 ) : (
                   <div className="relative">
-                    <Link to={"/ogin"}>
+                    <Link to={"/login"}>
                       <IoIosHeartEmpty />
                     </Link>
                   </div>
@@ -329,6 +329,7 @@ const NavberSection = () => {
             </div>
             {/* menu btn, cart */}
             <div className="flex gap-3 items-center text-2xl">
+              
               <Link to="/wishlist">
                 <IoIosHeartEmpty />
               </Link>

@@ -24,6 +24,7 @@ import AddressBook from "./pages/profile/AddressBook";
 import PaymentSettings from "./pages/profile/PaymentSettings";
 import ProfileWishlist from "./pages/profile/ProfileWishlist";
 import Wishlist from "./pages/Wishlist";
+import PageNotFound from "./pages/PageNotFound";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -56,7 +57,7 @@ const App = () => {
       },
 
 
-        { path: "*", element: "No Data Found" },
+        { path: "*", element: <PageNotFound/>},
       ],
     },
   ]);

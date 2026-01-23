@@ -12,11 +12,23 @@ import rocket from "@/assets/rocket-logo.png";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import ShopButton from "./ShopButton";
+import { useSelector } from "react-redux";
 const Payment = () => {
   const [active, setActive] = useState();
   const handleActive = (id) => {
     setActive(id);
   };
+const addresses = useSelector((state) => state.address.value);
+const cartitem = useSelector((state) => state.cart.items);
+const isActiveAddress = localStorage.getItem("selectedAddressId");
+const activeAddress = addresses.find(
+  (item) => item.id === isActiveAddress
+);
+
+
+const checkout = useSelector((state) => state.checkout);
+console.log(checkout);
+
 
   return (
     <>
@@ -44,48 +56,25 @@ const Payment = () => {
 
               {/* summary card */}
               <div className="flex flex-col gap-y-4 pb-8">
-                <div className="card p-4 bg-gray-100 rounded-xl">
+              {
+                cartitem.map((item)=> (
+                    <div className="card p-4 bg-gray-100 rounded-xl">
                   <div className="flex items-center gap-3 justify-between">
                     <div className="img flex items-center gap-3">
-                      <img src={iphone17} alt="" className="max-w-10" />
+                      <img src={item.thumbnail} alt="" className="max-w-10" />
                       <h2 className="font-poppins font-medium text-base leading-6 text-black">
-                        Iphone 17 pro 256gb (orange)
+                        {item.title}
                       </h2>
                     </div>
 
                     <p className="font-poppins font-bold text-base leading-6 text-black">
-                      $1099
+                    ${Math.round(item.price)}
                     </p>
                   </div>
                 </div>
-                <div className="card p-4 bg-gray-100 rounded-xl">
-                  <div className="flex items-center gap-3 justify-between">
-                    <div className="img flex items-center gap-3">
-                      <img src={macbook} alt="" className="max-w-10" />
-                      <h2 className="font-poppins font-medium text-base leading-6 text-black">
-                        Apple MacBook Air M4 13-inch 256GB
-                      </h2>
-                    </div>
-
-                    <p className="font-poppins font-bold text-base leading-6 text-black">
-                      $899
-                    </p>
-                  </div>
-                </div>
-                <div className="card p-4 bg-gray-100 rounded-xl">
-                  <div className="flex items-center gap-3 justify-between">
-                    <div className="img flex items-center gap-3">
-                      <img src={watch} alt="" className="max-w-10" />
-                      <h2 className="font-poppins font-medium text-base leading-6 text-black">
-                        Apple Watch Series 9 GPS 41mm
-                      </h2>
-                    </div>
-
-                    <p className="font-poppins font-bold text-base leading-6 text-black">
-                      $499
-                    </p>
-                  </div>
-                </div>
+                ))
+              }
+         
               </div>
 
               {/* Address */}
@@ -97,7 +86,9 @@ const Payment = () => {
                     </h2>
                   </div>
                   <p className="font-poppins font-normal text-base leading-6 text-[#000000]">
-                    1131 Dusty Townline, Jacksonville, TX 40322
+                  {
+                    activeAddress?.address
+                  }
                   </p>
                 </div>
 
@@ -119,7 +110,7 @@ const Payment = () => {
                         Subtotal
                       </h2>
                       <h2 className="font-poppins font-medium text-base leading-4">
-                        $2597
+                       ${Math.round(checkout.subtotal)}
                       </h2>
                     </div>
                     <div className="tax flex justify-between items-center pb-4">
@@ -127,7 +118,7 @@ const Payment = () => {
                         Estimated Tax
                       </h2>
                       <h2 className="font-poppins font-medium text-base leading-4">
-                        5% ($130)
+                        5% (${checkout.tax})
                       </h2>
                     </div>
                     <div className="shipping flex justify-between items-center pb-4">
@@ -135,7 +126,7 @@ const Payment = () => {
                         Estimated shipping & Handling
                       </h2>
                       <h2 className="font-poppins font-medium text-base leading-4">
-                        $25
+                        ${checkout.shipping}
                       </h2>
                     </div>
 
@@ -144,7 +135,7 @@ const Payment = () => {
                         Total
                       </h2>
                       <h2 className="font-poppins font-semibold text-base leading-4">
-                        $2752
+                        ${checkout.total}
                       </h2>
                     </div>
                   </div>

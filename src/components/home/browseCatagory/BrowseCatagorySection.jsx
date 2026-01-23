@@ -135,7 +135,7 @@ const BrowseCatagorySection = () => {
        {
         categories.map((catagory)=> (
       <SwiperSlide key={catagory.id} className=''>
-        <Link to={`/products/category/${catagory.slug}`}>
+        <Link to={`/shop/category/${catagory.slug}`}>
             <motion.div
             variants={fadeIn('down', 0.6)}
             className="py-6 rounded-[15px] bg-gray-200 flex flex-col items-center justify-center cursor-pointer min-h-[110px]">

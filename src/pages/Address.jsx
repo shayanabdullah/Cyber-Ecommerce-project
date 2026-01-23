@@ -1,5 +1,5 @@
 import Container from "@/components/common/Container";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSolidPencil } from "react-icons/bi";
 import line from "@/assets/line.svg";
 import { RiMapPinFill } from "react-icons/ri";
@@ -13,8 +13,7 @@ import { address, deleteAddress, updateAddress } from "../redux/addressSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Address = () => {
- 
-const addresses = useSelector((state) => state.address.value);
+  const addresses = useSelector((state) => state.address.value);
 
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
@@ -79,10 +78,10 @@ const addresses = useSelector((state) => state.address.value);
     if (!validateForm()) return;
 
     if (isEditing) {
-  dispatch(updateAddress({ ...form, id: isEditing }));
-  setModalOpen(false);
-  setIsEditing(null);
-} else {
+      dispatch(updateAddress({ ...form, id: isEditing }));
+      setModalOpen(false);
+      setIsEditing(null);
+    } else {
       setModalOpen(false);
       setIsEditing(null);
       dispatch(
@@ -96,11 +95,23 @@ const addresses = useSelector((state) => state.address.value);
     }
   };
 
+  useEffect(() => {
+  const saved = localStorage.getItem("selectedAddressId");
+  if (saved) setSelectedId(saved);
+}, []);
+
+useEffect(() => {
+  if (selectedId) {
+    localStorage.setItem("selectedAddressId", selectedId);
+  }
+}, [selectedId]);
+
+
   const removeAddress = (id) => {
     dispatch(deleteAddress(id));
     if (selectedId == id) setSelectedId(null);
   };
-
+  console.log(selectedId, addresses);
 
   return (
     <>
@@ -115,7 +126,7 @@ const addresses = useSelector((state) => state.address.value);
             </div>
 
             <div className="flex flex-col gap-y-6 pb-12">
-              {addresses?.map((item) => (
+              {addresses?.map((item, index) => (
                 <div
                   className="address-box p-6 rounded-lg bg-gray-100  flex items-center justify-between"
                   key={item.id}
@@ -314,7 +325,7 @@ const addresses = useSelector((state) => state.address.value);
             </div>
 
             {isDeleteMsg && (
-              <div className="w-full absolute top-[25%] left-1/2 -translate-x-1/2 z-20 max-w-[400px]">
+              <div className="w-full fixed top-[25%] left-1/2 -translate-x-1/2 z-20 max-w-[400px]">
                 <div className="modal py-5 px-3 rounded-lg border border-gray-800 bg-white">
                   <p className="font-poppins font-medium text-lg text-red-700 text-center pb-2">
                     Are you sure you want to delete this?

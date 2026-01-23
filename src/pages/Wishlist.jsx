@@ -79,6 +79,8 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
           <div className="main grid grid-cols-1 gap-12">
             <div className="">
               <div className="header ">
+
+                
                 <h2 className="font-poppins font-semibold  text-2xl leading-6 text-black pb-2">
                   My Wishlist
                 </h2>

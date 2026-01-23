@@ -3,6 +3,8 @@ import ShopButton from "./ShopButton";
 import { coupons } from "@/data/coupons";
 import { FaShippingFast } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setCheckoutSummary } from "../../redux/checkoutSlice";
 
 const Form = ({ subtotal }) => {
   const [discount, setdiscount] = useState(0);
@@ -37,6 +39,22 @@ const applyCoupon = (e) => {
   setCouponMessage("");
   setAppliedCoupon(foundCoupon);
 };
+
+
+  const dispatch = useDispatch()
+
+useEffect(() => {
+  dispatch(setCheckoutSummary({
+    subtotal,
+    tax: taxAmount,
+    shipping,
+    discount,
+    total,
+    coupon: appliedCoupon?.code || null,
+  }));
+}, [subtotal, taxAmount, shipping, discount, total, appliedCoupon]);
+
+
 
 
 
@@ -78,7 +96,7 @@ useEffect(() => {
         </div>
 
         <div className="form ">
-          <form>
+     
             <div className="space-y-6">
               <div className="flex flex-col relative">
                 <label className="text-[#545454] font-poppins font-medium text-sm leading-4 block pb-2">
@@ -190,10 +208,11 @@ useEffect(() => {
               <ShopButton
                 className={"w-full bg-black! text-white!"}
                 text={"Checkout"}
+
               />
               </Link>
             </div>
-          </form>
+
         </div>
       </div>
     </div>

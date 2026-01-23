@@ -13,6 +13,7 @@ import { GoHeart } from "react-icons/go";
 import { FaFire, FaHeart, FaRegHeart } from "react-icons/fa";
 import { useState } from "react";
 import { newArrival } from "@/data/featuredProducts";
+import { Link } from "react-router-dom";
 
 const bestSellingProducts = newArrival.filter(
   (item) => item.bestSelling === true
@@ -29,6 +30,9 @@ const FeaturedProductSection = () => {
 
     console.log(id, wishlist);
   };
+
+const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
+
 
   return (
     <>
@@ -61,6 +65,7 @@ const FeaturedProductSection = () => {
                 <TabPanel>
                   <div className="main grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {newArrival.map((item) => (
+                    <Link to={`/shop/category/${slugify(item.category)}`}>
                       <div
                         className="card py-6 md:px-10 px-6 bg-gray-200 rounded-[10px] flex flex-col  justify-center cursor-pointer group  relative"
                         key={item.id}
@@ -104,6 +109,7 @@ const FeaturedProductSection = () => {
                           }
                         />
                       </div>
+                    </Link>
                     ))}
                   </div>
                 </TabPanel>
@@ -111,6 +117,7 @@ const FeaturedProductSection = () => {
                 <TabPanel>
                   <div className="main grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {bestSellingProducts.map((item) => (
+                <Link  to={`/shop/category/${slugify(item.category)}`}>
                       <div
                         className="card py-6 md:px-10 px-6 bg-gray-200 rounded-[10px] flex flex-col  justify-center relative"
                         key={item.id}
@@ -150,6 +157,7 @@ const FeaturedProductSection = () => {
                           }
                         />
                       </div>
+                </Link>
                     ))}
                   </div>
                 </TabPanel>
@@ -157,6 +165,7 @@ const FeaturedProductSection = () => {
                 <TabPanel>
                   <div className="main grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {featuredProd.map((item) => (
+                  <Link  to={`/shop/category/${slugify(item.category)}`}>
                       <div
                         className="card py-6 md:px-10 px-6 bg-gray-200 rounded-[10px] flex flex-col  justify-center relative"
                         key={item.id}
@@ -199,6 +208,7 @@ const FeaturedProductSection = () => {
                           }
                         />
                       </div>
+                  </Link>
                     ))}
                   </div>
                 </TabPanel>

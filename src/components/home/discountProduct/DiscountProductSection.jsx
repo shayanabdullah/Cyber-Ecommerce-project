@@ -3,6 +3,7 @@ import { discountProducts } from "@/data/discountProducts";
 import { Container } from "@mui/material";
 import React, { useState } from "react";
 import { FaFire, FaHeart, FaRegHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const DiscountProductSection = () => {
   const [wishlist, setWishList] = useState({});
@@ -12,6 +13,9 @@ const DiscountProductSection = () => {
       [id]: !prev[id],
     }));
   };
+
+  const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
+
   return (
     <>
     <section className="py-20">
@@ -21,8 +25,9 @@ const DiscountProductSection = () => {
         </div>
           <div className="main grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {discountProducts.map((item) => (
+                  <Link to={`/shop/category/${slugify(item.category)}`} >
                       <div
-                        className="card py-6 md:px-10 px-6 bg-gray-200 rounded-[10px] flex flex-col  cursor-pointer group w-full relative"
+                        className="card py-6 md:px-10 px-6 bg-gray-200 rounded-[10px] flex flex-col j  cursor-pointer group w-full relative min-h-[521px]"
                         key={item.id}
                       >
                           <div className={`absolute top-3 left-2 py-1 px-2 bg-black rounded-[10px] ${item.sale ? 'block' : 'hidden'}`}>
@@ -64,6 +69,7 @@ const DiscountProductSection = () => {
                         />
                      </div>
                       </div>
+                  </Link>
                     ))}
                   </div>
       </Container>
