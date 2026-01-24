@@ -97,9 +97,10 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
                     className="py-10 border-b border-[#A3A3A3] last:border-b-0 cursor-pointer"
                     key={wishlist.id}
                   >
-                   <Link to={`/shop/category/${slugify(wishlist.title || wishlist.name)}/${wishlist.id}`}>
+                
                     <div className="w-full flex flex-col md:flex-row justify-between">
-                      <div className="wishlist py-4  flex items-center gap-4">
+                         <Link to={`/shop/category/${slugify(wishlist.title || wishlist.name)}/${wishlist.id}`}>
+                              <div className="wishlist py-4  flex items-center gap-4">
                         <div className="img max-w-[90px] w-full">
                           <img src={wishlist.thumbnail} alt="" />
                         </div>
@@ -114,9 +115,12 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
                           </div>
                         </div>
                       </div>
+                         </Link>
+                 
                       <div className="flex items-center flex-wrap justify-between md:justify-start gap-6">
                         <div className="flex justify-between md:justify-end items-center w-full">
-                          <div className="flex items-center gap-3">
+                     {
+                      wishlist.quantity &&      <div className="flex items-center gap-3">
                             <button
                               className="py-1 px-2 rounded-md text-black text-lg font-inter font-medium cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#dddd]"
                               onClick={() => decrement(wishlist)}
@@ -137,11 +141,13 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
                               <GoPlus />
                             </button>
                           </div>
+                     }
                           <div className="flex items-center gap-2">
                             <div className="price">
                               <p className="font-poppins font-medium  text-xl leading-6 text-black">
                                 $
-                                {Math.round(wishlist.price) * wishlist.quantity}
+                                {wishlist.quantity ? Math.round(wishlist.price) * wishlist.quantity : wishlist.price}
+                              
                               </p>
                             </div>
                             <div
@@ -161,7 +167,7 @@ const slugify = (text) => text?.toLowerCase().replace(/\s+/g, "-");
                         </div>
                       </div>
                     </div>
-                   </Link>
+                 
                   </div>
                 ))}
               </div>
